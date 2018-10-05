@@ -1,0 +1,10 @@
+{% extends 'admin/change_list.html' %}
+
+{% block object-tools %}
+    <div>
+        <a class="default" href="{% url 'admin:estad_locales'%}">Ver estadístico</a>
+    </div>
+
+{{ block.super }}
+{% endblock %}
+
