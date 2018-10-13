@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core import validators
 from apps.dpv_persona.models import PersonaNatural
-from apps.nomencladores.models import Municipio
+from apps.dpv_nomencladores.models import Municipio
 
 
 # Create your models here.

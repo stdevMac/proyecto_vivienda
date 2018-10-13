@@ -1,5 +1,5 @@
 from django.db import models
-from apps.nomencladores.models import Destino
+from apps.dpv_nomencladores.models import Destino
 from apps.dpv_persona.models import PersonaNatural
 
 

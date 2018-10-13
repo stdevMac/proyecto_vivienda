@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
-from apps.nomencladores.models import Municipio, Calle
-from apps.nomencladores.validators import only_letters, only_numbers
+from apps.dpv_nomencladores.models import Municipio, Calle
+from apps.dpv_nomencladores.validators import only_letters, only_numbers
 
 
 # Create your models here.

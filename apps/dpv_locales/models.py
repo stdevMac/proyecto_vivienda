@@ -1,5 +1,5 @@
 from django.db import models
-from apps.nomencladores.models import Municipio, Organismo, Calle, Piso
+from apps.dpv_nomencladores.models import Municipio, Organismo, Calle, Piso
 from .validators import validate_acta_acuerdo
 
 
