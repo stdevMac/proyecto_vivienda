@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="85e50ca9-2d4a-4606-b364-fff274a87892" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/apps/dpv_base/templates/layouts/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dpv_base/templates/layouts/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/dpv_locales/templates/dpv_locales/locales_change_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dpv_locales/templates/dpv_locales/locales_change_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/app_vivienda$python7.coverage" NAME="python7 Coverage Results" MODIFIED="1539727710914" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1358572541">
@@ -62,6 +64,14 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-1853897916">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.42" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -77,7 +87,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/dpv_persona/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="187">
               <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
@@ -89,7 +99,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/dpv_viviendas/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-16">
+            <state relative-caret-position="187">
               <caret line="13" selection-start-line="13" selection-end-line="13" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
@@ -102,7 +112,7 @@
         <entry file="file://$PROJECT_DIR$/docs/description_blocks.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
-              <caret line="19" lean-forward="true" selection-start-line="3" selection-end-line="19" />
+              <caret line="19" selection-start-line="3" selection-end-line="19" />
             </state>
           </provider>
         </entry>
@@ -111,7 +121,7 @@
         <entry file="file://$PROJECT_DIR$/apps/dpv_base/apps.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
-              <caret line="10" column="120" lean-forward="true" selection-start-line="3" selection-end-line="10" selection-end-column="120" />
+              <caret line="10" column="120" selection-start-line="3" selection-end-line="10" selection-end-column="120" />
             </state>
           </provider>
         </entry>
@@ -128,7 +138,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/dpv_base/templates/layouts/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-908">
+            <state relative-caret-position="153">
               <caret line="9" column="91" selection-start-line="9" selection-start-column="91" selection-end-line="9" selection-end-column="91" />
             </state>
           </provider>
@@ -188,6 +198,12 @@
       </list>
     </option>
   </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="131" />
     <option name="y" value="50" />
@@ -230,6 +246,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -266,11 +283,12 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="$PROJECT_DIR$/../bin/python3" />
+      <option name="SDK_HOME" value="$USER_HOME$/anaconda3/bin/python3.6" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
       <option name="PARAMETERS" value="runserver 0.0.0.0:8000" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -279,7 +297,7 @@
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
       <method v="2">
-        <option name="LaunchBrowser.Before.Run" browser="87e67168-5ef2-4211-b0c4-c1950c1f0ee8" url="http://localhost:8000/sitio" />
+        <option name="LaunchBrowser.Before.Run" url="http://localhost:8000/sitio" />
       </method>
     </configuration>
   </component>
@@ -297,12 +315,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1602" height="865" extended-state="6" />
+    <frame x="0" y="26" width="1280" height="694" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24952501" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25364667" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32928476" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.43933055" />
@@ -311,14 +330,19 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003167" side_tool="true" weight="0.32928476" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49968335" visible="true" weight="0.33891213" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49968335" visible="true" weight="0.339823" />
       <window_info anchor="bottom" id="Python Console" order="11" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="SciView" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -342,13 +366,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../lib/python3.7/site-packages/django/contrib/admin/templates/admin/change_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="49" column="25" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../lib/python3.7/site-packages/django/contrib/admin/templates/admin/change_form.html" />
     <entry file="file://$PROJECT_DIR$/apps/dpv_perfil/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -370,9 +388,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/dpv_base/static/dpv_base/vendor/wow/wow.min.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/dpv_base/static/dpv_base/vendor/wow/wow.min.js" />
     <entry file="file://$PROJECT_DIR$/apps/dpv_viviendas/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -380,39 +396,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/nomencladores/static/css/theme.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/nomencladores/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="65" column="5" selection-start-line="65" selection-start-column="5" selection-end-line="65" selection-end-column="5" />
-          <folding>
-            <element signature="n#aside#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/nomencladores/static/css/app_style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/nomencladores/static/css/theme.css" />
+    <entry file="file://$PROJECT_DIR$/apps/nomencladores/templates/index.html" />
+    <entry file="file://$PROJECT_DIR$/apps/nomencladores/static/css/app_style.css" />
     <entry file="file://$PROJECT_DIR$/apps/dpv_base/utils.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$USER_HOME$/Documentos/templates/CoolAdmin-master/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="38" column="30" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Documentos/templates/CoolAdmin-master/login.html" />
     <entry file="file://$PROJECT_DIR$/locales_viv/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -427,9 +417,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="47" lean-forward="true" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
-          <folding>
-            <marker date="1539384632405" expanded="true" signature="82:87" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -437,9 +424,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="394">
           <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-          <folding>
-            <element signature="e#635#667#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -447,9 +431,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
-          <folding>
-            <element signature="e#1#29#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -516,21 +497,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/dpv_nomencladores/validators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/dpv_locales/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="45" lean-forward="true" selection-start-line="2" selection-start-column="45" selection-end-line="2" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -550,7 +522,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/dpv_persona/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
+        <state relative-caret-position="187">
           <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
@@ -560,7 +532,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/dpv_viviendas/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16">
+        <state relative-caret-position="187">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
@@ -568,24 +540,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/dpv_base/templates/layouts/base.html">
+    <entry file="file://$PROJECT_DIR$/docs/description_blocks.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-908">
-          <caret line="9" column="91" selection-start-line="9" selection-start-column="91" selection-end-line="9" selection-end-column="91" />
+        <state relative-caret-position="323">
+          <caret line="19" selection-start-line="3" selection-end-line="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/dpv_base/apps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="10" column="120" lean-forward="true" selection-start-line="3" selection-end-line="10" selection-end-column="120" />
+          <caret line="10" column="120" selection-start-line="3" selection-end-line="10" selection-end-column="120" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/description_blocks.txt">
+    <entry file="file://$PROJECT_DIR$/apps/dpv_base/templates/layouts/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" lean-forward="true" selection-start-line="3" selection-end-line="19" />
+        <state relative-caret-position="153">
+          <caret line="9" column="91" selection-start-line="9" selection-start-column="91" selection-end-line="9" selection-end-column="91" />
         </state>
       </provider>
     </entry>
