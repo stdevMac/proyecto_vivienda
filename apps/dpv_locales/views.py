@@ -5,6 +5,6 @@ from .models import Local
 
 
 # Create your views here.
-class EstadisticoView(View):
-    pass
+def index(request):
+    return render(request, 'dpv_locales/list.html')
 

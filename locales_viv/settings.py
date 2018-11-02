@@ -124,9 +124,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_URL = reverse_lazy('login')
+LOGIN_URL = reverse_lazy('base_login')
 
-LOGOUT_REDIRECT_URL = '/sitio'
+LOGOUT_REDIRECT_URL = reverse_lazy('base_login')
+
+LOGIN_REDIRECT_URL = reverse_lazy('base_dashboard')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -135,3 +137,6 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+SESSION_COOKIE_AGE = 84600
+
+BULK_URLS = []

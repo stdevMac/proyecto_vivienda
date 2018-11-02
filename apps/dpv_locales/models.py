@@ -1,6 +1,8 @@
 from django.db import models
 from apps.dpv_nomencladores.models import Municipio, Organismo, Calle, Piso
 from .validators import validate_acta_acuerdo
+from django.utils.translation import gettext as _
+from django.core.exceptions import ValidationError
 
 
 # Create your models here.
@@ -16,13 +18,13 @@ class Local(models.Model):
     pendiente = models.PositiveSmallIntegerField(verbose_name="Pendientes de aprobación", help_text="Viviendas pendientes de aprobación")
     organismo = models.ForeignKey(Organismo, help_text="Organismo que ocupa el local", related_name="locales_org", on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True, auto_created=True, help_text="Fecha en que se introdujo el local al sistema.")
-    acta = models.CharField(max_length=9, verbose_name="Acta", validators=[validate_acta_acuerdo])
-    acuerdoCAM = models.CharField(max_length=9, verbose_name="Acuerdo CAM", validators=[validate_acta_acuerdo])
-    acuerdoPEM = models.CharField(max_length=9, verbose_name="Acuerdo PEM", validators=[validate_acta_acuerdo])
-    acuerdoORG = models.CharField(max_length=9, verbose_name="Acuerdo Organismo", validators=[validate_acta_acuerdo])
+    acta = models.CharField(max_length=9, validators=[validate_acta_acuerdo], verbose_name="Acta")
+    acuerdoCAM = models.CharField(max_length=9, verbose_name="Acuerdo CAM", validators=[validate_acta_acuerdo], blank=True)
+    acuerdoPEM = models.CharField(max_length=9, verbose_name="Acuerdo PEM", validators=[validate_acta_acuerdo], blank=True)
+    acuerdoORG = models.CharField(max_length=9, verbose_name="Acuerdo Organismo", validators=[validate_acta_acuerdo], blank=True)
     observaciones = models.TextField(max_length=600, verbose_name="Otras observaciones")
     estatal = models.BooleanField(default=True, verbose_name="Es estatal")
-    no_expediente = models.PositiveSmallIntegerField(verbose_name="No. Expediente", unique=True)
+    acuerdo_DPV = models.CharField(max_length=9, verbose_name="Acuerdo DPV",  unique=True, validators=[validate_acta_acuerdo], default='')
 
     class Meta:
         verbose_name = "Local"
@@ -33,3 +35,17 @@ class Local(models.Model):
     def __str__(self):
         return self.municipio.nombre + '-' + self.direccion_calle.nombre + '-' + self.direccion_numero
 
+    def clean(self):
+        super(Local, self).clean()
+
+        if self.direccion_calle == self.direccion_entre1:
+            raise ValidationError({'direccion_entre1': _('La primera entre calle no puede ser igual a la calle de la dirección.')})
+
+        if self.direccion_entre2 == self.direccion_calle:
+            raise ValidationError({'direccion_entre2': _('La segunda entre calle no puede ser igual a la calle de la dirección.')})
+
+        if self.direccion_entre1 == self.direccion_entre2:
+            raise ValidationError({'direccion_entre2': _('Ambas entre calles no pueden ser iguales.')})
+
+        if self.no_viviendas > self.pendiente:
+            raise ValidationError({'pendiente': 'El número de viviendas pendientes de aprovación no puede ser mayor que el número de viviendas del local'})
