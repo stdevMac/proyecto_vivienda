@@ -4,11 +4,11 @@ from apps.dpv_nomencladores.models import Calle, AreaTrabajo, CentroTrabajo, Gen
 
 
 class LoginForm(forms.Form):
-    complaint_username_login = forms.CharField(max_length=255, required=True, label="Nombre de usuario ó Correo electrónico", help_text="Aqui introdusca su nombre de usuario o email para entrar al sistema.",
+    username_login = forms.CharField(max_length=255, required=True, label="Nombre de usuario ó Correo electrónico", help_text="Aqui introdusca su nombre de usuario o email para entrar al sistema.",
                                widget=(forms.TextInput(attrs={"placeholder": "Nombre de usuario ó Email", "class": "form-control"})))
-    complaint_password_login = forms.CharField(max_length=255, required=True, label="Contraseña",
+    password_login = forms.CharField(max_length=255, required=True, label="Contraseña",
                                      widget=(forms.PasswordInput(attrs={"placeholder": "Contraseña", "class": "form-control"})))
-    person_remenber_me = forms.BooleanField(label="Recordarme", required=False, widget=(forms.CheckboxInput(attrs={"class": ""})))
+    remenber_me = forms.BooleanField(label="Recordarme", required=False, widget=(forms.CheckboxInput(attrs={"class": ""})))
 
 
 class RecoverPassForm(forms.Form):
