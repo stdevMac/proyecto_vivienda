@@ -69,6 +69,7 @@
     <session id="-1853897916">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.42" value="1" />
           <entry key="project.opened" value="2" />
@@ -211,23 +212,19 @@
         <subPane>
           <expand>
             <path>
-              <item name="locales_viv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="locales_viv" type="462c0819:PsiDirectoryNode" />
+              <item name="app-vivienda" type="b2602c69:ProjectViewProjectNode" />
+              <item name="app-vivienda" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="locales_viv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="locales_viv" type="462c0819:PsiDirectoryNode" />
+              <item name="app-vivienda" type="b2602c69:ProjectViewProjectNode" />
+              <item name="app-vivienda" type="462c0819:PsiDirectoryNode" />
               <item name="apps" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="locales_viv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="locales_viv" type="462c0819:PsiDirectoryNode" />
+              <item name="app-vivienda" type="b2602c69:ProjectViewProjectNode" />
+              <item name="app-vivienda" type="462c0819:PsiDirectoryNode" />
               <item name="apps" type="462c0819:PsiDirectoryNode" />
-              <item name="dpv_locales" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="locales_viv" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="dpv_base" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -336,7 +333,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32928476" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.43933055" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.43896976" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
