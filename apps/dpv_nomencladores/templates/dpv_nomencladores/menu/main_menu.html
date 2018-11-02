@@ -1,0 +1,131 @@
+{% load static base_tags i18n %}
+{% if perms.dpv_nomencladores.view_provincia or  perms.dpv_nomencladores.view_municipio or perms.dpv_nomencladores.view_organismo or perms.dpv_nomencladores.view_destino or perms.dpv_nomencladores.view_calle or perms.dpv_nomencladores.view_piso %}
+    <li class="{% if '/nomenclador/' in request.path %} active show {% endif %} menu-item-has-children dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="menu-icon fa fa-home"></i>
+            Nomencladores
+        </a>
+        <ul class="sub-menu children dropdown-menu">
+            {% if perms.dpv_nomencladores.view_provincia %}
+            <li class="{% if '/nomenclador/provincia/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_provincia' as nomenclador_provurl %}
+                {% if nomenclador_provurl == 'True' %}
+                <a href="{% url 'nomenclador_provincia' %}">
+                    <i class="fa fa-tag">
+                        Provincias
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% if perms.dpv_nomencladores.view_municipio %}
+            <li class="{% if '/nomenclador/municipio/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_municipio' as nomenclador_munurl %}
+                {% if nomenclador_munurl == 'True' %}
+                <a href="{% url 'nomenclador_municipio' %}">
+                    <i class="fa fa-tag">
+                        Municipios
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% if perms.dpv_nomencladores.view_destino %}
+            <li class="{% if '/nomenclador/destino/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_destino' as nomenclador_desurl %}
+                {% if nomenclador_desurl == 'True' %}
+                <a href="{% url 'nomenclador_destino' %}">
+                    <i class="fa fa-tag">
+                        Destinos
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% if perms.dpv_nomencladores.view_organismo %}
+            <li class="{% if '/nomenclador/organismo/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_organismo' as nomenclador_orgurl %}
+                {% if nomenclador_orgurl == 'True' %}
+                <a href="{% url 'nomenclador_organismo' %}">
+                    <i class="fa fa-tag">
+                        Organismos
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% if perms.dpv_nomencladores.view_calle %}
+            <li class="{% if '/nomenclador/calle/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_calle' as nomenclador_callurl %}
+                {% if nomenclador_callurl == 'True' %}
+                <a href="{% url 'nomenclador_calle' %}">
+                    <i class="fa fa-tag">
+                        Calles
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% if perms.dpv_nomencladores.view_piso %}
+            <li class="{% if '/nomenclador/piso/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_piso' as nomenclador_pisourl %}
+                {% if nomenclador_pisourl == 'True' %}
+                <a href="{% url 'nomenclador_piso' %}">
+                    <i class="fa fa-tag">
+                        Pisos
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% if perms.dpv_nomencladores.view_genero %}
+            <li class="{% if '/nomenclador/genero/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_genero' as nomenclador_genurl %}
+                {% if nomenclador_genurl == 'True' %}
+                <a href="{% url 'nomenclador_genero' %}">
+                    <i class="fa fa-tag">
+                        Género
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% if perms.dpv_nomencladores.view_areatrabajo %}
+            <li class="{% if '/nomenclador/areadetrabajo/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_areatrab' as nomenclador_aturl %}
+                {% if nomenclador_aturl == 'True' %}
+                <a href="{% url 'nomenclador_areatrab' %}">
+                    <i class="fa fa-tag">
+                        Departamento
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% if perms.dpv_nomencladores.view_centrotrabajo %}
+            <li class="{% if '/nomenclador/centrodetrabajo/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_centrab' as nomenclador_cenurl %}
+                {% if nomenclador_cenurl == 'True' %}
+                <a href="{% url 'nomenclador_centrab' %}">
+                    <i class="fa fa-tag">
+                        Centro de Trabajo
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% if perms.dpv_nomencladores.view_concepto %}
+            <li class="{% if '/nomenclador/concepto/' in request.path %} active {% endif %}">
+                {% exist_url 'nomenclador_concepto' as nomenclador_conurl %}
+                {% if nomenclador_conurl == 'True' %}
+                <a href="{% url 'nomenclador_concepto' %}">
+                    <i class="fa fa-tag">
+                        Conceptos
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+        </ul>
+    </li>
+{% endif %}

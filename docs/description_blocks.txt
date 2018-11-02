@@ -11,7 +11,8 @@ bloque full_page_content -> Contenido total del body es todo el contenido del bo
 bloque sidebar_panel -> Elemento Side Bar de la aplicación web   ( no recomendado sobreescribir )
 bloque right_panel -> Elemento panel derecho del la aplicacion web contiene headbar, breadcrumb y page_content ( no recomendado sobreescribir )
 bloque header -> Elemento header de la palicacion Web( no recomendado sobreescribir )
-bloque breadcrumbs -> Elemento breadcrumb de la aplicacion web ( no recomendado sobreescribir )
+bloque breadcrumbs -> Elemento breadcrumb de la aplicacion web se usa heredando de la plantilla padre para mantener una navegabilidad ( no recomendado sobreescribir )
+bloque breadcrumbs_title -> Elemento títutlo del creadcrumb se hereda de la plantilla padre y se sobre escribe con el valor de la plantilla actual.
 bloque content_page -> Este bloque es el que tiene todo el contenido principal de cada pagina, este es el bloque donde se pone el contenido principal de
                        la vista, bloque hecho para sobre escribir( es para sobreescribir )
 bloque main_cripts -> Este bloque contiene los scripts js principales del sitio ( no recomendado sobreescribir )

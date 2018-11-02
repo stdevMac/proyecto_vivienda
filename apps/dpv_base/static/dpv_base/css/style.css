@@ -600,4 +600,29 @@ header .form-inline {
 .language-show + .dropdown-menu {
   display: block; }
 
+.page_background_kuki {
+	background: url(../images/habana1.jpg)no-repeat center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    min-height:800px
+}
+
+.imagat_center {
+    margin: auto !important;
+    text-align: center;
+}
+.snow_white_glass {
+    background-color:rgba(255,255,255,0.4);
+    margin-top: 10%;
+    padding: 10px;
+    border-radius: 5%;
+}
+.img-reponsive {
+    width: 100% !important;
+    height: auto !important;
+}
+.
 /*# sourceMappingURL=style.css.map */

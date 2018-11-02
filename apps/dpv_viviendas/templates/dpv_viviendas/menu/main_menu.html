@@ -1,0 +1,23 @@
+{% load static base_tags i18n %}
+{% if perms.dpv_viviendas.view_vivienda %}
+    <li class="{% if '/vivienda/' in request.path %} active show {% endif %} menu-item-has-children dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="menu-icon fa fa-home"></i>
+            Viviendas
+        </a>
+        <ul class="sub-menu children dropdown-menu">
+            {% if perms.dpv_viviendas.view_vivienda %}
+            <li class="{% if '/vivienda/vivienda/' in request.path %} active {% endif %}">
+                {% exist_url 'persona_juridica' as persona_jururl %}
+                {% if persona_jururl == 'True' %}
+                <a href="{% url 'vivienda_vivienda' %}">
+                    <i class="fa fa-home">
+                        Viviendas
+                    </i>
+                </a>
+                {% endif %}
+            </li>
+            {% endif %}
+        </ul>
+    </li>
+{% endif %}

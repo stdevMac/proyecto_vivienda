@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% load static base_tags i18n %}
+<li class="{% if '/dashboard/' in request.path %} active {% endif %}">
+    {% exist_url 'base_dashboard' as base_dashurl %}
+    {% if base_dashurl == 'True' %}
+    <a href="{% url 'base_dashboard' %}">
+        <i class="fa fa-dashboard">
+            Inicio
+        </i>
+    </a>
+    {% endif %}
+</li>
+{% if perms.auth.view_user or perms.auth.view_group or perms.auth.view_logentry %}
+<li class="{% if '/admin/' in request.path %} active show {% endif %} menu-item-has-children dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="menu-icon fa fa-laptop"></i>
+        Administración
+    </a>
+    <ul class="sub-menu children dropdown-menu">
+        {% if perms.auth.view_user %}
+        <li class="{% if '/users/' in request.path %} active {% endif %}">
+            {% exist_url 'admin_user' as admin_userurl %}
+            {% if admin_userurl == 'True' %}
+            <a href="{% url 'admin_user' %}">
+                <i class="fa fa-user">
+                    Usuarios
+                </i>
+            </a>
+            {% endif %}
+        </li>
+        {% endif %}
+        {% if perms.auth.view_group %}
+        <li class="{% if '/groups/' in request.path %} active {% endif %}">
+            {% exist_url 'admin_group' as admin_groupurl %}
+            {% if admin_groupurl == 'True' %}
+            <a href="{% url 'admin_group' %}">
+                <i class="fa fa-users">
+                    Grupos
+                </i>
+            </a>
+            {% endif %}
+        </li>
+        {% endif %}
+        {% if perms.auth.view_logentry %}
+        <li class="{% if '/logs/' in request.path %} active {% endif %}">
+            {% exist_url 'admin_logs' as admin_logurl %}
+            {% if admin_logurl == 'True' %}
+            <a href="{% url 'admin_logs' %}">
+                <i class="fa fa-users">
+                    Registros
+                </i>
+            </a>
+            {% endif %}
+        </li>
+        {% endif %}
+    </ul>
+</li>
+{% endif %}

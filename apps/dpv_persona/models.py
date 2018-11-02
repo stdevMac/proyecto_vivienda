@@ -2,54 +2,10 @@ from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from apps.dpv_nomencladores.models import Municipio, Calle
 from apps.dpv_nomencladores.validators import only_letters, only_numbers
+from apps.dpv_nomencladores.models import Genero, AreaTrabajo, CentroTrabajo
 
 
 # Create your models here.
-class CentroTrabajo(models.Model):
-    nombre = models.CharField(max_length=50, verbose_name="Centro de trabajo", unique=True, validators=[MaxLengthValidator(50)])
-    numero = models.PositiveSmallIntegerField(verbose_name="Número", blank=True)
-    oc = models.BooleanField(default=False, verbose_name="Oficina Central")
-    municipio = models.ForeignKey(Municipio, related_name="ubicacion_work", on_delete=models.CASCADE, help_text="Municipio donde está ubicado el centro")
-
-    class Meta:
-        verbose_name = "Centro de Trabajo"
-        verbose_name_plural = "Centro de Trabajo"
-        ordering = ["numero", "nombre", ]
-
-    def __str__(self):
-        return self.nombre
-
-
-class AreaTrabajo(models.Model):
-    nombre = models.CharField(max_length=50, verbose_name="Área de Trabajo", unique=True, validators=[MaxLengthValidator(50)])
-    numero = models.CharField(max_length=3, blank=True, verbose_name="Número", validators=[MaxLengthValidator(3),
-                                                                                           only_numbers])
-
-    class Meta:
-        verbose_name = "Área de Trabajo"
-        verbose_name_plural = "Áreas de Trabajo"
-        ordering = ["nombre", ]
-
-    def __str__(self):
-        return self.nombre
-
-
-class Genero(models.Model):
-    nombre = models.CharField(max_length=9, verbose_name="Género", unique=True, validators=[MaxLengthValidator(9),
-                                                                                            only_letters])
-    sigla = models.CharField(max_length=1, verbose_name="Inicial", unique=True, validators=[MinLengthValidator(1),
-                                                                                            MaxLengthValidator(1),
-                                                                                            only_letters])
-
-    class Meta:
-        verbose_name = "Género"
-        verbose_name_plural = "Géneros"
-        ordering = ['nombre', ]
-
-    def __str__(self):
-        return self.nombre
-
-
 class Persona(models.Model):
     nombre = models.CharField(max_length=30, validators=[MaxLengthValidator(30), only_letters])
     municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE, verbose_name="Municipio", help_text="Municipio donde recide la persona")
@@ -91,9 +47,17 @@ class PersonaNatural(Persona):
 
 
 class PersonaJuridica(Persona):
-    codigo_nit = models.CharField(max_length=11)
-    codigo_reuup = models.CharField(max_length=11)
+    sigla = models.CharField(max_length=10, verbose_name="Siglas", blank=True, help_text="Siglas identificativas de la entidad.")
+    nombre_contacto = models.CharField(max_length=200, verbose_name="Nombre de contacto", blank=True, help_text="Nombre que se usara para el contacto con la entidad.")
+    codigo_nit = models.CharField(max_length=11, verbose_name="Código NiT", help_text="Código NiT de la entidad")
+    codigo_reuup = models.CharField(max_length=11, verbose_name="Código Reeup", help_text="Código Reeup de la Entidad")
+    direccion_entrecalle1 = models.ForeignKey(Calle, related_name="personaj_entrecalle1", on_delete=models.CASCADE, verbose_name="Primera Entrecalle", blank=True)
+    direccion_entrecalle2 = models.ForeignKey(Calle, related_name="personaj_entrecalle2", on_delete=models.CASCADE, verbose_name="Segunda Entrecalle", blank=True)
 
     class Meta:
         verbose_name = "Persona Jurídica"
         verbose_name_plural = "Personas Jurídicas"
+
+    def __str__(self):
+        return self.nombre
+

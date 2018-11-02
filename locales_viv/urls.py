@@ -1,27 +1,19 @@
-"""locales_viv URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
-from .views import view_main
 from apps.dpv_base import urls as base_url
+from apps.dpv_nomencladores import urls as nomencladores_url
+from apps.dpv_locales import urls as locales_url
+from apps.dpv_persona import urls as persona_url
+from apps.dpv_perfil import urls as perfil_url
+from apps.dpv_viviendas import urls as vivienda_url
 
 
 urlpatterns = [
-    path('sitio/', admin.site.urls),
-    path('main/', view_main),
-    path('base/', include(base_url))
-
+    path('dj-admin/', admin.site.urls),
+    path('', include(base_url)),
+    path('nomenclador/', include(nomencladores_url)),
+    path('local/', include(locales_url)),
+    path('persona/', include(persona_url)),
+    path('perfil/', include(perfil_url)),
+    path('vivienda/', include(vivienda_url)),
 ]

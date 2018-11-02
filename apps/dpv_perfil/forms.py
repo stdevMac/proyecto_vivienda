@@ -27,8 +27,22 @@ class PersonaForm(forms.ModelForm):
                   'telefono', 'movil', 'genero', )
 
 
-class FullUserForm(forms.Form):
+class FullPerfilForm(forms.Form):
 
     class Meta:
-        fields = ('username', 'ci', 'documentacion_email', )
+        fields = ('username',
+                  'ci',
+                  'documentacion_email',
+                  'nombre',
+                  'apellidos',
+                  'direccion_calle',
+                  'direccion_numero',
+                  'direccion_entrecalle1',
+                  'direccion_entrecalle2',
+                  'municipio',
+                  'telefono',
+                  'movil',
+                  'genero',
+                  'notificacion_email',
+                  'documentacion_email', )
 
