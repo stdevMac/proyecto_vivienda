@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.dpv_base',
     'apps.dpv_nomencladores',
+    'apps.dpv_complaint',
     'apps.export_do',
     'apps.dpv_persona',
     'apps.dpv_viviendas',

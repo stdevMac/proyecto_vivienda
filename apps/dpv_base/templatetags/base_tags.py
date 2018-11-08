@@ -1,5 +1,5 @@
 from django.apps import apps as all_apps
-# from django.template.defaultfilters import register, stringfilter
+# from django.templates.defaultfilters import register, stringfilter
 from django import template
 from locales_viv import settings
 
