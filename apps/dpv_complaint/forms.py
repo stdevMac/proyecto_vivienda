@@ -7,6 +7,17 @@ from apps.dpv_nomencladores.validators import only_letters, only_numbers
 from .models import *
 from apps.dpv_persona.models import PersonaJuridica, PersonaNatural
 
+class ComplaintForm(forms.Form):
+    _procedency = forms.CharField(max_length=50,
+                                  label="Procedencia")  # models.CharField(max_length=50,label="Procedencia de la Queja")
+    _body = forms.CharField(max_length=1000, label="Cuerpo de la Queja")
+    _topic = forms.CharField(max_length=200, label="Titulo de la Queja")
+    _number = forms.CharField(max_length=15, label="Numero de la Queja")
+    _status = forms.CharField(max_length=15, label="Estado de la Queja")
+    #_enterDate = forms.DateTimeField(label="Fecha de Introduccion de la Queja")
+    _is = forms.BooleanField(label="Juridica", widget=forms.BooleanField)
+
+
 class PresentedComplaintForm(forms.Form):
     _procedency = forms.CharField(max_length=50, label="Procedencia")#models.CharField(max_length=50,label="Procedencia de la Queja")
     _body = forms.CharField(max_length=1000,label="Cuerpo de la Queja")
@@ -17,10 +28,10 @@ class PresentedComplaintForm(forms.Form):
     _is = forms.BooleanField(label="Juridica", widget=forms.BooleanField )
     
     nombre = forms.CharField(max_length=30, validators=[MaxLengthValidator(30), only_letters])
-    municipio = forms.ForeignKey(Municipio, label="Municipio",
-                                  help_text="Municipio donde recide la persona")
-    direccion_calle = forms.ForeignKey(Calle, label="Calle", blank=True)
-    direccion_numero = forms.PositiveSmallIntegerField(blank=True, label="Número")
+    # municipio = forms.ForeignKey(Municipio, label="Municipio",
+    #                               help_text="Municipio donde recide la persona")
+    # direccion_calle = forms.ForeignKey(Calle, label="Calle", blank=True)
+    # direccion_numero = forms.PositiveSmallIntegerField(blank=True, label="Número")
     telefono = forms.CharField(max_length=8, label="Teléfono Fijo", blank=True,
                                 validators=[MinLengthValidator(8),
                                             MaxLengthValidator(8),
