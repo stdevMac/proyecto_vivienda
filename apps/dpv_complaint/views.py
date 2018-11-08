@@ -11,7 +11,7 @@ from .models import *
 def form_Complaint(request):
     form_name = "Queja"
     if request.method == "POST":
-        form = PresentedComplaintNaturalForm(request.POST)
+        form = PresentedComplaintForm(request.POST)
         if form.is_valid():
             complaint = Complaint()
             post = form.save(commit=False)
@@ -20,5 +20,6 @@ def form_Complaint(request):
             post.save()
             return redirect(reverse_lazy('naturalPerson'))
     else:
-        form = PresentedComplaintNaturalForm()
+        form = PresentedComplaintForm()
     return render(request, "dpv_complaint/create_complaint.html", {'form': form,'form_name': form_name})
+

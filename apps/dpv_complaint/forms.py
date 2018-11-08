@@ -36,11 +36,24 @@ class PresentedComplaintForm(forms.Form):
         MinLengthValidator(11, message="Este campo no puede tener menos de 11 caracteres"),
         MaxLengthValidator(11, message="Este campo no puede tener más de 11 caracteres"),
         only_numbers])
-    direccion_entrecalle1 = forms.ForeignKey(Calle, related_name="persona_entrecalle1",
-                                              label="Primera Entrecalle", blank=True)
-    direccion_entrecalle2 = forms.ForeignKey(Calle, related_name="persona_entrecalle2",
-                                              label="Segunda Entrecalle", blank=True)
-    genero = forms.ForeignKey(Genero, label="Género", blank=True)
+    # direccion_entrecalle1 = forms.ForeignKey(Calle, related_name="persona_entrecalle1",
+    #                                           label="Primera Entrecalle", blank=True)
+    # direccion_entrecalle2 = forms.ForeignKey(Calle, related_name="persona_entrecalle2",
+    #                                           label="Segunda Entrecalle", blank=True)
+    # genero = forms.ForeignKey(Genero, label="Género", blank=True)
+
+class WaitingForDistributionForm(forms.Form):
+    pass
+
+class AsignedToTecnicForm(forms.Form):
+    pass
+
+class FinishedComplaintForm(forms.Form):
+    pass
+
+class Accepted(models.Model):
+    pass
+
 
 # class PresentedComplaintNaturalForm(forms.Form):
 #     complaint_procedency = forms.CharField(max_length=50,label='Procedencia de la queja', help_text='Esta es la ayuda')
