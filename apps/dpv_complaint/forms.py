@@ -62,7 +62,7 @@ class AsignedToTecnicForm(forms.Form):
 class FinishedComplaintForm(forms.Form):
     pass
 
-class Accepted(models.Model):
+class AcceptedForm(models.Model):
     pass
 
 
