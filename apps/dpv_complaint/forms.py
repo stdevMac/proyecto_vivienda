@@ -15,7 +15,7 @@ class ComplaintForm(forms.Form):
     _number = forms.CharField(max_length=15, label="Numero de la Queja")
     _status = forms.CharField(max_length=15, label="Estado de la Queja")
     #_enterDate = forms.DateTimeField(label="Fecha de Introduccion de la Queja")
-    _is = forms.CharField(label="Juridica", widget=forms.BooleanField)
+    # _is = forms.CharField(label="Juridica", widget=forms.BooleanField)
 
 
 class PresentedComplaintForm(forms.Form):
@@ -25,7 +25,7 @@ class PresentedComplaintForm(forms.Form):
     _number = forms.CharField(max_length=15,label="Numero de la Queja")
     _status = forms.CharField(max_length=15,label="Estado de la Queja")
     _enterDate = forms.DateTimeField(label="Fecha de Introduccion de la Queja")
-    _is = forms.CharField(label="Juridica", widget=forms.BooleanField )
+    # _is = forms.CharField(label="Juridica", widget=forms.BooleanField , )
     
     nombre = forms.CharField(max_length=30, validators=[MaxLengthValidator(30), only_letters])
 

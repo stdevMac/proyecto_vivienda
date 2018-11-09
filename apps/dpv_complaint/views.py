@@ -8,9 +8,6 @@ from .models import *
 
 # Create your views here.
 
-# Index
-
-
 def form_Complaint(request):
     _form_name = "Queja"
     if request.method == "POST":
@@ -22,9 +19,9 @@ def form_Complaint(request):
             _post.id = _post.pk
             _post.save()
             return redirect(reverse_lazy('naturalPerson'))
-        else:
-            _form = ComplaintForm()
-        return render(request, "dpv_complaint/create_complaint.html", {'form':_form, 'form_name': _form_name})
+    else:
+        _form = ComplaintForm()
+    return render(request, "dpv_complaint/create_complaint.html", {'form':_form, 'form_name': _form_name})
 
 def form_PresentedComplaint(request):
     _form_name = "Queja Presentada"
@@ -51,9 +48,9 @@ def form_WaitingForDistribution(request):
             _post.id = _post.pk
             _post.save()
             return redirect(reverse_lazy())
-        else:
-            _form = WaitingForDistributionForm()
-        return render(request, "",{'form':_form, 'form_name': _form_name})
+    else:
+        _form = WaitingForDistributionForm()
+    return render(request, "",{'form':_form, 'form_name': _form_name})
 
 def form_AsignedToTecnic(request):
     _form_name = "Quejas en proceso de evaluacion"
@@ -65,9 +62,9 @@ def form_AsignedToTecnic(request):
             _post.id = _post.pk
             _post.save()
             return redirect(reverse_lazy())
-        else:
-            _form = AsignedToTecnicForm()
-        return render(request,"", {'form':_form, 'form_name':_form_name})
+    else:
+        _form = AsignedToTecnicForm()
+    return render(request,"", {'form':_form, 'form_name':_form_name})
 
 def form_FinishedComplaint(request):
     _form_name = "Queja por revisar"
@@ -79,9 +76,9 @@ def form_FinishedComplaint(request):
             _post.id = _post.pk
             _post.save()
             return redirect(reverse_lazy())
-        else:
-            _form = FinishedComplaintForm()
-        return render(request, "", {'form':_form, 'form_name': _form_name})
+    else:
+        _form = FinishedComplaintForm()
+    return render(request, "", {'form':_form, 'form_name': _form_name})
 
 def form_Accepted(request):
     _form_name = "Quejas Aceptadas"
@@ -93,10 +90,11 @@ def form_Accepted(request):
             _post.id = _post.pk
             _post.save()
             return redirect(reverse_lazy())
-        else:
-            _form = FinishedComplaintForm()
-        return render(request, "", {'form':_form, 'form_name': _form_name})
+    else:
+        _form = FinishedComplaintForm()
+    return render(request, "", {'form':_form, 'form_name': _form_name})
 
+# Index
 def index_Complaint(request):
     index_name = 'Indice de las Quejas'
     elems = Complaint.objects.all()
