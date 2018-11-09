@@ -8,8 +8,7 @@ from .models import *
 from apps.dpv_persona.models import PersonaJuridica, PersonaNatural
 
 class ComplaintForm(forms.Form):
-    _procedency = forms.CharField(max_length=50,
-                                  label="Procedencia")  # models.CharField(max_length=50,label="Procedencia de la Queja")
+    _procedency = forms.CharField(max_length=50, label="Procedencia")  # models.CharField(max_length=50,label="Procedencia de la Queja")
     _body = forms.CharField(max_length=1000, label="Cuerpo de la Queja")
     _topic = forms.CharField(max_length=200, label="Titulo de la Queja")
     _number = forms.CharField(max_length=15, label="Numero de la Queja")
@@ -17,6 +16,8 @@ class ComplaintForm(forms.Form):
     #_enterDate = forms.DateTimeField(label="Fecha de Introduccion de la Queja")
     # _is = forms.CharField(label="Juridica", widget=forms.BooleanField)
 
+    def clean(self):
+        pass
 
 class PresentedComplaintForm(forms.Form):
     _procedency = forms.CharField(max_length=50, label="Procedencia")#models.CharField(max_length=50,label="Procedencia de la Queja")
