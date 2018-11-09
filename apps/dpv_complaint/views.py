@@ -50,7 +50,7 @@ def form_WaitingForDistribution(request):
             return redirect(reverse_lazy())
     else:
         _form = WaitingForDistributionForm()
-    return render(request, "",{'form':_form, 'form_name': _form_name})
+    return render(request, "dpv_complaint/create_complaint.html",{'form':_form, 'form_name': _form_name})
 
 def form_AsignedToTecnic(request):
     _form_name = "Quejas en proceso de evaluacion"
@@ -64,7 +64,7 @@ def form_AsignedToTecnic(request):
             return redirect(reverse_lazy())
     else:
         _form = AsignedToTecnicForm()
-    return render(request,"", {'form':_form, 'form_name':_form_name})
+    return render(request,"dpv_complaint/create_complaint.html", {'form':_form, 'form_name':_form_name})
 
 def form_FinishedComplaint(request):
     _form_name = "Queja por revisar"
@@ -78,7 +78,7 @@ def form_FinishedComplaint(request):
             return redirect(reverse_lazy())
     else:
         _form = FinishedComplaintForm()
-    return render(request, "", {'form':_form, 'form_name': _form_name})
+    return render(request, "dpv_complaint/create_complaint.html", {'form':_form, 'form_name': _form_name})
 
 def form_Accepted(request):
     _form_name = "Quejas Aceptadas"

@@ -5,7 +5,7 @@
     {{ block.super }}
 
 {% endblock breadcrumbs %}
-<h1> bienvenido {{ request.user }} </h1>
+<h1> Bienvenido {{ request.user }} </h1>
 {% block content_page %}
     <h1>Insertar {{form_name}}</h1>
     <form method="POST" class="post-form">{% csrf_token %}
