@@ -1,1 +1,15 @@
 {% extends 'layouts/dashboard.html' %}
+{% block page_title %} | Nomencladores {% endblock page_title %}
+{% block breadcrumb_title %} Nomencladores {% endblock breadcrumb_title %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% if '/nomenclador/' == request.path %}
+    <li class="active">Nomenclador</li>
+    {% else %}
+    <li>
+        <a href="{% url 'nomenclador_index' %}">
+            Nomenclador
+        </a>
+    </li>
+    {% endif %}
+{% endblock breadcrumbs %}

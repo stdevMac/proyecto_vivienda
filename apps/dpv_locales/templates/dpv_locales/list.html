@@ -22,7 +22,9 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Locales</strong>
-                <button type="button" class="offset-md-10 btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Local</button>
+                {% if perms.local.add_local %}
+                <button type="button" class="offset-md-9 btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Local</button>
+                {% endif %}
             </div>
             <div class="card-body">
                 {% if locales %}
@@ -44,13 +46,13 @@
                             <td>{{local.organismo}}</td>
                             <td>{{local.fecha}}</td>
                             <td>
-                                {% if perms.auth.view_user %}
+                                {% if perms.local.view_local %}
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
                                 {% endif %}
-                                {% if perms.auth.change_user %}
+                                {% if perms.local.change_local %}
                                     <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
                                 {% endif %}
-                                {% if perms.auth.delete_user %}
+                                {% if perms.local.delete_local %}
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
                                 {% endif %}
                             </td>
@@ -60,7 +62,7 @@
                 </table>
                 {% else %}
                 <div class="alert alert-info">
-                    <h2>No hay Locales registrados que mostrar</h2>
+                    <h2 class="text-center">No hay Locales registrados que mostrar</h2>
                 </div>
                 {% endif %}
             </div>

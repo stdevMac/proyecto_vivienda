@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from . import models
 
 
 # Create your views here.
@@ -7,40 +8,50 @@ def index(request):
 
 
 def index_provincia(request):
-    return render(request, 'dpv_nomencladores/list_provincia.html')
+    provincias = models.Provincia.objects.all()
+    return render(request, 'dpv_nomencladores/list_provincia.html', {'provincias': provincias})
 
 
 def index_municipio(request):
-    return render(request, 'dpv_nomencladores/list_municipio.html')
+    municipios = models.Municipio.objects.all()
+    return render(request, 'dpv_nomencladores/list_municipio.html', {'municipios': municipios})
 
 
 def index_calle(request):
-    return render(request, 'dpv_nomencladores/list_calle.html')
+    calles = models.Calle.objects.all()
+    return render(request, 'dpv_nomencladores/list_calle.html', {'calles': calles})
 
 
 def index_piso(request):
-    return render(request, 'dpv_nomencladores/list_piso.html')
+    pisos = models.Piso.objects.all()
+    return render(request, 'dpv_nomencladores/list_piso.html', {'pisos': pisos})
 
 
 def index_organismo(request):
-    return render(request, 'dpv_nomencladores/list_organismo.html')
+    organismos = models.Organismo.objects.all()
+    return render(request, 'dpv_nomencladores/list_organismo.html', {'organismos': organismos})
 
 
 def index_destino(request):
-    return render(request, 'dpv_nomencladores/list_destino.html')
+    destinos = models.Destino.objects.all()
+    return render(request, 'dpv_nomencladores/list_destino.html', {'organismos': destinos})
 
 
 def index_concepto(request):
-    return render(request, 'dpv_nomencladores/list_concepto.html')
+    conceptos = models.Concepto.objects.all()
+    return render(request, 'dpv_nomencladores/list_concepto.html', {'conceptos': conceptos})
 
 
 def index_genero(request):
-    return render(request, 'dpv_nomencladores/list_genero.html')
+    generos = models.Genero.objects.all()
+    return render(request, 'dpv_nomencladores/list_genero.html', {'generos': generos})
 
 
 def index_areatrabajo(request):
-    return render(request, 'dpv_nomencladores/list_areatrabajo.html')
+    departamentos = models.AreaTrabajo.objects.all()
+    return render(request, 'dpv_nomencladores/list_areatrabajo.html', {'departamentos': departamentos})
 
 
 def index_centrotrabajo(request):
-    return render(request, 'dpv_nomencladores/list_centrotrabajo.html')
+    unidades = models.CentroTrabajo.objects.all()
+    return render(request, 'dpv_nomencladores/list_centrotrabajo.html', {'unidades': unidades})

@@ -22,6 +22,9 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Grupos</strong>
+                {% if perms.auth.add_group %}
+                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Grupo</button>
+                {% endif %}
             </div>
             <div class="card-body">
                 {% if grupos %}
@@ -53,7 +56,7 @@
                 </table>
                 {% else %}
                 <div class="alert alert-info">
-                    <h2>No hay grupos registrados que mostrar</h2>
+                    <h2 class="text-center">No hay grupos registrados que mostrar</h2>
                 </div>
                 {% endif %}
             </div>
