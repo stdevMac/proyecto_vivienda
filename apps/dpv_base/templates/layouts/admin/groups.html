@@ -1,4 +1,4 @@
-{% extends 'layouts/bashboard.html' %}
+{% extends 'layouts/dashboard.html' %}
 {% block page_title %} | Grupos {% endblock page_title %}
 {% load static %}
 {% block extra_style %}
@@ -37,29 +37,21 @@
                         <tr>
                             <td>{{group.name}}</td>
                             <td>
-                                <ul>
-                                    {% if perms.auth.view_group %}
-                                    <li>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
-                                    </li>
-                                    {% endif %}
-                                    {% if perms.auth.change_group %}
-                                    <li>
-                                        <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-                                    </li>
-                                    {% endif %}
-                                    {% if perms.auth.delete_group %}
-                                    <li>
-                                        <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                                    </li>
-                                    {% endif %}
-                                </ul>
+                                {% if perms.auth.view_group %}
+                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
+                                {% endif %}
+                                {% if perms.auth.change_group %}
+                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                                {% endif %}
+                                {% if perms.auth.delete_group %}
+                                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                {% else: %}
+                {% else %}
                 <div class="alert alert-info">
                     <h2>No hay grupos registrados que mostrar</h2>
                 </div>
@@ -86,3 +78,4 @@
         } );
     </script>
 {% endblock extra_scripts %}
+{% block init_jquery %} {% endblock init_jquery %}

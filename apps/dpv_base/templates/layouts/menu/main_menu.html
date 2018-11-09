@@ -1,13 +1,10 @@
-{% load static base_tags i18n %}
+{% load static i18n %}
 <li class="{% if '/dashboard/' in request.path %} active {% endif %}">
-    {% exist_url 'base_dashboard' as base_dashurl %}
-    {% if base_dashurl == 'True' %}
     <a href="{% url 'base_dashboard' %}">
         <i class="fa fa-dashboard">
             Inicio
         </i>
     </a>
-    {% endif %}
 </li>
 {% if perms.auth.view_user or perms.auth.view_group or perms.auth.view_logentry %}
 <li class="{% if '/admin/' in request.path %} active show {% endif %} menu-item-has-children dropdown">
@@ -18,38 +15,17 @@
     <ul class="sub-menu children dropdown-menu">
         {% if perms.auth.view_user %}
         <li class="{% if '/users/' in request.path %} active {% endif %}">
-            {% exist_url 'admin_user' as admin_userurl %}
-            {% if admin_userurl == 'True' %}
-            <a href="{% url 'admin_user' %}">
-                <i class="fa fa-user">
-                    Usuarios
-                </i>
-            </a>
-            {% endif %}
+            <a href="{% url 'admin_user' %}"><i class="fa fa-user"></i>Usuarios</a>
         </li>
         {% endif %}
         {% if perms.auth.view_group %}
         <li class="{% if '/groups/' in request.path %} active {% endif %}">
-            {% exist_url 'admin_group' as admin_groupurl %}
-            {% if admin_groupurl == 'True' %}
-            <a href="{% url 'admin_group' %}">
-                <i class="fa fa-users">
-                    Grupos
-                </i>
-            </a>
-            {% endif %}
+            <a href="{% url 'admin_group' %}"><i class="fa fa-users"></i>Grupos</a>
         </li>
         {% endif %}
         {% if perms.auth.view_logentry %}
         <li class="{% if '/logs/' in request.path %} active {% endif %}">
-            {% exist_url 'admin_logs' as admin_logurl %}
-            {% if admin_logurl == 'True' %}
-            <a href="{% url 'admin_logs' %}">
-                <i class="fa fa-users">
-                    Registros
-                </i>
-            </a>
-            {% endif %}
+            <a href="{% url 'admin_logs' %}"><i class="fa fa-users"></i>Registros</a>
         </li>
         {% endif %}
     </ul>

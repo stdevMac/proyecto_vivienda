@@ -9,7 +9,7 @@ class PerfilForm(forms.ModelForm):
 
     class Meta:
         model = Perfil
-        fields = ('notificacion_email', 'documentacion_email')
+        fields = ('notificacion_email', 'documentacion_email', 'avatar', 'centro_trabajo', 'depto_trabajo', )
 
 
 class UserForm(forms.ModelForm):
@@ -25,24 +25,3 @@ class PersonaForm(forms.ModelForm):
         model = Persona
         fields = ('ci', 'municipio', 'direccion_calle', 'direccion_numero', 'direccion_entrecalle1', 'direccion_entrecalle2',
                   'telefono', 'movil', 'genero', )
-
-
-class FullPerfilForm(forms.Form):
-
-    class Meta:
-        fields = ('username',
-                  'ci',
-                  'documentacion_email',
-                  'nombre',
-                  'apellidos',
-                  'direccion_calle',
-                  'direccion_numero',
-                  'direccion_entrecalle1',
-                  'direccion_entrecalle2',
-                  'municipio',
-                  'telefono',
-                  'movil',
-                  'genero',
-                  'notificacion_email',
-                  'documentacion_email', )
-

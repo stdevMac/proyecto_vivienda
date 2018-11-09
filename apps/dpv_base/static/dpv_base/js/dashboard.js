@@ -36,7 +36,7 @@ function random (min, max) {
     //Traffic Chart
     var ctx = document.getElementById( "trafficChart" );
     //ctx.height = 200;
-    var myChart = new Chart( ctx, {
+    /*var myChart = new Chart( ctx, {
         type: 'line',
         data: {
             labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'],
@@ -120,6 +120,6 @@ function random (min, max) {
 
         }
     } );
-
+*/
 
 } )( jQuery );

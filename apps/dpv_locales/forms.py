@@ -6,7 +6,7 @@ class LocalForm(forms.ModelForm):
 
     class Meta:
         model = Local
-        fields = ['direccion_calle',
+        fields = ('direccion_calle',
                   'direccion_numero',
                   'piso',
                   'direccion_entre1',
@@ -22,5 +22,5 @@ class LocalForm(forms.ModelForm):
                   'acuerdoORG',
                   'acuerdo_DPV',
                   'estatal',
-                  'observaciones', ]
+                  'observaciones', )
 

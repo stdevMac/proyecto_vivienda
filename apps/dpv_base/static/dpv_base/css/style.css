@@ -98,7 +98,7 @@ img {
   width: 100%; }
 
 aside.left-panel {
-  background: #272c33;
+  background: #487dc8;
   display: table-cell;
   height: 100vh;
   min-height: 100%;
@@ -108,7 +108,7 @@ aside.left-panel {
   transition: width 0.3s ease; }
 
 .navbar {
-  background: #272c33;
+  background: #487dc8;
   border-radius: 0;
   border: none;
   display: block;
@@ -620,9 +620,24 @@ header .form-inline {
     padding: 10px;
     border-radius: 5%;
 }
-.img-reponsive {
-    width: 100% !important;
-    height: auto !important;
+.img-brandnav {
+    height: 44px !important;
+    margin-top: 5px !important;
+    padding-top: 0px !important;
 }
-.
+p.help-text {
+    color: #3b4856;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 24px;
+}
+.color-blue {
+    color: #007bff;
+}
+.background-blue {
+    background: #487dc8 !important;
+}
+.background-lightblue {
+    background: #bed7f3 !important;
+}
 /*# sourceMappingURL=style.css.map */

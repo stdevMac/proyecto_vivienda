@@ -82,7 +82,7 @@ class Piso(models.Model):
 
 class CentroTrabajo(models.Model):
     nombre = models.CharField(max_length=50, verbose_name="Centro de trabajo", unique=True, validators=[MaxLengthValidator(50)], help_text="Nombre de la unidad.")
-    siplas = models.CharField(max_length=5, verbose_name="Siglas", validators=[MaxLengthValidator(5)], help_text="Siglas de la entidad.")
+    siglas = models.CharField(max_length=5, verbose_name="Siglas", validators=[MaxLengthValidator(5)], help_text="Siglas de la entidad.")
     numero = models.PositiveSmallIntegerField(verbose_name="Número", blank=True, help_text="Número de la unidad")
     oc = models.BooleanField(default=False, verbose_name="Oficina Central", help_text="Indica si la unidad es la oficina central")
     municipio = models.ForeignKey(Municipio, related_name="ubicacion_work", on_delete=models.CASCADE, help_text="Municipio donde está ubicado el centro.")
@@ -126,3 +126,13 @@ class Genero(models.Model):
         return self.nombre
 
 
+class Concepto(models.Model):
+    nombre = models.CharField(max_length=25, verbose_name="Concepto")
+
+    class Meta:
+        verbose_name = "Concepto"
+        verbose_name_plural = "Conceptos"
+        ordering = ["nombre", ]
+
+    def __str__(self):
+        return self.nombre

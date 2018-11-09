@@ -49,23 +49,15 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <ul class="">
-                                    {% if perms.auth.view_user %}
-                                    <li>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
-                                    </li>
-                                    {% endif %}
-                                    {% if perms.auth.change_user %}
-                                    <li>
-                                        <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-                                    </li>
-                                    {% endif %}
-                                    {% if perms.auth.delete_user %}
-                                    <li>
-                                        <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                                    </li>
-                                    {% endif %}
-                                </ul>
+                                {% if perms.auth.view_user %}
+                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
+                                {% endif %}
+                                {% if perms.auth.change_user %}
+                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                                {% endif %}
+                                {% if perms.auth.delete_user %}
+                                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -98,3 +90,4 @@
         } );
     </script>
 {% endblock extra_scripts %}
+{% block init_jquery %} {% endblock init_jquery %}

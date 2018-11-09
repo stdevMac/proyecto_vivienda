@@ -1,33 +1,19 @@
-{% load static base_tags i18n %}
+{% load static i18n %}
 {% if perms.dpv_persona.view_personajuridica or perms.dpv_persona.view_personanatural %}
     <li class="{% if '/local/' in request.path %} active show {% endif %} menu-item-has-children dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="menu-icon fa fa-home"></i>
+            <i class="menu-icon fa fa-user"></i>
             Personas
         </a>
         <ul class="sub-menu children dropdown-menu">
             {% if perms.dpv_persona.view_personanatural %}
             <li class="{% if '/persona/personanatural/' in request.path %} active {% endif %}">
-                {% exist_url 'persona_natural' as persona_naturl %}
-                {% if persona_naturl == 'True' %}
-                <a href="{% url 'persona_natural' %}">
-                    <i class="fa fa-tag">
-                        Personas
-                    </i>
-                </a>
-                {% endif %}
+                <a href="{% url 'persona_natural' %}"><i class="fa fa-users"></i>Personas</a>
             </li>
             {% endif %}
             {% if perms.dpv_persona.view_personajuridica %}
             <li class="{% if '/persona/personajuridica/' in request.path %} active {% endif %}">
-                {% exist_url 'persona_juridica' as persona_jururl %}
-                {% if persona_jururl == 'True' %}
-                <a href="{% url 'persona_juridica' %}">
-                    <i class="fa fa-tag">
-                        Entidades
-                    </i>
-                </a>
-                {% endif %}
+                <a href="{% url 'persona_juridica' %}"><i class="fa fa-building-o"></i>Entidades</a>
             </li>
             {% endif %}
         </ul>

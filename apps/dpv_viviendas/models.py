@@ -1,21 +1,9 @@
 from django.db import models
-from apps.dpv_nomencladores.models import Destino
+from apps.dpv_nomencladores.models import Destino, Concepto
 from apps.dpv_persona.models import PersonaNatural
 
 
 # Create your models here.
-class Concepto(models.Model):
-    nombre = models.CharField(max_length=25, verbose_name="Concepto")
-
-    class Meta:
-        verbose_name = "Concepto"
-        verbose_name_plural = "Conceptos"
-        ordering = ["nombre", ]
-
-    def __str__(self):
-        return self.nombre
-
-
 class Vivienda(models.Model):
     numero = models.PositiveSmallIntegerField()
     destino = models.ForeignKey(Destino, help_text="Destino para la vivienda", related_name="locales_dest", on_delete=models.CASCADE)

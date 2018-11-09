@@ -19,6 +19,7 @@
 
 
 
+/*
     //WidgetChart 1
     var ctx = document.getElementById( "widgetChart1" );
     ctx.height = 150;
@@ -259,6 +260,7 @@
             }
         }
     } );
+*/
 
 
 

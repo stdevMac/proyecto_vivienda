@@ -23,7 +23,7 @@
         </div>
 
         {% endif %}
-        <div class="col-sm-10 col-md-4">
+        <div class="col-sm-10 col-md-5">
             <div class="sufee-login d-flex align-content-center flex-wrap snow_white_glass">
                 <div class="container">
                     <div class="login-content">
@@ -39,11 +39,11 @@
                                 <div class="form-group">
                                     <label>{{field.label}}</label>
                                     {{field}}
-                                    <p>{{field.help_text}}</p>
+                                    <p class="help-text">{{field.help_text}}</p>
                                 </div>
                                 {% endfor %}
                                 <label class="pull-right">
-                                    <a href="{% url 'base_recoverpass' %}">A olvidado su contraseña?</a>
+                                    <a class="color-blue" href="{% url 'base_recoverpass' %}">A olvidado su contraseña?</a>
                                 </label>
                                 <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Entrar</button>
                             </form>

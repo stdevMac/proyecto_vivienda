@@ -20,7 +20,7 @@ def menuable_apps():
     if all_apps.get_app_configs:
         for app in all_apps.get_app_configs():
             if hasattr(app, 'owned') and app.active:
-                if hasattr(app, 'menuable'):
+                if hasattr(app, 'menuable') and app.menuable:
                     menuable_apps.append(app)
     return menuable_apps
 
@@ -28,7 +28,11 @@ def menuable_apps():
 def exist_url(url=None):
     if not url:
         return False
-    return url in settings.BULK_URLS
+    # for urlpat in settings.BULK_URLS:
+    #
+    #     if url in urlpat.name:
+    #         return True
+    return settings.BULK_URLS
 
 @register.simple_tag()
 def ative_url(url=None):
