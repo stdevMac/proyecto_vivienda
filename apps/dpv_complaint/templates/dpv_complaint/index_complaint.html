@@ -9,8 +9,8 @@
 
 {% if index %}
     <ul>
-    {% for _complaint in index %}
-        <li>{{ _complaint._number }}{{ _complaint._topic }} {{ _complaint._body }}</li>
+    {% for complaint in index %}
+        <li>{{ complaint._number }}{{ complaint._topic }} {{ complaint._body }}</li>
     {% endfor %}
     </ul>
 {% else %}
