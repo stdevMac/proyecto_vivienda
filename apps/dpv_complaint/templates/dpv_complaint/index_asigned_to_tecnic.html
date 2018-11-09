@@ -9,11 +9,11 @@
 
 {% if index %}
     <ul>
-    {% for complaint in index %}
-        <li>{{ complaint.number }} {{ complaint.person.name }} {{ complaint.topic }} {{ complaint.body }} </li>
+    {% for complaint_to_tecnic in index %}
+        <li>{{ complaint_to_tecnic.number }} Tratada por => {{ complaint_to_tecnic.tecnic.perfil.datos_personales.name }}, del departamento {{ complaint_to_tecnic.tecnic.perfil.depto_trabajo.nombre }}  </li>
     {% endfor %}
     </ul>
 {% else %}
-    <p> No existen quejas registradas.</p>
+    <p> No existen Quejas asignadas a ningun tecnico.</p>
 {% endif %}
 {% endblock  %}

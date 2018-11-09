@@ -54,14 +54,18 @@ class PresentedComplaintForm(forms.Form):
     #                                           label="Segunda Entrecalle", blank=True)
     # genero = forms.ForeignKey(Genero, label="Género", blank=True)
 
+
 class WaitingForDistributionForm(forms.Form):
     pass
+
 
 class AsignedToTecnicForm(forms.Form):
     pass
 
+
 class FinishedComplaintForm(forms.Form):
     pass
+
 
 class AcceptedForm(models.Model):
     pass

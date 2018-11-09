@@ -1,0 +1,29 @@
+{% extends 'layouts/base.html' %}
+{% block content_page %}
+{#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
+{% block breadcrumbs %}
+    {{block.super }}
+
+{% endblock breadcrumbs %}
+<h1>{{index_name}}</h1>
+
+{% if index %}
+    <ul>
+    {% for complaint_accepted in index %}
+        <li>{{ complaint_accepted.complaint.number }} </li>
+        <p>
+            Argumentos finales del Tecnico: =>
+            {{ complaint_accepted.argumentsOfTecnic}}
+            Por el Tecnico:
+            Tratada por => {{ complaint_accepted.tecnic.perfil.datos_personales.name }}, del departamento {{ complaint_finished.tecnic.perfil.depto_trabajo.nombre }}
+            Argumentos finales del Jefe que la acepto: =>
+            {{ complaint_accepted.finalArgumnets}}
+            Por el Jefe:
+            {{ complaint_accepted.bossAccepted.datos_personales.nombre }}
+        </p>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p> No existen quejas aceptadas.</p>
+{% endif %}
+{% endblock  %}

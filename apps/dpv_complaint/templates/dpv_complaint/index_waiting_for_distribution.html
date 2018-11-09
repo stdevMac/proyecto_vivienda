@@ -10,7 +10,7 @@
 {% if index %}
     <ul>
     {% for complaint_for_dist in index %}
-        <li>{{ complaint_for_dist._complaint._number }}{{ presented_complaint._person.nombre}}</li>
+        <li>{{ complaint_for_dist.complaint.number }}{{ presented_complaint.complaint.person.nombre}}</li>
     {% endfor %}
     </ul>
 {% else %}
