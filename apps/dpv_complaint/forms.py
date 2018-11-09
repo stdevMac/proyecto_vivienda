@@ -15,7 +15,7 @@ class ComplaintForm(forms.Form):
     _number = forms.CharField(max_length=15, label="Numero de la Queja")
     _status = forms.CharField(max_length=15, label="Estado de la Queja")
     #_enterDate = forms.DateTimeField(label="Fecha de Introduccion de la Queja")
-    _is = forms.BooleanField(label="Juridica", widget=forms.BooleanField)
+    _is = forms.CharField(label="Juridica", widget=forms.BooleanField)
 
 
 class PresentedComplaintForm(forms.Form):
@@ -25,7 +25,7 @@ class PresentedComplaintForm(forms.Form):
     _number = forms.CharField(max_length=15,label="Numero de la Queja")
     _status = forms.CharField(max_length=15,label="Estado de la Queja")
     _enterDate = forms.DateTimeField(label="Fecha de Introduccion de la Queja")
-    _is = forms.BooleanField(label="Juridica", widget=forms.BooleanField )
+    _is = forms.CharField(label="Juridica", widget=forms.BooleanField )
     
     nombre = forms.CharField(max_length=30, validators=[MaxLengthValidator(30), only_letters])
 
@@ -33,15 +33,15 @@ class PresentedComplaintForm(forms.Form):
     #                               help_text="Municipio donde recide la persona")
     # direccion_calle = forms.ForeignKey(Calle, label="Calle", blank=True)
     # direccion_numero = forms.PositiveSmallIntegerField(blank=True, label="Número")
-    telefono = forms.CharField(max_length=8, label="Teléfono Fijo", blank=True,
+    telefono = forms.CharField(max_length=8, label="Teléfono Fijo",
                                 validators=[MinLengthValidator(8),
                                             MaxLengthValidator(8),
                                             only_numbers])
-    movil = forms.CharField(max_length=8, label="Teléfono Movil", blank=True,
+    movil = forms.CharField(max_length=8, label="Teléfono Movil",
                              validators=[MinLengthValidator(8),
                                          MaxLengthValidator(8),
                                          only_numbers])
-    email_address = forms.EmailField(label="Correo Electrónico", blank=True)
+    email_address = forms.EmailField(label="Correo Electrónico")
 
     apellidos = forms.CharField(max_length=50, validators=[MaxLengthValidator(50), only_letters])
     ci = forms.CharField(max_length=11, validators=[
