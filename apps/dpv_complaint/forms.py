@@ -28,6 +28,7 @@ class PresentedComplaintForm(forms.Form):
     _is = forms.BooleanField(label="Juridica", widget=forms.BooleanField )
     
     nombre = forms.CharField(max_length=30, validators=[MaxLengthValidator(30), only_letters])
+
     # municipio = forms.ForeignKey(Municipio, label="Municipio",
     #                               help_text="Municipio donde recide la persona")
     # direccion_calle = forms.ForeignKey(Calle, label="Calle", blank=True)

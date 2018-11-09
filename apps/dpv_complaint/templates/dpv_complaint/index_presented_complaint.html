@@ -9,11 +9,11 @@
 
 {% if index %}
     <ul>
-    {% for _complaint in index %}
-        <li>{{ _complaint._number }}{{ _complaint._topic }} {{ _complaint._body }}</li>
+    {% for presented_complaint in index %}
+        <li>{{ presented_complaint._complaint._number }}{{ presented_complaint._person.nombre}}</li>
     {% endfor %}
     </ul>
 {% else %}
-    <p> No existen quejas registradas.</p>
+    <p> No existen quejas en espera de ser Asignadas.</p>
 {% endif %}
 {% endblock  %}
