@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 {% block content_page %}
-{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}
+{#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
 {% block breadcrumbs %}
     {{block.super }}
 
@@ -10,7 +10,7 @@
 {% if index %}
     <ul>
     {% for complaint in index %}
-        <li>{{ complaint._number }}{{ complaint._topic }} {{ complaint._body }}</li>
+        <li>{{ complaint.number }}{{ complaint.topic }} {{ complaint.body }}</li>
     {% endfor %}
     </ul>
 {% else %}
