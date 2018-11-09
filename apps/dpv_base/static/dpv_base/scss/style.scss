@@ -125,7 +125,7 @@ aside.left-panel {
 }
 
 .navbar {
-    background: #272c33;
+    background: #487dc8;
     border-radius: 0;
     border: none;
     display: block;
@@ -135,7 +135,7 @@ aside.left-panel {
 
     .navbar-header {
         float: none;
-        text-align: center;
+        text-align: left;
         width: 100%;
     }
     .navbar-brand {
@@ -159,7 +159,11 @@ aside.left-panel {
             font-weight: 600;
         }
         img {
-            max-width: 160px;
+            float: left;
+            max-width: 100%;
+            height: 44px !important;
+            margin-top: 5px !important;
+            padding-top: 0px !important;
         }
         &.hidden {
             display: none;

@@ -22,7 +22,9 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Usuarios</strong>
-                <button type="button" class="offset-md-10 btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Usuario</button>
+                {% if perms.auth.add_user %}
+                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Usuario</button>
+                {% endif %}
             </div>
             <div class="card-body">
                 {% if usuarios %}
@@ -49,23 +51,15 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <ul class="">
-                                    {% if perms.auth.view_user %}
-                                    <li>
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
-                                    </li>
-                                    {% endif %}
-                                    {% if perms.auth.change_user %}
-                                    <li>
-                                        <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-                                    </li>
-                                    {% endif %}
-                                    {% if perms.auth.delete_user %}
-                                    <li>
-                                        <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                                    </li>
-                                    {% endif %}
-                                </ul>
+                                {% if perms.auth.view_user %}
+                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
+                                {% endif %}
+                                {% if perms.auth.change_user %}
+                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                                {% endif %}
+                                {% if perms.auth.delete_user %}
+                                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -73,7 +67,7 @@
                 </table>
                 {% else %}
                 <div class="alert alert-info">
-                    <h2>No hay usuarios registrados que mostrar</h2>
+                    <h2 class="text-center">No hay usuarios registrados que mostrar</h2>
                 </div>
                 {% endif %}
             </div>
@@ -98,3 +92,4 @@
         } );
     </script>
 {% endblock extra_scripts %}
+{% block init_jquery %} {% endblock init_jquery %}

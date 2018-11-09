@@ -6,7 +6,7 @@ from apps.dpv_nomencladores.models import AreaTrabajo, CentroTrabajo
 
 # Create your models here.
 class Perfil(models.Model):
-    datos_usuario = models.ForeignKey(User, verbose_name="Datos del usuario", related_name="perfil_usuario", on_delete=models.CASCADE)
+    datos_usuario = models.OneToOneField(User, verbose_name="Datos del usuario", related_name="perfil_usuario", on_delete=models.CASCADE)
     datos_personales = models.OneToOneField(PersonaNatural, verbose_name="Datos Personales", related_name="perfil_datos", on_delete=models.CASCADE)
     notificacion_email = models.BooleanField(default=True, verbose_name="Notificar por Email",
                                              help_text="Marque para recibir las notificaciones por correo electrónico")

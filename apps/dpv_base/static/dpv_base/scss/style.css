@@ -825,9 +825,9 @@ textarea {
   width: 100%; }
 
 aside.left-panel {
-  background: #272c33;
+  background: #487dc8;
   display: table-cell;
-  height: 100vh;
+  height: 110vh;
   min-height: 100%;
   padding: 0 25px;
   vertical-align: top;
@@ -835,13 +835,14 @@ aside.left-panel {
   transition: width 0.3s ease; }
 
 .navbar {
-  background: #272c33;
+  background: #487dc803;
   border-radius: 0;
   border: none;
   display: block;
   margin: 0;
   margin-bottom: 100px;
-  padding: 0; }
+  padding-bottom: 8px;
+  padding-top: 0px !important;}
   .navbar .navbar-header {
     float: none;
     text-align: center;
@@ -866,7 +867,8 @@ aside.left-panel {
     .navbar .navbar-brand span {
       font-weight: 600; }
     .navbar .navbar-brand img {
-      max-width: 160px; }
+      max-width: 100%;
+      max-height: 42px; }
     .navbar .navbar-brand.hidden {
       display: none; }
   .navbar .menu-title {
@@ -893,7 +895,7 @@ aside.left-panel {
         display: none; }
       .navbar .navbar-nav li > a {
         background: none !important;
-        color: #c8c9ce !important;
+        color: #fff !important;
         display: inline-block;
         font-family: 'Open Sans';
         font-size: 14px;
@@ -940,7 +942,7 @@ aside.left-panel {
           .navbar .navbar-nav li.menu-item-has-children a:hover:before {
             color: #fff; }
         .navbar .navbar-nav li.menu-item-has-children .sub-menu {
-          background: #272c33;
+          background: #487dc8;
           border: none;
           box-shadow: none;
           overflow-y: hidden;
@@ -1132,7 +1134,7 @@ header.fixed-top {
   font-size: 18px;
   height: 43px;
   line-height: 44px;
-  margin: -2px 20px 0 -57px;
+  margin: -2px 20px 0 -53px;
   text-align: center;
   width: 43px; }
 
@@ -2236,5 +2238,7 @@ header .form-inline {
           padding: 0; }
         .right-panel .content #bootstrap-data-table_wrapper .table td, .right-panel .content #bootstrap-data-table_wrapper .table th {
           padding: 5px; } }
-
+.background-lightblue {
+    background: #bed7f3 !important;
+}
 /*# sourceMappingURL=style.css.map */

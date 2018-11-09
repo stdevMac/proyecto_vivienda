@@ -6,7 +6,7 @@ class PersonaNaturalForm(forms.ModelForm):
 
     class Meta:
         model = PersonaNatural
-        fields = ['nombre',
+        fields = ('nombre',
                   'apellidos',
                   'ci',
                   'email_address',
@@ -17,14 +17,14 @@ class PersonaNaturalForm(forms.ModelForm):
                   'direccion_entrecalle1',
                   'direccion_entrecalle2',
                   'municipio',
-                  'genero', ]
+                  'genero', )
 
 
 class PersonaJuridicaForm(forms.ModelForm):
 
     class Meta:
         model = PersonaJuridica
-        fields = ['nombre',
+        fields = ('nombre',
                   'telefono',
                   'movil',
                   'email_address',
@@ -34,4 +34,4 @@ class PersonaJuridicaForm(forms.ModelForm):
                   'direccion_entrecalle2',
                   'municipio',
                   'codigo_nit',
-                  'codigo_reuup', ]
+                  'codigo_reuup', )

@@ -1,0 +1,88 @@
+{% extends 'dpv_nomencladores/list.html' %}
+{% block page_title %} | Municipios {% endblock page_title %}
+{% load static %}
+{% block extra_style %}
+    <link rel="stylesheet" href="{% static 'dpv_base/css/lib/datatable/dataTables.bootstrap.min.css' %}">
+{% endblock extra_style %}
+{% block breadcrumb_title %} Gestión de Municipios {% endblock breadcrumb_title %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% if '/nomenclador/municipio/' == request.path %}
+        <li class="active">Municipios</li>
+    {% else %}
+    <li>
+        <a href="{% url 'nomenclador_municipio' %}">
+            Municipios
+        </a>
+    </li>
+    {% endif %}
+{% endblock breadcrumbs %}
+{% block content_page %}
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Municipios</strong>
+                {% if perms.genero.add_genero %}
+                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Municipio</button>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% if municipios %}
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Nombre</th>
+                            <th>Provincia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for municipio in municipios %}
+                        <tr>
+                            <td>{{municipio.numero}}</td>
+                            <td>{{municipio.nombre}}</td>
+                            <td>{{municipio.provincia}}</td>
+                            <td>
+                                {% if perms.municipio.view_municipio %}
+                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
+                                {% endif %}
+                                {% if perms.municipio.change_municipio %}
+                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                                {% endif %}
+                                {% if perms.municipio.delete_municipio %}
+                                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="alert alert-info">
+                    <h2 class="text-center">No hay Municipios registrados que mostrar</h2>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content_page %}
+{% block extra_scripts %}
+    <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/jszip.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/pdfmake.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/vfs_fonts.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.print.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.colVis.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/datatables-init.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $('#bootstrap-data-table-export').DataTable();
+        } );
+    </script>
+{% endblock extra_scripts %}
+{% block init_jquery %} {% endblock init_jquery %}
