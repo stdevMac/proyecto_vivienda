@@ -10,6 +10,63 @@ from .models import *
 
 # Index
 
+def form_WaitingForDistribution(request):
+    _form_name = "Quejas por distribuir"
+    if request.method == "POST":
+        _form = WaitingForDistributionForm(request.POST)
+        if _form.is_valid():
+            _post = _form.save(commit=False)
+            _post._enter_date=timezone.now()
+            _post.id = _post.pk
+            _post.save()
+            return redirect(reverse_lazy())
+        else:
+            _form = WaitingForDistributionForm()
+        return render(request, "",{'form':_form, 'form_name': _form_name})
+
+
+def form_AsignedToTecnic(request):
+    _form_name = "Quejas en proceso de evaluacion"
+    if request.method == "POST":
+        _form = AsignedToTecnicForm(request.POST)
+        if _form.is_valid():
+            _post = _form.save(commit = False)
+            _post._enter_date = timezone.now()
+            _post.id = _post.pk
+            _post.save()
+            return redirect(reverse_lazy())
+        else:
+            _form = AsignedToTecnicForm()
+        return render(request,"", {'form':_form, 'form_name':_form_name})
+
+def form_FinishedComplaint(request):
+    _form_name = "Queja por revisar"
+    if request.method == "POST":
+        _form = FinishedComplaintForm(request.POST)
+        if _form.is_valid():
+            _post = _form.save(commit = False)
+            _post._enter_date = timezone.now()
+            _post.id = _post.pk
+            _post.save()
+            return redirect(reverse_lazy())
+        else:
+            _form = FinishedComplaintForm()
+        return render(request, "", {'form':_form, 'form_name': _form_name})
+
+def form_Accepted(request):
+    _form_name = "Quejas Aceptadas"
+    if request.method == "POST":
+        _form = AcceptedForm(request.POST)
+        if _form.is_valid():
+            _post = _form.save(commit = False)
+            _post._enter_date = timezone.now()
+            _post.id = _post.pk
+            _post.save()
+            return redirect(reverse_lazy())
+        else:
+            _form = FinishedComplaintForm()
+        return render(request, "", {'form':_form, 'form_name': _form_name})
+
 def index_Complaint(request):
     index_name = 'Indice de las Quejas'
     elems = Complaint.objects.all()
