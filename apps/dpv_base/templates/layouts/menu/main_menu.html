@@ -23,7 +23,7 @@
             <a href="{% url 'admin_group' %}"><i class="fa fa-users"></i>Grupos</a>
         </li>
         {% endif %}
-        {% if perms.auth.view_logentry %}
+        {% if False %}
         <li class="{% if '/logs/' in request.path %} active {% endif %}">
             <a href="{% url 'admin_logs' %}"><i class="fa fa-users"></i>Registros</a>
         </li>
