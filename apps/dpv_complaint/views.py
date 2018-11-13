@@ -5,6 +5,8 @@ from django.utils import timezone
 
 from .forms import *
 from .models import *
+from apps.dpv_persona.forms import *
+from apps.dpv_persona.models import *
 
 # Create your views here.
 
@@ -22,6 +24,26 @@ def form_Complaint(request):
     else:
         _form = ComplaintForm()
     return render(request, "dpv_complaint/create_complaint.html", {'form':_form, 'form_name': _form_name})
+
+def form_NaturalComplaint(request):
+    _form_name = "Queja de persona Natural"
+    if request.method == "POST":
+        _form_complaint = ComplaintForm(request.POST)
+        _form_natural = PersonaNaturalForm(request.POST)
+        if _form_complaint.is_valid() and _form_natural.is_valid():
+            _complaint = Complaint(_form_complaint) #args
+            _person = PersonaNatural(_form_natural)
+            _person.save()
+            _complaint._is_natural = True
+            _complaint._person_natural = _person
+            _complaint._enterDate = timezone.now()
+            _complaint.save()
+            return redirect(reverse_lazy('index_complaint'))
+    else:
+        _form_complaint = ComplaintForm()
+        _form_natural = PersonaNaturalForm()
+    return render(request, "dpv_complaint/multiform_complaint.html", {'form_one':_form_complaint, 'form_two': _form_natural, 'form_name': _form_name})
+
 
 def form_PresentedComplaint(request):
     _form_name = "Queja Presentada"

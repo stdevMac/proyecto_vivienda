@@ -3,7 +3,7 @@ from . import views as  complaint_view
 
 urlpatterns = [
 
-    path('complaint/new', complaint_view.form_Complaint, name="form_complaint"),
+    path('personaNatural/new', complaint_view.form_NaturalComplaint, name="form_Nat_complaint"),
     path('complaint/', complaint_view.index_Complaint , name="index_complaint"),
     path('presentedComplaint/new', complaint_view.form_PresentedComplaint, name="form_presented_complaint"),
     path('presentedComplaint/', complaint_view.index_PresentedComplaint, name="index_presented_complaint"),

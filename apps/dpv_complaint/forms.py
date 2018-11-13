@@ -13,11 +13,11 @@ class ComplaintForm(forms.Form):
     _topic = forms.CharField(max_length=200, label="Titulo de la Queja")
     _number = forms.CharField(max_length=15, label="Numero de la Queja")
     _status = forms.CharField(max_length=15, label="Estado de la Queja")
-    #_enterDate = forms.DateTimeField(label="Fecha de Introduccion de la Queja")
-    # _is = forms.CharField(label="Juridica", widget=forms.BooleanField)
-
-    def clean(self):
-        pass
+    # def clean(self):
+    #     if self._is_natural:
+    #         if not self._person_natural or self._person_natural is '':
+    #             raise ValidationError('En una queja natural tienque tener los datos de una perosna natural', code="not_natural_person")
+    #     else:
 
 class PresentedComplaintForm(forms.Form):
     _procedency = forms.CharField(max_length=50, label="Procedencia")#models.CharField(max_length=50,label="Procedencia de la Queja")
