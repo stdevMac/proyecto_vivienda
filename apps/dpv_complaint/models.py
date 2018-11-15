@@ -12,7 +12,7 @@ class Complaint(models.Model):
     _topic = models.CharField(max_length=200,verbose_name="Titulo de la Queja")
     _number = models.CharField(max_length=15,verbose_name="Numero de la Queja")
     _status = models.CharField(max_length=15,verbose_name="Estado de la Queja")
-    _enterDate = models.DateTimeField(default=timezone.now(), verbose_name="Fecha de Introduccion de la Queja")
+    _enterDate = models.DateTimeField(default=timezone.now, verbose_name="Fecha de Introduccion de la Queja")
     _is_natural = models.BooleanField(verbose_name="Es Natural",default=True)
     _person_natural = models.ForeignKey(PersonaNatural, null=True, on_delete=models.CASCADE, verbose_name="Persona Natural  que Presenta la Queja", blank=True)
     _person_juridic = models.ForeignKey( PersonaJuridica, null=True, on_delete=models.CASCADE, verbose_name="Persona Natural  que Presenta la Queja", blank=True)
@@ -43,21 +43,21 @@ class PresentedComplaint(models.Model):
 #waiting for distribution in the working area
 class WaitingForDistribution(models.Model):
     _complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE, verbose_name="Queja")
-    _enterDate = models.DateTimeField(default=timezone.now(), verbose_name="Fecha insertada la queja por PersonaNatural  para esperar la distribucion")
+    _enterDate = models.DateTimeField(default=timezone.now, verbose_name="Fecha insertada la queja por PersonaNatural  para esperar la distribucion")
 
 
 #waiting for the tecniccian to give it an answer
 class AsignedToTecnic(models.Model):
     _complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE, verbose_name="Queja por PersonaNatural ")
     _tecnic = models.ForeignKey(Tecnic, on_delete=models.CASCADE, verbose_name="Tecnico asignado a la Queja ")
-    _enterDate = models.DateTimeField(default=timezone.now(),verbose_name='Now')
+    _enterDate = models.DateTimeField(default=timezone.now,verbose_name='Now')
 
 #the tecniccian gave an answer
 class FinishedComplaint(models.Model):
     _complaint = models.ForeignKey(Complaint,on_delete=False, verbose_name="Queja por PersonaNatural ")
     _tecnic = models.ManyToManyField(Tecnic, verbose_name="Tecnico que atendio la Queja ")#.ForeignKey(Tecnic, on_delete=models.CASCADE)
     _arguments = models.CharField(default='', verbose_name="Respuesta del tecnico a la queja", max_length=1000)
-    _enterDate = models.DateTimeField(default=timezone.now(), verbose_name='now')
+    _enterDate = models.DateTimeField(default=timezone.now, verbose_name='now')
 
 #the answer given by the tecniccian was accepted by the boss
 class Accepted(models.Model):
@@ -65,7 +65,7 @@ class Accepted(models.Model):
     _tecnicWorkInComplaint = models.ManyToManyField(Tecnic, verbose_name="Tecnico que atendio la Queja ")
     _argumentsOfTecnic = models.CharField(default='', verbose_name="Respuesta del tecnico a la queja", max_length=1000)
     _finalArgumnets = models.CharField(default='', verbose_name="Respuesta final del jefe a la queja", max_length=1000)
-    _finishedDate = models.DateTimeField(default=timezone.now(), verbose_name='now')
+    _finishedDate = models.DateTimeField(default=timezone.now, verbose_name='now')
     _bossAccepted = models.ForeignKey(Perfil, on_delete=False, default=False)
 
     def clean(self):

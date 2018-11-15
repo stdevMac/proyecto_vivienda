@@ -30,7 +30,7 @@ def form_NaturalComplaint(request):
     if request.method == "POST":
         _form_complaint = ComplaintForm(request.POST)
         _form_natural = PersonaNaturalForm(request.POST)
-        if _form_complaint.is_valid() and _form_natural.is_valid():
+        if _form_complaint.is_valid() or _form_natural.is_valid():
             _complaint = Complaint(_form_complaint) #args
             _person = PersonaNatural(_form_natural)
             _person.save()
@@ -44,21 +44,21 @@ def form_NaturalComplaint(request):
         _form_natural = PersonaNaturalForm()
     return render(request, "dpv_complaint/multiform_complaint.html", {'form_one':_form_complaint, 'form_two': _form_natural, 'form_name': _form_name})
 
-
-def form_PresentedComplaint(request):
-    _form_name = "Queja Presentada"
-    if request.method == "POST":
-        _form = PresentedComplaintForm(request.POST)
-        if _form.is_valid():
-            # _complaint = Complaint()revisar como crear las tablas persona y quejas
-            _post = _form.save(commit=False)
-            _post._enter_date = timezone.now()
-            _post.id = _post.pk
-            _post.save()
-            return redirect(reverse_lazy('index_presented_complaint'))
-    else:
-        _form = PresentedComplaintForm()
-    return render(request, "dpv_complaint/create_complaint.html", {'form': _form,'form_name': _form_name})
+#
+# def form_PresentedComplaint(request):
+#     _form_name = "Queja Presentada"
+#     if request.method == "POST":
+#         _form = PresentedComplaintForm(request.POST)
+#         if _form.is_valid():
+#             # _complaint = Complaint()revisar como crear las tablas persona y quejas
+#             _post = _form.save(commit=False)
+#             _post._enter_date = timezone.now()
+#             _post.id = _post.pk
+#             _post.save()
+#             return redirect(reverse_lazy('index_presented_complaint'))and
+#     else:
+#         _form = PresentedComplaintForm()
+#     return render(request, "dpv_complaint/create_complaint.html", {'form': _form,'form_name': _form_name})
 
 def form_WaitingForDistribution(request):
     _form_name = "Quejas por distribuir"
@@ -122,10 +122,11 @@ def index_Complaint(request):
     elems = Complaint.objects.all()
     return render(request, "dpv_complaint/index_complaint.html", { 'index' : elems, 'index_name' : index_name })
 
-def index_PresentedComplaint(request):
-    index_name = 'Indice Quejas sin Asignar'
-    elems = PresentedComplaint.objects.all()
-    return render(request, "dpv_complaint/index_presented_complaint.html", { 'index' : elems, 'index_name' : index_name })
+def index_NaturalComplaint(request):
+    index_name = 'Indice de las Quejas'
+    elems = Complaint.objects.filter(_is_natural = True)
+    return render(request, "dpv_complaint/index_complaint.html", {'index': elems, 'index_name': index_name})
+
 
 def index_WaitingForDistribution(request):
     index_name = 'Indice de Quejas en espera de su distribucion'
