@@ -1,10 +1,11 @@
 from django.urls import path
 from . import views as  complaint_view
-
 urlpatterns = [
 
-    path('complaintNatural/new', complaint_view.form_NaturalComplaint, name="form_Nat_complaint"),
-    path('complaintNatural/', complaint_view.index_Complaint , name="index_complaint"),
+    path('naturalComplaint/', complaint_view.index_NaturalComplaint, name="index_natural_complaint"),
+    path('juridicComplaint/', complaint_view.index_JuridicComplaint, name="index_juridic_complaint"),
+    path('naturalComplaint/new', complaint_view.form_NaturalComplaint, name="form_Nat_complaint"),
+    path('juridicComplaint/new', complaint_view.form_JuridicComplaint, name="form_Jurid_complaint"),
     path('waitingForDistribution/new', complaint_view.form_WaitingForDistribution, name="form_waiting_for_distribution"),
     path('waitingForDistribution/', complaint_view.index_WaitingForDistribution, name="index_waiting_for_distribution"),
     path('asignedToTecnic/new', complaint_view.form_AsignedToTecnic, name="form_asigned_to_tecnic"),
@@ -20,3 +21,4 @@ urlpatterns = [
     # path('', complaint_view.index_Complaint, name="quejas"),
 
 ]
+

@@ -8,22 +8,23 @@ from .models import *
 from apps.dpv_persona.models import PersonaJuridica, PersonaNatural
 
 class ComplaintForm(forms.Form):
-    _procedency = forms.CharField(max_length=50, label="Procedencia")  # models.CharField(max_length=50,label="Procedencia de la Queja")
-    _body = forms.CharField(max_length=1000, label="Cuerpo de la Queja", widget=forms.Textarea)
-    _topic = forms.CharField(max_length=200, label="Titulo de la Queja")
-    _number = forms.CharField(max_length=15, label="Numero de la Queja")
-    _status = forms.CharField(max_length=15, label="Estado de la Queja")
+    procedency = forms.CharField(max_length=50, label="Procedencia")  # models.CharField(max_length=50,label="Procedencia de la Queja")
+    body = forms.CharField(max_length=1000, label="Cuerpo de la Queja", widget=forms.Textarea)
+    topic = forms.CharField(max_length=200, label="Titulo de la Queja")
+    number = forms.CharField(max_length=15, label="Numero de la Queja")
+    status = forms.CharField(max_length=15, label="Estado de la Queja")
     # def clean(self):
     #     if self._is_natural:
     #         if not self._person_natural or self._person_natural is '':
     #             raise ValidationError('En una queja natural tienque tener los datos de una perosna natural', code="not_natural_person")
     #     else:
 
-class WaitingForDistributionForm(forms.Form):
+class WaitingForDistributionForm(ComplaintForm):
     pass
 
 
 class AsignedToTecnicForm(forms.Form):
+    # tecnic = forms.ModelMultipleChoiceField(queryset=Tecnic.objects.filter(tecnic__perfil_))
     pass
 
 
@@ -31,7 +32,7 @@ class FinishedComplaintForm(forms.Form):
     pass
 
 
-class AcceptedForm(models.Model):
+class AcceptedForm(forms.Form):
     pass
 
 

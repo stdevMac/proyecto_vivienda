@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html' %}
+{% block content_page %}
+{#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
+{% block breadcrumbs %}
+    {{block.super }}
+
+{% endblock breadcrumbs %}
+<h1>{{index_name}}</h1>
+
+{% if index %}
+    <ul>
+    {% for complaint in index %}
+        <li>{{ complaint.number }} {{ complaint.person_juridic.name }} {{ complaint.topic }} {{ complaint.body }} </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p> No existen quejas registradas.</p>
+{% endif %}
+{% endblock  %}

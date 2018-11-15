@@ -34,11 +34,38 @@ def form_NaturalComplaint(request):
             _complaint = Complaint(_form_complaint) #args
             _person = PersonaNatural(_form_natural)
             _person.save()
-            _complaint._is_natural = True
-            _complaint._person_natural = _person
-            _complaint._enterDate = timezone.now()
+            _complaint.is_natural = True
+            _complaint.person_natural = _person
+            _complaint.enterDate = timezone.now()
             _complaint.save()
-            return redirect(reverse_lazy('index_complaint'))
+            p = WaitingForDistribution()
+            p.complaint = _complaint
+            p.enterDate = timezone.now()
+            p.save()
+            return redirect(reverse_lazy('index_natural_complaint'))
+    else:
+        _form_complaint = ComplaintForm()
+        _form_natural = PersonaNaturalForm()
+    return render(request, "dpv_complaint/multiform_complaint.html", {'form_one':_form_complaint, 'form_two': _form_natural, 'form_name': _form_name})
+
+def form_JuridicComplaint(request):
+    _form_name = "Queja de persona Natural"
+    if request.method == "POST":
+        _form_complaint = ComplaintForm(request.POST)
+        _form_natural = PersonaNaturalForm(request.POST)
+        if _form_complaint.is_valid() or _form_natural.is_valid():
+            _complaint = Complaint(_form_complaint) #args
+            _person = PersonaJuridica(_form_natural)
+            _person.save()
+            _complaint.is_natural = False
+            _complaint.person_juridic = _person
+            _complaint.enterDate = timezone.now()
+            _complaint.save()
+            p = WaitingForDistribution()
+            p.complaint = _complaint
+            p.enterDate = timezone.now()
+            p.save()
+            return redirect(reverse_lazy('index_natural_complaint'))
     else:
         _form_complaint = ComplaintForm()
         _form_natural = PersonaNaturalForm()
@@ -108,7 +135,7 @@ def form_Accepted(request):
         _form = AcceptedForm(request.POST)
         if _form.is_valid():
             _post = _form.save(commit = False)
-            _post._enter_date = timezone.now()
+            _post.enter_date = timezone.now()
             _post.id = _post.pk
             _post.save()
             return redirect(reverse_lazy())
@@ -117,16 +144,17 @@ def form_Accepted(request):
     return render(request, "", {'form':_form, 'form_name': _form_name})
 
 # Index
-def index_Complaint(request):
-    index_name = 'Indice de las Quejas'
-    elems = Complaint.objects.all()
-    return render(request, "dpv_complaint/index_complaint.html", { 'index' : elems, 'index_name' : index_name })
 
+### Indexing complaint, Natural and Juridic
 def index_NaturalComplaint(request):
     index_name = 'Indice de las Quejas'
-    elems = Complaint.objects.filter(_is_natural = True)
-    return render(request, "dpv_complaint/index_complaint.html", {'index': elems, 'index_name': index_name})
+    elems = Complaint.objects.filter(is_natural = True)
+    return render(request, "dpv_complaint/index_natural_complaint.html", {'index': elems, 'index_name': index_name})
 
+def index_JuridicComplaint(request):
+    index_name = 'Indice de las Quejas'
+    elems = Complaint.objects.filter(_is_natural = False)
+    return render(request, "dpv_complaint/index_juridic_complaint.html", {'index': elems, 'index_name': index_name})
 
 def index_WaitingForDistribution(request):
     index_name = 'Indice de Quejas en espera de su distribucion'
