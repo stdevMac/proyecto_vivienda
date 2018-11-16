@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.db.models import F, Q, Sum, Count
 from django.views.generic import View
 from .models import Local
+from django.contrib.auth.decorators import permission_required
 
 
 # Create your views here.
+@permission_required('local.view_local', raise_exception=True)
 def index(request):
     # if request.user.perfil_usuario:
     #     perfil = request.user.perfil_usuario

@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'apps.dpv_viviendas',
     'apps.dpv_locales',
     'apps.dpv_perfil',
+    'apps.dpv_events',
+    'apps.email_sender',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +142,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 SESSION_COOKIE_AGE = 84600
 
 BULK_URLS = []
+
+# Email configuration to do
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+EMAIL_HOST = "10.18.24.199"
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 25

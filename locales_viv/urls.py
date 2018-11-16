@@ -6,6 +6,8 @@ from apps.dpv_locales import urls as locales_url
 from apps.dpv_persona import urls as persona_url
 from apps.dpv_perfil import urls as perfil_url
 from apps.dpv_viviendas import urls as vivienda_url
+from apps.dpv_events import urls as events_url
+from apps.email_sender import urls as email_url
 
 
 urlpatterns = [
@@ -16,4 +18,6 @@ urlpatterns = [
     path('persona/', include(persona_url)),
     path('perfil/', include(perfil_url)),
     path('vivienda/', include(vivienda_url)),
+    path('dpv_events/', include(events_url)),
+    path('emailing/', include(email_url)),
 ]
