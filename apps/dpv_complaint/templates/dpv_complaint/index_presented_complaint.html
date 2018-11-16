@@ -10,7 +10,11 @@
 {% if index %}
     <ul>
     {% for presented_complaint in index %}
-        <li>{{ presented_complaint.complaint.number }}{{ presented_complaint.complaint.person.nombre}}</li>
+        <tr>
+            <td>{{ presented_complaint.complaint.number }}</td>
+            <td>{{ presented_complaint.complaint.person.nombre }}</td>
+            <td> TODO REDIRECT TO FINISHED COMPLAINT</td>
+        </tr>
     {% endfor %}
     </ul>
 {% else %}

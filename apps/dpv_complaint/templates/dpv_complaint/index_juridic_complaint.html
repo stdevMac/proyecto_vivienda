@@ -10,7 +10,13 @@
 {% if index %}
     <ul>
     {% for complaint in index %}
-        <li>{{ complaint.number }} {{ complaint.person_juridic.name }} {{ complaint.topic }} {{ complaint.body }} </li>
+        <tr>
+            <td>{{ complaint.number }}</td>
+            <td>{{ complaint.person_juridic.nombre  }}</td>
+            <td>{{ complaint.topic }}</td>
+            <td>{{ complaint.body }}</td>
+            <td> TODO REDIRECT A EL FORM TO ASIGN TO TECNIC </td>
+        </tr>
     {% endfor %}
     </ul>
 {% else %}

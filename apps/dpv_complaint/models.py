@@ -62,14 +62,14 @@ class AsignedToTecnic(models.Model):
 #the tecniccian gave an answer
 class FinishedComplaint(models.Model):
     complaint = models.ForeignKey(Complaint,on_delete=False, verbose_name="Queja por PersonaNatural ")
-    tecnic = models.ManyToManyField(Tecnic, verbose_name="Tecnico que atendio la Queja ")#.ForeignKey(Tecnic, on_delete=models.CASCADE)
+    tecnic = models.ForeignKey(Tecnic, on_delete=False,verbose_name="Tecnico que atendio la Queja ")#.ForeignKey(Tecnic, on_delete=models.CASCADE)
     arguments = models.CharField(default='', verbose_name="Respuesta del tecnico a la queja", max_length=1000)
     enterDate = models.DateTimeField(default=timezone.now, verbose_name='now')
 
 #the answer given by the tecniccian was accepted by the boss
 class Accepted(models.Model):
     complaint = models.ForeignKey(Complaint,on_delete=False, verbose_name="Queja por PersonaNatural ")
-    tecnicWorkInComplaint = models.ManyToManyField(Tecnic, verbose_name="Tecnico que atendio la Queja ")
+    tecnicWorkInComplaint = models.ForeignKey(Tecnic,on_delete=False,default=1, verbose_name="Tecnico que atendio la Queja ")
     argumentsOfTecnic = models.CharField(default='', verbose_name="Respuesta del tecnico a la queja", max_length=1000)
     finalArgumnets = models.CharField(default='', verbose_name="Respuesta final del jefe a la queja", max_length=1000)
     finishedDate = models.DateTimeField(default=timezone.now, verbose_name='now')

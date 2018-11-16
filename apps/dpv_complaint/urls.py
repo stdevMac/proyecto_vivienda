@@ -13,12 +13,5 @@ urlpatterns = [
     path('finishedComplaint/new', complaint_view.form_FinishedComplaint, name="form_finished_complaint"),
     path('finishedComplaint/', complaint_view.index_FinishedComplaint, name="index_finished_complaint"),
     path('accepted/', complaint_view.index_Accepted, name="index_accepted"),
-
-    # path('naturalPerson/new', complaint_view.form_NaturalPerson, name="FormNaturalperson"),
-    # # path('juridicPerson/new', complaint_view.post_JuridicPerson, name="FormJuridicperson"),
-    # path('naturalPerson/', complaint_view.index_NaturalPerson, name="naturalPerson"),
-    # # path('juridicPerson/', complaint_view.index_JuridicPerson, name="juridicPerson"),
-    # path('', complaint_view.index_Complaint, name="quejas"),
-
 ]
 

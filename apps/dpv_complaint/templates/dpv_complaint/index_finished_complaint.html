@@ -10,10 +10,11 @@
 {% if index %}
     <ul>
     {% for complaint_finished in index %}
-        <li>{{ complaint_finished.complaint.number }} Tratada por => {{ complaint_finished.tecnic.perfil.datos_personales.name }}, del departamento {{ complaint_finished.tecnic.perfil.depto_trabajo.nombre }}  </li>
-        <p>
-        {{ complaint_finished.arguments }}
-        </p>
+        <tr>
+        <td>{{ complaint_finished.complaint.number }} </td>
+        <td>{{ complaint_finished.tecnic.perfil.datos_personales.name }}</td>
+        <td>{{ complaint_finished.tecnic.perfil.depto_trabajo.nombre }}</td>
+        <td>{{ complaint_finished.arguments }}</td>
     {% endfor %}
     </ul>
 {% else %}
