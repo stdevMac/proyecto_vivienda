@@ -1,1 +1,23 @@
 {% extends 'layouts/admin/groups.html' %}
+{% block page_title %} {{ block.super }} -> Formulario {% endblock page_title %}
+{% load static %}
+{% block breadcrumb_title %} Formulario {% endblock breadcrumb_title %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% if '/admin/users/form' == request.path %}
+    <li class="active">Crear</li>
+    {% else %}
+    <li>
+        <a href="{% url 'admin_user_add' %}">
+            Crear
+        </a>
+    </li>
+    {% endif %}
+{% endblock breadcrumbs %}
+{% block content_page %}
+{% endblock content_page %}
+
+
+                      <button type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#mediumModal">
+                          Medium
+                      </button>

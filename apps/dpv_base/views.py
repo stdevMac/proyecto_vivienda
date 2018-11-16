@@ -93,7 +93,7 @@ def users_add(request):
         form = UserProfileForm
     if exist_persona and exist_perfil:
         form = FullUserForm
-    render(request, 'layouts/admin/users_form.html', {'form': form})
+    return render(request, 'layouts/admin/users_form.html', {'form': form})
 
 
 @permission_required('auth.view_group', raise_exception=True)

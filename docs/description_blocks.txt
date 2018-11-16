@@ -8,7 +8,7 @@ bloque extra_style -> Importacion de archivos CSS de la pagina en si ( recomenda
 bloque main_fonts -> Importacion de archivos de Fuentes principales del sitio en general  ( no recomendado sobreescribir )
 bloque extra_fonts -> Importacion de archivos de Fuentes de una pagina especifica ( recomendado sobreescribir )
 bloque full_page_content -> Contenido total del body es el contenido del body excepto la importacion de js y css ( no recomendado sobreescribir )
-bloque sidebar_panel -> Elemento Side Bar de la aplicación web   ( no recomendado sobreescribir )
+bloque sidebar_panel -> Element o Side Bar de la aplicación web   ( no recomendado sobreescribir )
 bloque right_panel -> Elemento panel derecho del la aplicacion web contiene headbar, breadcrumb y page_content ( no recomendado sobreescribir )
 bloque header -> Elemento header de la palicacion Web( no recomendado sobreescribir )
 bloque breadcrumbs -> Elemento breadcrumb de la aplicacion web se usa heredando de la plantilla padre para mantener una navegabilidad ( no recomendado sobreescribir )

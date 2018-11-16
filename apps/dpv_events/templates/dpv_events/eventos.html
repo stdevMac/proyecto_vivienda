@@ -21,38 +21,7 @@
 
 {% block content_page %}
     <div class="row">
-        <div class="col-md-12">
-            <div class="tab-content">
-                <div id="list_evento" class="tab-pane active portlet light">
-                    <div class="portlet-title">
-                        <div class="caption theme-font">
-                            <i class="icon-grid theme-font"></i>
-                            <span class="caption-subject bold uppercase"> EVENTOS</span>
-                        </div>
-                        <div class="actions">
-                            {% if perms.dpv_events.add_evento %}
-                            <a href="#form_evento" class="btn green-haze btn-sm" role="button" data-toggle="tab">
-                                {% trans 'Add' %} Evento </a>
-                            {% endif %}
-                            {% if models %}
-                            <div class="btn-group hidden">
-                                <a class="btn btn-default btn-sm" href="#" data-toggle="dropdown">
-                                    <i class="fa fa-cogs"></i> Exportar <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-file-pdf-o"></i> PDF </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-file-excel-o"></i> Excel </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
+
                     <div class="portlet-body" id="evento-body">
                         {% if models %}
                         <table class="table table-striped table-hover table-bordered text-center" id="sample_editable_1">
@@ -218,9 +187,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+     </div>
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -290,7 +257,7 @@
                 </table>
                 {% else %}
                 <div class="alert alert-info">
-                    <h2 class="text-center">No hay Locales registrados que mostrar</h2>
+                    <h2 class="text-center">No hay Eventos registrados que mostrar</h2>
                 </div>
                 {% endif %}
             </div>
