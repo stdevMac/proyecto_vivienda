@@ -15,7 +15,8 @@
             <td>{{ complaint.person_natural.nombre  }}</td>
             <td>{{ complaint.topic }}</td>
             <td>{{ complaint.body }}</td>
-            <td> TODO REDIRECT A EL FORM TO ASIGN TO TECNIC </td>
+            <a href="transWaitToASigned/{{ complaint.id  }}"> Asignar</a>
+{#            <a href=" {% url 'trans_Wait_To_Asigned' complaint.id %}">  </a>#}
         </tr>
     {% endfor %}
     </ul>

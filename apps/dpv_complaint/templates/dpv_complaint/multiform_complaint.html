@@ -10,10 +10,10 @@
     <h1>Insertar {{form_name}}</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form_one.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
-    <form method="POST" class="post-form">{% csrf_token %}
         {{ form_two.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
+{#    <form method="POST" class="post-form">{% csrf_token %}#}
+{#        <button type="submit" class="save btn btn-default">Save</button>#}
+{#    </form>#}
 {% endblock content_page %}

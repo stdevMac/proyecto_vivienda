@@ -23,14 +23,6 @@ class Complaint(models.Model):
     person_natural = models.ForeignKey(PersonaNatural, null=True, on_delete=models.CASCADE, verbose_name="Persona Natural  que Presenta la Queja", blank=True)
     person_juridic = models.ForeignKey( PersonaJuridica, null=True, on_delete=models.CASCADE, verbose_name="Persona Juridica que Presenta la Queja", blank=True)
 
-
-    def clean(self):
-
-        if self.is_natural:
-            if not self.person_natural or self.person_natural is '':
-                raise ValidationError('En una queja natural tienque tener los datos de una perosna natural', code="not_natural_person")
-
-
     class Meta:
         verbose_name = "Queja"
 

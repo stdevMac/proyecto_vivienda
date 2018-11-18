@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
+from .models import Perfil
 # from apps.dpv_perfil.forms import FullUserForm
 
 # Register your models here.
 admin.site.unregister(User)
-
+admin.site.register(Perfil)
 
 class UserAdmin(admin.ModelAdmin):
 

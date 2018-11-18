@@ -8,45 +8,28 @@ from .models import *
 from apps.dpv_persona.forms import *
 from apps.dpv_persona.models import *
 
-# Create your views here.
-
-def form_Complaint(request):
-    _form_name = "Queja"
-    if request.method == "POST":
-        _form = ComplaintForm(request.POST)
-        if _form.is_valid():
-            # _complaint = Complaint()#args
-            # _post = _form.save(commit = False)
-            # _post._enter_date = timezone.now()
-            # _post.id = _post.pk
-            # _post.save()
-            return redirect(reverse_lazy('index_complaint'))
-    else:
-        _form = ComplaintForm()
-    return render(request, "dpv_complaint/create_complaint.html", {'form':_form, 'form_name': _form_name})
-
+# Create Forms
 def form_NaturalComplaint(request):
     _form_name = "Queja de persona Natural"
     if request.method == "POST":
         _form_complaint = ComplaintForm(request.POST)
         _form_natural = PersonaNaturalForm(request.POST)
-        if _form_complaint.is_valid() or _form_natural.is_valid():
-            _complaint = Complaint(_form_complaint) #args
-            _person = PersonaNatural(_form_natural)
-            _person.save()
-            _complaint.is_natural = True
-            _complaint.person_natural = _person
-            _complaint.enterDate = timezone.now()
-            _complaint.save()
+        if _form_complaint.is_valid() and _form_natural.is_valid():
+            complaint = _form_complaint.save(commit=False)
+            complaint.is_natural = True
+            complaint.person_natural = _form_natural.save()
+            complaint.enterDate = timezone.now()
+            complaint.save()
+            # _form_natural.save()
             p = WaitingForDistribution()
-            p.complaint = _complaint
+            p.complaint = complaint
             p.enterDate = timezone.now()
             p.save()
             return redirect(reverse_lazy('index_natural_complaint'))
     else:
         _form_complaint = ComplaintForm()
         _form_natural = PersonaNaturalForm()
-    return render(request, "dpv_complaint/multiform_complaint.html", {'form_one':_form_complaint, 'form_two': _form_natural, 'form_name': _form_name})
+    return render(request, "dpv_complaint/multiform_complaint.html", {'form_one': _form_complaint, 'form_two': _form_natural, 'form_name': _form_name})
 
 def form_JuridicComplaint(request):
     _form_name = "Queja de persona Natural"
@@ -160,43 +143,49 @@ def index_Accepted(request):
     elems = Accepted.objects.all()
     return render(request, "dpv_complaint/index_complaint.html", { 'index' : elems, 'index_name' : index_name})
 
-
+temp_complaint = None
 # Mov from state to state
-def from_waitingForDistribution_to_asignedToTecnic(request):
+def from_waitingForDistribution_to_asignedToTecnic(request, complaint):
     _form_name = "Quejas Aceptadas"
     if request.method == "POST":
         _form = AsignedToTecnicForm(request.POST)
         if _form.is_valid():
+            if complaint is None:
+                complaint = temp_complaint
+                temp_complaint = None
             _post = _form.save(commit=False)
             _post.enterDate = timezone.now()
             # todo Get information of Complaint
-            _post.complaint = 0
+            _post.complaint = Complaint.objects.get(id=complaint)
             _post.id = _post.pk
             _post.save()
             return redirect(reverse_lazy("index_asigned_to_tecnic"))
     else:
+        temp_complaint = complaint
         _form = FinishedComplaintForm()
     return render(request, "dpv_complaint/trans_wait_to_asignedToTecnic.html", {'form': _form, 'form_name': _form_name})
 
     pass
 
-def from_asignedToTecnic_to_finishedComplaint(request):
+def from_asignedToTecnic_to_finishedComplaint(request, complaint):
     _form_name = "Quejas Aceptadas"
     if request.method == "POST":
         _form = AsignedToTecnicForm(request.POST)
         if _form.is_valid():
             _post = _form.save(commit=False)
             _post.enterDate = timezone.now()
-            # todo Get information of complaint
-            _post.complaint = 0
-            _post.id = _post.pk
-            _post.save()
-            return redirect(reverse_lazy("index_finished_complaint"))
+            # ###todo Get information of complaint
+            # comp_get = request.GET.get('complaint_num','')
+            if complaint is not None:
+                _post.complaint = Complaint.objects.get(id=complaint)
+                _post.id = _post.pk
+                _post.save()
+                return redirect(reverse_lazy("index_finished_complaint"))
     else:
         _form = FinishedComplaintForm()
     return render(request, "dpv_complaint/trans_asignedToTecnic_to_finishedComp.html", {'form': _form, 'form_name': _form_name})
 
-def from_finishedComplaint_to_acceptedComplaint(request):
+def from_finishedComplaint_to_acceptedComplaint(request, complaint_id, tecnic_id):
     _form_name = "Quejas Aceptadas"
     if request.method == "POST":
         _form = AcceptedForm(request.POST)
@@ -204,14 +193,20 @@ def from_finishedComplaint_to_acceptedComplaint(request):
             _post = _form.save(commit=False)
             _post.finishedDate = timezone.now()
             # todo Get information of the complaint
-            _post.complaint = 0
-            # todo Get information of the boss
-            _post.bossAccepted = 0
-            # todo Get information of the tecnic
-            _post.tecnicWorkInComplaint = 0
-            _post.id = _post.pk
-            _post.save()
-            return redirect(reverse_lazy('index_accepted'))
+            # comp_get = request.GET.get('complaint_num', '')
+            # boss_get = request.GET.get('boss_num', '')
+            # tecnic_get = request.GET.get('tecnic_num', '')
+            if (complaint_id is not None) and (tecnic_id is not None):
+
+                _post.complaint = Complaint.objects.get(id=complaint_id)
+                # todo Get information of the boss
+                # _post.bossAccepted = Perfil.objects.get(id=boss_id)
+                ##########
+                # todo Get information of the tecnic
+                _post.tecnicWorkInComplaint = Tecnic.objects.get(tecnic_id)
+                _post.id = _post.pk
+                _post.save()
+                return redirect(reverse_lazy('index_accepted'))
     else:
         _form = AcceptedForm()
     return render(request, "dpv_complaint/trans_finished_to_ accepted.html", {'form': _form, 'form_name': _form_name})
