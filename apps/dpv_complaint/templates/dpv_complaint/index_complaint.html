@@ -10,7 +10,22 @@
 {% if index %}
     <ul>
     {% for complaint in index %}
-        <li>{{ complaint.number }} {{ complaint.person_natural.name }} {{ complaint.topic }} {{ complaint.body }} </li>
+        <tr>
+            <td>{{ complaint.number }}</td>
+            {% if complaint.is_natural %}
+                <td>{{ complaint.person_natural.nombre  }}</td>
+            {% else %}
+                <td>{{ complaint.person_juridic.nombre  }}</td>
+            {% endif %}
+            <td>{{ complaint.topic }}</td>
+            <td>{{ complaint.body }}</td>
+            {% if complaint.department %}
+                <td>{{ complaint.department.nombre }}</td>
+            {% else %}
+                <td>Queja sin asignar area de Trabajo</td>
+            {% endif %}
+            <a href="complaint/{{ complaint.id }}"> Ver Todos los Datos </a>
+        </tr>
     {% endfor %}
     </ul>
 {% else %}

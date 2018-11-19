@@ -1,0 +1,39 @@
+{% extends 'layouts/base.html' %}
+{% block content_page %}
+{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}
+{% block breadcrumbs %}
+    {{block.super }}
+
+{% endblock breadcrumbs %}
+    {% if complaint %}
+        <h1>Queja {{ complaint.id }}</h1>
+        <ul>
+        {% for complaint_for_dist in complaint %}
+            <li>Numero de la Queja:{{ complaint_for_dist.number }}</li>
+            <li>Procedencia:{{ complaint_for_dist.procedency }}</li>
+            <li>Titulo:{{ complaint_for_dist.topic }}</li>
+            <li>Cuerpo:{{ complaint_for_dist.body }}</li>
+            <li>Estado:{{ complaint_for_dist.status }}</li>
+            <li>Fecha de Entrada:{{ complaint_for_dist.enterDate }}</li>
+            {% if complaint_for_dist.is_natural %}
+                <li>La queja fue realizada por una persona Natural</li>
+            {% else %}
+                <li>La queja fue realizada por una persona Juridica</li>
+            {% endif %}
+            {% if complaint_for_dist.department %}
+                <li>Area de Trabajo Asignada:{{ complaint_for_dist.department.nombre }}</li>
+                {% if complaint_for_dist.status == 'Pendiente' %}
+                    <a href="transWaitToASigned/{{ complaint_for_dist.id  }}"> Asignar a un Tecnico</a>
+                {% endif %}
+            {% else %}
+                <a href="asignDepartment/{{ complaint_for_dist.id  }}"> Asignar Departamento</a>
+            {% endif %}
+
+
+
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Problemas Rendereando la queja</p>
+    {% endif %}
+{% endblock  %}
