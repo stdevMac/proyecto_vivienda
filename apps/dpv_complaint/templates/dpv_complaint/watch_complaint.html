@@ -22,7 +22,7 @@
             {% endif %}
             {% if complaint_for_dist.department %}
                 <li>Area de Trabajo Asignada:{{ complaint_for_dist.department.nombre }}</li>
-                {% if complaint_for_dist.status == 'Pendiente' %}
+                {% if complaint_for_dist.status == 'P' or complaint_for_dist.status == 'Pendiente' %}
                     <a href="transWaitToASigned/{{ complaint_for_dist.id  }}"> Asignar a un Tecnico</a>
                 {% endif %}
             {% else %}

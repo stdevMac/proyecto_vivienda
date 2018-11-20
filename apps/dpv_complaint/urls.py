@@ -1,18 +1,19 @@
 from django.urls import path, re_path
 from . import views as complaint_view
 from .index import index as complaint_index
+from .render_form import render_forms as rendered_form
 
 urlpatterns = [
     #  teniente rey y habana
     path('naturalComplaint/', complaint_index.index_NaturalComplaint, name="index_natural_complaint"),
     path('juridicComplaint/', complaint_index.index_JuridicComplaint, name="index_juridic_complaint"),
-    path('naturalComplaint/new', complaint_view.form_NaturalComplaint, name="form_Nat_complaint"),
-    path('juridicComplaint/new', complaint_view.form_JuridicComplaint, name="form_Jurid_complaint"),
+    path('naturalComplaint/new', rendered_form.form_NaturalComplaint, name="form_Nat_complaint"),
+    path('juridicComplaint/new', rendered_form.form_JuridicComplaint, name="form_Jurid_complaint"),
     path('waitingForDistribution/', complaint_index.index_WaitingForDistribution, name="index_waiting_for_distribution"),
-    path('asignedToTecnic/new', complaint_view.form_AsignedToTecnic, name="form_asigned_to_tecnic"),
-    re_path(r'asignDepartment/(?P<complaint_id>[1-9]\d*)/$', complaint_view.form_AsignDepartment, name='form_asign_department'),
+    path('asignedToTecnic/new', rendered_form.form_AsignedToTecnic, name="form_asigned_to_tecnic"),
+    re_path(r'asignDepartment/(?P<complaint_id>[1-9]\d*)/$', rendered_form.form_AsignDepartment, name='form_asign_department'),
     re_path(r'asignedToTecnic/(?P<tecnic_id>[1-9]\d*)/$', complaint_index.index_AsignedToTecnic, name="index_asigned_to_tecnic"),
-    path('finishedComplaint/new', complaint_view.form_FinishedComplaint, name="form_finished_complaint"),
+    path('finishedComplaint/new', rendered_form.form_FinishedComplaint, name="form_finished_complaint"),
     path('finishedComplaint/', complaint_index.index_FinishedComplaint, name="index_finished_complaint"),
     path('accepted/', complaint_index.index_Accepted, name="index_accepted"),
     re_path(r'complaint/(?P<complaint_id>[1-9]\d*)/$', complaint_view.watch_complaint, name="watch_complaint"),
