@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html' %}
+{% block content_page %}
+{#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
+{% block breadcrumbs %}
+    {{block.super }}
+
+{% endblock breadcrumbs %}
+<h1>{{index_name}}</h1>
+
+{% if index %}
+    <ul>
+    {% for finished in index %}
+        <tr>
+            <li>Queja Numero: <a href="complaint/{{ finished.complaint.id }}"> {{ finished.complaint.number }} </a></li>
+            {% if finished.complaint.is_natural %}
+                <li>Realizada por: {{ finished.complaint.person_natural.nombre  }}</li>
+            {% else %}
+                <li>Realizada por: {{ finished.complaint.person_juridic.nombre  }}</li>
+            {% endif %}
+            <li>Titulo: {{ finished.complaint.topic }}</li>
+            <li>Cuerpo: {{ finished.complaint.body }}</li>
+            <li>Resuelto Por: {{ finished.tecnic.perfil.datos_personales.nombre }} {{ finished.tecnic.perfil.datos_personales.apellidos }}</li>
+            <li>
+                Argumentos:
+                <p>
+                {{ finished.arguments }}
+                </p>
+            </li>
+            <li><a href="accepted/{{ finished.id }}"> Acceptar </a></li>
+            <li><a href="reAsign/{{ finished.id }}"> Reasignar (Todavia)</a></li>
+        </tr>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p> No existen quejas registradas.</p>
+{% endif %}
+{% endblock  %}

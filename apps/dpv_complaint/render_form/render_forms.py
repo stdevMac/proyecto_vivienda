@@ -69,7 +69,7 @@ def form_AsignedToTecnic(request):
 
 
 def form_FinishedComplaint(request):
-    _form_name = "Queja por revisar"
+    _form_name = "Queja por Para Responder"
     if request.method == "POST":
         _form = FinishedComplaintForm(request.POST)
         if _form.is_valid():

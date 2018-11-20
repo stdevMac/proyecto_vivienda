@@ -29,7 +29,7 @@ class AsignedToTecnicForm(forms.ModelForm):
 class FinishedComplaintForm(forms.ModelForm):
     class Meta:
         model = FinishedComplaint
-        exclude = ('enterDate', 'complaint',)
+        exclude = ('enterDate', 'tecnic', 'complaint',)
 
 
 class AcceptedForm(forms.ModelForm):

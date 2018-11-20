@@ -32,7 +32,7 @@ def index_AsignedToTecnic(request, tecnic_id):
 def index_FinishedComplaint(request):
     index_name = 'Indice de Quejas Finalizadas'
     elems = FinishedComplaint.objects.all()
-    return render(request, "dpv_complaint/index_complaint.html", { 'index': elems, 'index_name': index_name})
+    return render(request, "dpv_complaint/index_finished.html", { 'index': elems, 'index_name': index_name})
 
 
 def index_Accepted(request):
