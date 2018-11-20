@@ -26,7 +26,7 @@
                 {{ finished.arguments }}
                 </p>
             </li>
-            <li><a href="accepted/{{ finished.id }}"> Acceptar </a></li>
+            <li><a href={% url 'trans_Finished_to_Accepted' complaint_id=finished.complaint.id tecnic_id=finished.tecnic.id %}> Acceptar </a></li>
             <li><a href="reAsign/{{ finished.id }}"> Reasignar (Todavia)</a></li>
         </tr>
     {% endfor %}

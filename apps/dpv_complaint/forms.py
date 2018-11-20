@@ -35,4 +35,4 @@ class FinishedComplaintForm(forms.ModelForm):
 class AcceptedForm(forms.ModelForm):
     class Meta:
         model = Accepted
-        exclude = ('finishedDate', 'complaint', 'bossAccepted', 'tecnicWorkInComplaint',)
+        exclude = ('finishedDate', 'complaint', 'bossAccepted', 'tecnicWorkInComplaint', 'argumentsOfTecnic')

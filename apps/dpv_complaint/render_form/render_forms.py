@@ -83,16 +83,21 @@ def form_FinishedComplaint(request):
     return render(request, "dpv_complaint/single_form.html", {'form':_form, 'form_name': _form_name})
 
 
-def form_Accepted(request):
+def form_Accepted(request, finished_id):
     _form_name = "Quejas Aceptadas"
     if request.method == "POST":
         _form = AcceptedForm(request.POST)
         if _form.is_valid():
+            finished = FinishedComplaint.objects.get(id=finished_id)
             _post = _form.save(commit = False)
-            _post.enterDate = timezone.now()
+            _post.finishedDate = timezone.now()
+            _post.complaint = finished.complaint
+            _post.tecnicWorkInComplaint = finished.tecnic
+            _post.argumentsOfTecnic = finished.arguments
+            _post.bossAccepted = request.user.id
             _post.id = _post.pk
             _post.save()
-            return redirect(reverse_lazy())
+            return redirect(reverse_lazy('index_accepted'))
     else:
         _form = FinishedComplaintForm()
     return render(request, "", {'form':_form, 'form_name': _form_name})

@@ -48,6 +48,11 @@ def from_asignedToTecnic_to_finishedComplaint(request, complaint_id, tecnic_id):
     return render(request, "dpv_complaint/asigned_to_finished.html", {'form': _form, 'form_name': _form_name})
 
 
+def index_accepted_all(request, accepted_id):
+    elems = Accepted.objects.get(id=accepted_id)
+    return render(request, 'dpv_complaint/watch_accepted.html', {'index': elems})
+
+
 def from_finishedComplaint_to_acceptedComplaint(request, complaint_id, tecnic_id):
     _form_name = "Quejas Aceptadas"
     if request.method == "POST":
@@ -58,7 +63,7 @@ def from_finishedComplaint_to_acceptedComplaint(request, complaint_id, tecnic_id
             if (complaint_id is not None) and (tecnic_id is not None):
 
                 _post.complaint = Complaint.objects.get(id=complaint_id)
-                _post.tecnicWorkInComplaint = Tecnic.objects.get(tecnic_id)
+                _post.tecnicWorkInComplaint = Tecnic.objects.get(id=tecnic_id)
                 _post.id = _post.pk
                 _post.save()
                 return redirect(reverse_lazy('index_accepted'))

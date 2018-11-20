@@ -12,6 +12,8 @@
     {% for complaint_accepted in index %}
         <li>{{ complaint_accepted.complaint.number }} </li>
         <p>
+            Argumentos de la queja: =>
+            <a href="complaint/{{ complaint_accepted.complaint.id }}"> Ver datos de la queja </a>
             Argumentos finales del Tecnico: =>
             {{ complaint_accepted.argumentsOfTecnic}}
             Por el Tecnico:
@@ -21,6 +23,7 @@
             Por el Jefe:
             {{ complaint_accepted.bossAccepted.datos_personales.nombre }}
         </p>
+        <li><a href="acceptedAll/{{ complaint_accepted.id }}"> Ver Todos los Datos </a></li>
     {% endfor %}
     </ul>
 {% else %}
