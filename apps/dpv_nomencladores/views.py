@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import models
+from . import forms
 from django.contrib.auth.decorators import permission_required, login_required
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -13,6 +16,20 @@ def index(request):
 def index_provincia(request):
     provincias = models.Provincia.objects.all()
     return render(request, 'dpv_nomencladores/list_provincia.html', {'provincias': provincias})
+
+
+class ProvinciaCreate(CreateView):
+    model = models.Provincia
+    form_class = forms.ProvinciaForm
+    template_name = 'dpv_nomencladores/list_provincia.html'
+    success_url = reverse_lazy('nomenclador_provincia')
+
+
+class ProvinciaUpdate(UpdateView):
+    model = models.Provincia
+    form_class = forms.ProvinciaForm
+    template_name = 'dpv_nomencladores/list_provincia.html'
+    success_url = reverse_lazy('nomenclador_provincia')
 
 
 @permission_required('municipio.view_municipio', raise_exception=True)
