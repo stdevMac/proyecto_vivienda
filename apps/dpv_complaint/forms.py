@@ -2,12 +2,15 @@ from django import forms
 from .models import *
 
 class ComplaintForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['department'].queryset = AreaTrabajo.objects.all()
+
     class Meta:
         model = Complaint
         exclude = ('enterDate', 'is_natural', 'person_juridic', 'person_natural', 'status',)
-    def __init__(self):
-        super(ComplaintForm, self).__init__()
-        self.fields['department'].queryset = AreaTrabajo.objects.all()
+
 
 
 class AsignDepartmentForm(forms.Form):

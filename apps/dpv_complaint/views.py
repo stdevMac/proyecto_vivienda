@@ -16,11 +16,13 @@ def from_waitingForDistribution_to_asignedToTecnic(request, complaint_id):
             _post = _form.save(commit=False)
             _post.enterDate = timezone.now()
             _post.complaint = Complaint.objects.get(id=complaint_id)
+            _post.complaint.status = 'Esperando Respuesta de Tecnico'
+            _post.complaint.save()
             _post.id = _post.pk
             _post.save()
-            return redirect(reverse_lazy("index_asigned_to_tecnic"))
+            return redirect(reverse_lazy("index_asigned_to_tecnic", tecnic_id=_post.tecnic.id))
     else:
-        _form = FinishedComplaintForm()
+        _form = AsignedToTecnicForm()
     return render(request, "dpv_complaint/single_form.html", {'form': _form, 'form_name': _form_name})
 
 

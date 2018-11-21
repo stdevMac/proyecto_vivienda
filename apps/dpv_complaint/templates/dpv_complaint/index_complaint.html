@@ -4,14 +4,32 @@
 {% block breadcrumbs %}
     {{block.super }}
 
+
 {% endblock breadcrumbs %}
-<h1>{{index_name}}</h1>
+    <style type="text/css">
+        td {
+            padding: 0px 8px 0px 8px;
+        }
+    </style>
+
+    <h1>{{index_name}}</h1>
 
 {% if index %}
-    <ul>
+    <table>
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Nombre </th>
+            <th>Titulo</th>
+            <th>Cuerpo</th>
+            <th>Departamento</th>
+            <th>Todos los Datos</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for complaint in index %}
         <tr>
-            <td>{{ complaint.number }}</td>
+            <td >{{ complaint.number }}</td>
             {% if complaint.is_natural %}
                 <td>{{ complaint.person_natural.nombre  }}</td>
             {% else %}
@@ -24,10 +42,12 @@
             {% else %}
                 <td>Queja sin asignar area de Trabajo</td>
             {% endif %}
-            <a href="complaint/{{ complaint.id }}"> Ver Todos los Datos </a>
+
+            <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los Datos </a></td>
         </tr>
     {% endfor %}
-    </ul>
+    </tbody>
+    </table>
 {% else %}
     <p> No existen quejas registradas.</p>
 {% endif %}

@@ -22,7 +22,7 @@ def index_WaitingForDistribution(request):
 
 
 def index_AsignedToTecnic(request, tecnic_id):
-    comp = AsignedToTecnic.objects.get(tecnic=tecnic_id)
+    comp = AsignedToTecnic.objects.filter(tecnic=tecnic_id)
     index_name = 'Quejas asignadas al Tecnico Fulano de tal'
     elems = [x.complaint for x in comp ]
     return render(request, "dpv_complaint/index_complaint.html", {'index': elems, 'index_name' : index_name })

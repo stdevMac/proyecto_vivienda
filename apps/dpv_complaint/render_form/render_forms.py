@@ -13,11 +13,11 @@ def form_NaturalComplaint(request):
         _form_complaint = ComplaintForm(request.POST)
         _form_natural = PersonaNaturalForm(request.POST)
         if _form_complaint.is_valid() and _form_natural.is_valid():
+
             complaint = _form_complaint.save(commit=False)
             complaint.is_natural = True
             complaint.person_natural = _form_natural.save()
             complaint.enterDate = timezone.now()
-            complaint.department = None
             complaint.save()
             p = WaitingForDistribution()
             p.complaint = complaint
@@ -46,26 +46,11 @@ def form_JuridicComplaint(request):
             p.complaint = complaint
             p.enterDate = timezone.now()
             p.save()
-            return redirect(reverse_lazy('index_natural_complaint'))
+            return redirect(reverse_lazy('index_juridic_complaint'))
     else:
         _form_complaint = ComplaintForm()
         _form_juridic = PersonaJuridicaForm()
     return render(request, "dpv_complaint/multiform_complaint.html", {'form_one':_form_complaint, 'form_two': _form_juridic, 'form_name': _form_name})
-
-
-def form_AsignedToTecnic(request):
-    _form_name = "Quejas en proceso de evaluacion"
-    if request.method == "POST":
-        _form = AsignedToTecnicForm(request.POST)
-        if _form.is_valid():
-            _post = _form.save(commit = False)
-            _post._enterDate = timezone.now()
-            _post.id = _post.pk
-            _post.save()
-            return redirect(reverse_lazy('index_asigned_to_tecnic'))
-    else:
-        _form = AsignedToTecnicForm()
-    return render(request,"dpv_complaint/single_form.html", {'form':_form, 'form_name':_form_name})
 
 
 def form_FinishedComplaint(request):
