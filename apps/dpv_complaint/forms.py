@@ -12,7 +12,6 @@ class ComplaintForm(forms.ModelForm):
         exclude = ('enterDate', 'is_natural', 'person_juridic', 'person_natural', 'status',)
 
 
-
 class AsignDepartmentForm(forms.Form):
     department = forms.ModelChoiceField(queryset=AreaTrabajo.objects.all(), label='Seleccione Area de Trabajo')
 

@@ -13,42 +13,45 @@
     </style>
 
     <h1>{{index_name}}</h1>
+    <a href={% url 'add_natural_complaint' %}> + Insertar Queja Natural</a>
+    <a href={% url 'add_juridic_complaint' %}> + Insertar Queja Juridica</a>
 
-{% if index %}
-    <table>
-    <thead>
-        <tr>
-            <th>Numero</th>
-            <th>Nombre </th>
-            <th>Titulo</th>
-            <th>Cuerpo</th>
-            <th>Departamento</th>
-            <th>Todos los Datos</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for complaint in index %}
-        <tr>
-            <td >{{ complaint.number }}</td>
-            {% if complaint.is_natural %}
-                <td>{{ complaint.person_natural.nombre  }}</td>
-            {% else %}
-                <td>{{ complaint.person_juridic.nombre  }}</td>
-            {% endif %}
-            <td>{{ complaint.topic }}</td>
-            <td>{{ complaint.body }}</td>
-            {% if complaint.department %}
-                <td>{{ complaint.department.nombre }}</td>
-            {% else %}
-                <td>Queja sin asignar area de Trabajo</td>
-            {% endif %}
+    {% if index %}
+        <table>
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Nombre </th>
+                <th>Titulo</th>
+                <th>Cuerpo</th>
+                <th>Departamento</th>
+                <th>Todos los Datos</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for complaint in index %}
+            <tr>
+                <td >{{ complaint.number }}</td>
+                {% if complaint.is_natural %}
+                    <td>{{ complaint.person_natural.nombre  }}</td>
+                {% else %}
+                    <td>{{ complaint.person_juridic.nombre  }}</td>
+                {% endif %}
+                <td>{{ complaint.topic }}</td>
+                <td>{{ complaint.body }}</td>
+                {% if complaint.department %}
+                    <td>{{ complaint.department.nombre }}</td>
+                {% else %}
+                    <td>Queja sin asignar area de Trabajo</td>
+                {% endif %}
 
-            <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los Datos </a></td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    </table>
-{% else %}
-    <p> No existen quejas registradas.</p>
-{% endif %}
+                <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los Datos </a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        <p> No existen quejas registradas.</p>
+    {% endif %}
+
 {% endblock  %}

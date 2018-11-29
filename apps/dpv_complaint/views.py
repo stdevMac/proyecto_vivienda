@@ -7,6 +7,8 @@ from .models import *
 
 # Create Forms
 
+def main_view(request):
+    return render(request, "dpv_complaint/complaint_main_page.html")
 
 def from_waitingForDistribution_to_asignedToTecnic(request, complaint_id):
     _form_name = "Quejas Aceptadas"
@@ -44,7 +46,7 @@ def from_asignedToTecnic_to_finishedComplaint(request, complaint_id, tecnic_id):
                 _post.tecnic = Tecnic.objects.get(id=tecnic_id)
                 _post.id = _post.pk
                 _post.save()
-                return redirect(reverse_lazy("index_finished_complaint"))
+                return redirect(reverse_lazy( 'index_asigned_to_tecnic' tecnic_id=tecnic_id ))
     else:
         _form = FinishedComplaintForm()
     return render(request, "dpv_complaint/asigned_to_finished.html", {'form': _form, 'form_name': _form_name})

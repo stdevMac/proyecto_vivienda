@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html' %}
+{% block content_page %}
+{#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
+{% block breadcrumbs %}
+    {{block.super }}
+
+
+{% endblock breadcrumbs %}
+    <style type="text/css">
+        td {
+            padding: 0px 8px 0px 8px;
+        }
+    </style>
+    <h2><a href={% url 'add_natural_complaint' %}> + Insertar Queja Natural</a></h2>
+    <h2><a href={% url 'index_natural_complaint' %}> + Ver Quejas Naturales</a></h2>
+    <h2><a href={% url 'add_juridic_complaint' %}> + Insertar Queja Juridica</a></h2>
+    <h2><a href={% url 'index_juridic_complaint' %}> + Ver Quejas Juridicas</a></h2>
+    <h2><a href={% url 'waiting_for_distribution' %}> + Ver Quejas en espera de Distribucion</a></h2>
+    <h2><a href={% url 'index_finished_complaint' %}> + Ver Quejas Finalizadas</a></h2>
+    <h2><a href={% url 'index_accepted_all' %}> + Ver Quejas Aceptadas</a></h2>
+
+
+{% endblock  %}

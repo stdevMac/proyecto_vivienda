@@ -11,7 +11,7 @@ def index_NaturalComplaint(request):
 
 def index_JuridicComplaint(request):
     index_name = 'Indice de las Quejas'
-    elems = Complaint.objects.filter(_is_natural = False)
+    elems = Complaint.objects.filter(is_natural = False)
     return render(request, "dpv_complaint/index_complaint.html", {'index': elems, 'index_name': index_name})
 
 
@@ -25,7 +25,7 @@ def index_AsignedToTecnic(request, tecnic_id):
     comp = AsignedToTecnic.objects.filter(tecnic=tecnic_id)
     index_name = 'Quejas asignadas al Tecnico Fulano de tal'
     elems = [x.complaint for x in comp ]
-    return render(request, "dpv_complaint/index_complaint.html", {'index': elems, 'index_name' : index_name })
+    return render(request, "dpv_complaint/index_asigned_to_tecnic.html", {'index': elems, 'index_name' : index_name , 'tecnic_id':tecnic_id})
 
 
 

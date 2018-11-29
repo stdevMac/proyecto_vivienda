@@ -31,6 +31,11 @@
 
         {% endfor %}
         </ul>
+        {% if complaint.first.is_natural %}
+            <a href={% url 'index_natural_complaint' %}>Ver Todas las Quejas</a>
+        {% else %}
+            <a href={% url 'index_juridic_complaint' %}>Ver Todas las Quejas</a>
+        {% endif %}
     {% else %}
         <p>Problemas Rendereando la queja</p>
     {% endif %}
