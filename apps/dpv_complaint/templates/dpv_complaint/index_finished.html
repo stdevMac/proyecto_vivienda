@@ -18,7 +18,7 @@
     <ul>
     {% for finished in index %}
         <tr>
-            <li>Queja Numero: <a href="complaint/{{ finished.complaint.id }}"> {{ finished.complaint.number }} </a></li>
+            <li>Queja Numero: <a href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> {{ finished.complaint.number }} </a></li>
             {% if finished.complaint.is_natural %}
                 <li>Realizada por: {{ finished.complaint.person_natural.nombre  }}</li>
             {% else %}

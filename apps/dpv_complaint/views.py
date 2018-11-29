@@ -5,10 +5,10 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 
-# Create Forms
 
 def main_view(request):
     return render(request, "dpv_complaint/complaint_main_page.html")
+
 
 def from_waitingForDistribution_to_asignedToTecnic(request, complaint_id):
     _form_name = "Quejas Aceptadas"
@@ -46,7 +46,7 @@ def from_asignedToTecnic_to_finishedComplaint(request, complaint_id, tecnic_id):
                 _post.tecnic = Tecnic.objects.get(id=tecnic_id)
                 _post.id = _post.pk
                 _post.save()
-                return redirect(reverse_lazy( 'index_asigned_to_tecnic' tecnic_id=tecnic_id ))
+                return redirect(reverse_lazy( 'index_asigned_to_tecnic' ))
     else:
         _form = FinishedComplaintForm()
     return render(request, "dpv_complaint/asigned_to_finished.html", {'form': _form, 'form_name': _form_name})
@@ -68,9 +68,10 @@ def from_finishedComplaint_to_acceptedComplaint(request, complaint_id, tecnic_id
 
                 _post.complaint = Complaint.objects.get(id=complaint_id)
                 _post.tecnicWorkInComplaint = Tecnic.objects.get(id=tecnic_id)
+                _post.bossAccepted = Perfil.objects.get(id=1)
                 _post.id = _post.pk
                 _post.save()
-                return redirect(reverse_lazy('index_accepted'))
+                return redirect(reverse_lazy('index_accepted_all'))
     else:
         _form = AcceptedForm()
     return render(request, "dpv_complaint/single_form.html", {'form': _form, 'form_name': _form_name })

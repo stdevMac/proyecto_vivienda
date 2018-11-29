@@ -11,10 +11,10 @@ urlpatterns = [
     url(r'^natural/new$', rendered_form.form_NaturalComplaint, name="add_natural_complaint"),
     url(r'^juridic/new$', rendered_form.form_JuridicComplaint, name="add_juridic_complaint"),
     url(r'^waitDistrib/$', complaint_index.index_WaitingForDistribution, name="waiting_for_distribution"),
-    url('^finished/$', complaint_index.index_FinishedComplaint, name="index_finished_complaint"),
-    url('^acceptedAll/$', complaint_index.index_Accepted, name="index_accepted_all"),
+    url(r'^finished/$', complaint_index.index_FinishedComplaint, name="index_finished_complaint"),
+    url(r'^acceptedAll/$', complaint_index.index_Accepted, name="index_accepted_all"),
 
-    re_path(r'^accepted/(?P<accepted_id>[0-9]\d*/$)', complaint_view.index_accepted_all, name='accepted_complaint'),
+    re_path(r'^getaccepted/(?P<accepted_id>[1-9]\d*)/$', complaint_view.index_accepted_all, name='accepted_complaint'),
     re_path(r'^asignDepartment/(?P<complaint_id>[1-9]\d*)/$', rendered_form.form_AsignDepartment, name='form_asign_department'),
     re_path(r'^asignedToTecnic/(?P<tecnic_id>[1-9]\d*)/$', complaint_index.index_AsignedToTecnic, name="index_asigned_to_tecnic"),
     re_path(r'^addFinished/(?P<complaint_id>[1-9]\d*)/(?P<tecnic_id>[0-9]*)/$', complaint_view.from_asignedToTecnic_to_finishedComplaint, name="form_finished_complaint"),

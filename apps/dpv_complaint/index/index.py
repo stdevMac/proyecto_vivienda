@@ -1,4 +1,3 @@
-### Indexing complaint, Natural and Juridic
 from django.shortcuts import render
 from apps.dpv_complaint.models import *
 

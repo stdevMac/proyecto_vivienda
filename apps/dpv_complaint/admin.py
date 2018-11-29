@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(Complaint)
 admin.site.register(Tecnic)
 admin.site.register(AsignedToTecnic)
+admin.site.register(Accepted)
