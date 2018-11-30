@@ -1,4 +1,4 @@
-{% extends 'layouts/dashboard.html' %}
+{% extends 'dpv_events/events_base.html' %}
 {% load i18n %}
 {% load static %}
 {% block page_title %}| Tipos de Eventos {% endblock page_title %}
@@ -134,4 +134,6 @@
     </div>
     {% endif %}
 {% endblock %}
-{% block extra_scripts %}{% endblock %}
+{% block extra_scripts %}
+    <script src="{% static 'dpv_events/scripts/tipoevento.js' %}"></script>
+{% endblock extra_scripts %}
