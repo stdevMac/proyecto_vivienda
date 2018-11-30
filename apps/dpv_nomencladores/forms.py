@@ -1,11 +1,12 @@
 from django import forms
-from . import models
+from .models import *
 
 
 class ProvinciaForm(forms.ModelForm):
     class Meta:
-        model=models.Provincia
-        fields = ['numero','nombre']
+        model = Provincia
+
+        fields = ['nombre', 'numero']
 
     def __init__(self, *args, **kwargs):
         super(ProvinciaForm, self).__init__(*args, **kwargs)
@@ -14,9 +15,10 @@ class ProvinciaForm(forms.ModelForm):
                 'class': 'form-control'
             })
 
+
 class MunicipioForm(forms.ModelForm):
     class Meta:
-        model=models.Municipio
+        model = Municipio
         fields = ['numero', 'nombre', 'provincia']
 
         widgets = {
@@ -32,7 +34,7 @@ class MunicipioForm(forms.ModelForm):
 
 class OrganismoForm(forms.ModelForm):
     class Meta:
-        model=models.Organismo
+        model = Organismo
 
         fields = ['nombre', 'siglas']
 
@@ -45,7 +47,7 @@ class OrganismoForm(forms.ModelForm):
 
 class DestinoForm(forms.ModelForm):
     class Meta:
-        model=models.Destino
+        model= Destino
 
         fields = ['nombre']
 
@@ -59,7 +61,7 @@ class DestinoForm(forms.ModelForm):
 
 class CalleForm(forms.ModelForm):
     class Meta:
-        model=models.Calle
+        model= Calle
 
         fields = ['nombre']
 
@@ -73,7 +75,7 @@ class CalleForm(forms.ModelForm):
 
 class PisoForm(forms.ModelForm):
     class Meta:
-        model=models.Piso
+        model= Piso
 
         fields = ['nombre']
 
@@ -86,7 +88,7 @@ class PisoForm(forms.ModelForm):
 
 class ConceptoForm(forms.ModelForm):
     class Meta:
-        model=models.Concepto
+        model= Concepto
 
         fields = ['nombre']
 
@@ -99,7 +101,7 @@ class ConceptoForm(forms.ModelForm):
 
 class GeneroForm(forms.ModelForm):
     class Meta:
-        model=models.Genero
+        model= Genero
 
         fields = ['nombre', 'sigla']
 
@@ -114,7 +116,7 @@ class GeneroForm(forms.ModelForm):
 class CentroTrabajoForm(forms.ModelForm):
 
     class Meta:
-        model = models.CentroTrabajo
+        model = CentroTrabajo
         fields = ['nombre', 'numero', 'siglas', 'municipio', 'oc']
 
         widgets = {
@@ -133,9 +135,8 @@ class CentroTrabajoForm(forms.ModelForm):
 class AreaTrabajoForm(forms.ModelForm):
 
     class Meta:
-        model = models.AreaTrabajo
-        fields = ('nombre',
-                  'numero', )
+        model = AreaTrabajo
+        fields = ['nombre', 'numero', ]
 
     def __init__(self, *args, **kwargs):
         super(AreaTrabajoForm, self).__init__(*args, **kwargs)
