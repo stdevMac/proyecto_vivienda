@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import Group, User, Permission
 from apps.dpv_nomencladores.models import Calle, AreaTrabajo, CentroTrabajo, Genero, Municipio
+from .models import ConfigMail
 
 
 class LoginForm(forms.Form):
@@ -21,27 +22,27 @@ class UserForm(forms.Form):
                                widget=(forms.TextInput(attrs={"placeholder": "Nombre de usuario", "class":"form-control"})))
     password = forms.CharField(max_length=255, required=True, label="Contraseña", help_text="Recuerde que la contraseña debe tener mas de 8 caracteres.\nLa contraseña debe contener letras minúsculas, mayúsculas, números y caracteres especiales.",
                                      widget=(forms.PasswordInput(attrs={"placeholder": "Contraseña", "class": "form-control"})))
-    password_repeat = forms.CharField(max_length=255, required=True, label="Repetir Contraseña", help_text="Debe ser igual que la contraseña delcampo anterior.",
+    password_repeat = forms.CharField(max_length=255, required=True, label="Repetir Contraseña", help_text="Debe ser igual que la contraseña del campo anterior.",
                                      widget=(forms.PasswordInput(attrs={"placeholder": "Repetir Contraseña", "class": "form-control"})))
-    is_staff = forms.BooleanField(label="Administrador?", help_text="Marquelo para que el usuario pueda entrar al sitio de administración.",
-                                       widget=(forms.CheckboxInput(attrs={"class": "form-control"})))
     first_name = forms.CharField(max_length=60, required=True, label="Nombre(s) Real(es)", help_text="Nombre real de la persona.",
                              widget=(forms.TextInput(attrs={"placeholder": "Nombre", "class": "form-control"})))
     last_name = forms.CharField(max_length=100, required=True, help_text="Apellidos de la persona.",
                                 widget=(forms.TextInput(attrs={"placeholder": "Apellidos", "class": "form-control"})))
     email = forms.EmailField(max_length=255, required=True, label="Correo Electrónico", help_text="Correo electronico del usuario, es al que el usuario recibira las notificaciones.",
                              widget=(forms.EmailInput(attrs={"placeholder": "Correo Electronico", "class": "form-control"})))
-    permissions = forms.ModelMultipleChoiceField(queryset=Permission.objects.all(), label="Permisos", help_text="Permisos otorgados al usuario.",
-                                                 widget=(forms.CheckboxSelectMultiple(attrs={"class": ""})))
+    permissions = forms.ModelMultipleChoiceField(queryset=Permission.objects.all(), label="Permisos",  help_text="Permisos otorgados al usuario.",
+                                                 widget=(forms.CheckboxSelectMultiple(attrs={"class": "form-control"})))
     groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(), label="Grupos", help_text="Grupos a los que pertenecera el usuario.\nEl usuario heredara los permisos de los grupos a los que pertenesca.",
                                             widget=(forms.CheckboxSelectMultiple(attrs={"class": ""})))
+    is_staff = forms.BooleanField(label="Administrador?", help_text="Marquelo para que el usuario pueda entrar al sitio de administración.",
+                                  widget=(forms.CheckboxInput(attrs={"class": "form-check-input"})))
 
 
 class UserProfileForm(UserForm):
     notificaciones_email = forms.BooleanField(label="Notificar a mi Correo", help_text="El usuario recibirá las notificaciones del sistema tambien por correo.",
-                                              widget=(forms.CheckboxInput(attrs={"class": "form-control"})))
+                                              widget=(forms.CheckboxInput(attrs={"class": "form-check-input"})))
     documentacion_email = forms.BooleanField(label="Documentación a mi correo", help_text="El usuario recibirá la documentación del sistema a su buzon de correo",
-                                             widget=(forms.CheckboxInput(attrs={"class": "form-control"})))
+                                             widget=(forms.CheckboxInput(attrs={"class": "form-check-input"})))
     area_trabajo = forms.ModelChoiceField(queryset=AreaTrabajo.objects.all(), label="Departamento", required=True, help_text="Departamento en el que trabaja el usuario",
                                      widget=(forms.Select(attrs={"placeholder": "Seleccione un Depto.", "class": "form-control"})))
     centro_trabajo = forms.ModelChoiceField(queryset=CentroTrabajo.objects.all(), label="Unidad", required=True, help_text="Unidad en la que trabaja el usuario",
@@ -73,3 +74,9 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ('name', )
+
+
+class ConfigMail(forms.ModelForm):
+    class Meta:
+        model = ConfigMail
+        fields = ('servidor', 'puerto', 'usuario', 'password', 'usa_tls', 'usa_ssl', )

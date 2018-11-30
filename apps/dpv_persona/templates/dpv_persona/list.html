@@ -1,1 +1,14 @@
 {% extends 'layouts/dashboard.html' %}
+{% block breadcrumb_title %} Personas Naturales y Jurídicas {% endblock breadcrumb_title %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% if '/persona/' == request.path %}
+    <li class="active">Personas</li>
+    {% else %}
+    <li>
+        <a href="{% url 'persona_list' %}">
+            Personas
+        </a>
+    </li>
+    {% endif %}
+{% endblock breadcrumbs %}

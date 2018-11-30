@@ -7,11 +7,11 @@
 {% block breadcrumb_title %} Gestión de Usuarios {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% if 'admin/users/' in request.path %}
+    {% if '/admin/users/' == request.path %}
     <li class="active">Usuarios</li>
     {% else %}
     <li>
-        <a href="{% url 'admin_users' %}">
+        <a href="{% url 'admin_user' %}">
             Usuarios
         </a>
     </li>
@@ -23,7 +23,7 @@
             <div class="card-header">
                 <strong class="card-title">Usuarios</strong>
                 {% if perms.auth.add_user %}
-                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Usuario</button>
+                <a type="button" href="{% url 'admin_user_add' %}" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Usuario</a>
                 {% endif %}
             </div>
             <div class="card-body">

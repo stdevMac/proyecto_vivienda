@@ -17,5 +17,7 @@ urlpatterns = [
     path('persona/', include(persona_url)),
     path('perfil/', include(perfil_url)),
     path('vivienda/', include(vivienda_url)),
-    path('quejas/', include(complaint_url))
+    path('quejas/', include(complaint_url)),
+    path('dpv_events/', include(events_url)),
+    path('emailing/', include(email_url)),
 ]

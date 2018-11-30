@@ -1,0 +1,32 @@
+{% if object %}
+    <form role="form" action="{% url 'piso_edit' object.id %}" method="post">
+    {% else %}
+    <form role="form" action="{% url 'piso_new' %}" method="post">
+    {% endif %}
+{% csrf_token %}
+<div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" >
+                    <h4 class="modal-title">Piso</h4>
+                    <div class="actions">
+                        <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                 </div>
+                <div class="modal-body">
+                    <form class="row" role="form" method="post">
+                       <div class="col-md-12">
+                            <div class="form-control-sm">
+                                <label for="">Nombre</label>
+                                {{ form.non_field_errors }}
+                                {{ form.nombre }}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+</form>

@@ -640,4 +640,15 @@ p.help-text {
 .background-lightblue {
     background: #bed7f3 !important;
 }
+.padding-short {
+    padding-right: 3%;
+    padding-left: 3%;
+}
+.form-check-input {
+    position: relative;
+    margin-top: .3rem;
+    margin-left: auto;
+    float: left;
+    margin-right: 1.03rem;
+}
 /*# sourceMappingURL=style.css.map */

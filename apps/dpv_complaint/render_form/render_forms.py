@@ -1,7 +1,5 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.utils import timezone
-
 from apps.dpv_complaint.forms import *
 from apps.dpv_complaint.models import *
 from apps.dpv_persona.forms import PersonaNaturalForm, PersonaJuridicaForm
