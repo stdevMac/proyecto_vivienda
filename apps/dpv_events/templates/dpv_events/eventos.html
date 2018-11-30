@@ -1,4 +1,4 @@
-{% extends 'layouts/dashboard.html' %}
+{% extends 'dpv_events/events_base.html' %}
 {% load i18n %}
 {% load static %}
 {% block page_title %}| Eventos{% endblock page_title %}
@@ -241,4 +241,6 @@
         </div>
     </div>
 {% endblock content_page %}
-{% block extra_scripts %}{% endblock %}
+{% block extra_scripts %}
+    <script src="{% static 'dpv_events/scripts/eventos.js' %}"></script>
+{% endblock extra_scripts %}

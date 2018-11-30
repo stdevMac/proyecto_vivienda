@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import Group, User, Permission
 from apps.dpv_nomencladores.models import Calle, AreaTrabajo, CentroTrabajo, Genero, Municipio
 from .models import ConfigMail
+from .Widgets import DivCheckboxSelectMultiple
 
 
 class LoginForm(forms.Form):
@@ -31,9 +32,9 @@ class UserForm(forms.Form):
     email = forms.EmailField(max_length=255, required=True, label="Correo Electrónico", help_text="Correo electronico del usuario, es al que el usuario recibira las notificaciones.",
                              widget=(forms.EmailInput(attrs={"placeholder": "Correo Electronico", "class": "form-control"})))
     permissions = forms.ModelMultipleChoiceField(queryset=Permission.objects.all(), label="Permisos",  help_text="Permisos otorgados al usuario.",
-                                                 widget=(forms.CheckboxSelectMultiple(attrs={"class": "form-control"})))
+                                                 widget=(DivCheckboxSelectMultiple(attrs={"class": "form-control"})))
     groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(), label="Grupos", help_text="Grupos a los que pertenecera el usuario.\nEl usuario heredara los permisos de los grupos a los que pertenesca.",
-                                            widget=(forms.CheckboxSelectMultiple(attrs={"class": ""})))
+                                            widget=(DivCheckboxSelectMultiple(attrs={"class": ""})))
     is_staff = forms.BooleanField(label="Administrador?", help_text="Marquelo para que el usuario pueda entrar al sitio de administración.",
                                   widget=(forms.CheckboxInput(attrs={"class": "form-check-input"})))
 
