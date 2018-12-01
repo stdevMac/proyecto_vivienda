@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import Group, User, Permission
 from apps.dpv_nomencladores.models import Calle, AreaTrabajo, CentroTrabajo, Genero, Municipio
+from .models import ConfigMail
 
 
 class LoginForm(forms.Form):
@@ -73,3 +74,9 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ('name', )
+
+
+class ConfigMail(forms.ModelForm):
+    class Meta:
+        model = ConfigMail
+        fields = ('servidor', 'puerto', 'usuario', 'password', 'usa_tls', 'usa_ssl', )

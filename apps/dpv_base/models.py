@@ -15,3 +15,19 @@ class FilesUploaded(models.Model):
 
     def __str__(self):
         return '%s.%s' % (self.nombre, self.extencion)
+
+
+class ConfigMail(models.Model):
+    servidor = models.CharField(max_length=100)
+    puerto = models.CharField(max_length=3)
+    usuario = models.CharField(max_length=255)
+    password = models.CharField(max_length=50)
+    usa_tls = models.BooleanField(default=False)
+    usa_ssl = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name='Configuración de correo'
+
+    def __str__(self):
+        return self.servidor + ':' + self.puerto
+
