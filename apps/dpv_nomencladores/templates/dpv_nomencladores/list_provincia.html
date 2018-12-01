@@ -50,7 +50,7 @@
                                     <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
                                 {% endif %}
                                 {% if perms.provincia.delete_provincia %}
-                                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                                    <a href="#delete_provincia" role="button" data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -66,50 +66,17 @@
         </div>
     </div>
 
-
+{% if perms.dpv_events.add_provincia %}
     <div id="form_provincia" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    {% if object%}
-                    <form role="form" action="{% url 'provincia_edit' object.pk %}" method="post">
-                    {% else %}
-                    <form role="form" action="{% url 'provincia_new' %}" method="post">
-                    {% endif %}
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">Cerrar</span>
-                        </button>
-                        <h5 class="modal-title" id="smallmodalLabel">Provincia</h5>
-                    </div>
-                    <div class="modal-body">
-                        {% csrf_token %}
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class="col-md-6">
-                                        <div class="form-control-sm">
-                                            <label for="">Nombre</label>
-                                            {{ form.non_field_errors }}
-                                            {{ form.nombre }}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-control-sm">
-                                            <label for="">Número</label>
-                                            {{ form.non_field_errors }}
-                                            {{ form.numero }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Agregar</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
+            {% include 'dpv_nomencladores/form_provincia.html' %}
+
     </div>
+{% endif %}
+{% if perms.provincia.delete_provincia %}
+    <div id="delete_provincia" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            {% include 'dpv_nomencladores/delete_provincia.html' %}
+    </div>
+{% endif %}
 
 {% endblock content_page %}
 {% block extra_scripts %}

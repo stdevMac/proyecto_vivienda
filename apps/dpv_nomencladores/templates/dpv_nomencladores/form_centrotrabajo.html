@@ -1,29 +1,45 @@
 {% if object %}
-    <form role="form" action="{% url 'provincia_edit' object.id %}" method="post">
+    <form role="form" action="{% url 'centrotrabajo_edit' object.id %}" method="post">
     {% else %}
-    <form role="form" action="{% url 'provincia_new' %}" method="post">
+    <form role="form" action="{% url 'centrotrabajo_new' %}" method="post">
     {% endif %}
 {% csrf_token %}
 <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header" >
-                    <h4 class="modal-title">Provincia</h4>
+                    <h4 class="modal-title">Unidad</h4>
                     <div class="actions">
                         <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     </div>
                  </div>
                 <div class="modal-body">
                     <form class="row" role="form" method="post">
-                       <div class="col-md-12">
+                       <div class="col-md-6">
                             <div class="form-control-sm">
                                 <label for="">Nombre</label>
                                 {{ form.non_field_errors }}
                                 {{ form.nombre }}
                             </div>
-                           <div class="form-control-sm">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-control-sm">
                                 <label for="">Número</label>
                                 {{ form.non_field_errors }}
                                 {{ form.numero }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-control-sm">
+                                <label for="">Siglas</label>
+                                {{ form.non_field_errors }}
+                                {{ form.sigla }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-control-sm">
+                                <label for="">Municipio</label>
+                                {{ form.non_field_errors }}
+                                {{ form.municipio }}
                             </div>
                         </div>
                         <div class="modal-footer">
