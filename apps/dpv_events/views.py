@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import permission_required
+from django.contrib.contenttypes.models import ContentType
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import *
 
@@ -29,22 +30,12 @@ def create_tipoevento(request):
         model.frecuencia_id = request.POST["frecuencia_tipoevento"]
     model.permission_id = permission.id
     model.save()
-    
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(TipoEvento)
-    log.object = model.id
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
 
     data['id'] = model.id
     data['type'] = model.type
     data['frecuencia'] = str(model.frecuencia)
-    
 
-    return JsonResponse(data)
+    return redirect('dpv_events:tipoevento')
 
 
 @permission_required('dpv_events.change_tipoevento')
@@ -112,22 +103,12 @@ def create_frecuencia(request):
     model.name = request.POST["name_frecuencia"]
     model.days = request.POST["days_frecuencia"]
     model.save()
-    
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(Frecuencia)
-    log.object = model.id
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
 
     data['id'] = model.id
     data['name'] = model.name
     data['days'] = model.days
-    
 
-    return JsonResponse(data)
+    return redirect('dpv_events:frecuencia')
 
 
 @permission_required('dpv_events.change_frecuencia')
