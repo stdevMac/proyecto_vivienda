@@ -4,6 +4,6 @@ from .models import *
 
 # Register your models here.
 admin.site.register(Complaint)
-admin.site.register(Tecnic)
-admin.site.register(AsignedToTecnic)
+admin.site.register(Technical)
+admin.site.register(AssignedToTechnician)
 admin.site.register(Accepted)

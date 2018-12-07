@@ -3,69 +3,78 @@ from apps.dpv_nomencladores.models import AreaTrabajo
 from apps.dpv_perfil.models import Perfil
 from django.utils import timezone
 from apps.dpv_persona.models import *
-from django.core.exceptions import ValidationError
 
-#generic complaint
+stat = {
+    ('Pendiente', 'P'),
+    ('Esperando Asignacion', 'EA'),
+    ('Esperando Respuesta de Tecnico', 'ERT'),
+    ('Esperando aceptacion del jefe', 'EAJ'),
+}
+ans = {
+    ('S', "Solucion o Resuelto"),
+    ('PS', 'Pendiente de Solucion'),
+    ('PR', 'Pendiente de Respuesta'),
+    ('ECNS', 'Explicada Causa de no Solucion'),
+    ('Tramite', 'Tramite')
+}
+
+
 class Complaint(models.Model):
-    stat = {
-        ('Pendiente', 'P'),
-        ('Esperando Asignacion', 'EA'),
-        ('Esperando Respuesta de Tecnico', 'ERT'),
-        ('Esperando aceptacion del jefe', 'EAJ'),
-    }
-    procedency = models.CharField(max_length=50,verbose_name="Procedencia de la Queja")
-    body = models.CharField(max_length=1000,verbose_name="Cuerpo de la Queja")
-    topic = models.CharField(max_length=200,verbose_name="Titulo de la Queja")
-    number = models.CharField(max_length=15,verbose_name="Numero de la Queja")
-    status = models.CharField(choices=stat, default='Pendiente', max_length=20,verbose_name="Estado de la Queja")
-    enterDate = models.DateTimeField(default=timezone.now, verbose_name="Fecha de Introduccion de la Queja")
-    is_natural = models.BooleanField(verbose_name="Es Natural",default=True)
-    person_natural = models.ForeignKey(PersonaNatural, null=True, on_delete=models.CASCADE, verbose_name="Persona Natural  que Presenta la Queja", blank=True)
-    person_juridic = models.ForeignKey( PersonaJuridica, null=True, on_delete=models.CASCADE, verbose_name="Persona Juridica que Presenta la Queja", blank=True)
-    department = models.ForeignKey(AreaTrabajo, on_delete=False, null=True)
-    class Meta:
-        verbose_name = "Queja"
+    origin = models.CharField(max_length=50, )
+    body = models.CharField(max_length=1000, )
+    topic = models.CharField(max_length=200, )
+    number = models.CharField(max_length=15,)
+    status = models.CharField(choices=stat, default='Pendiente', max_length=20, )
+    enter_date = models.DateTimeField(default=timezone.now, )
+    is_natural = models.BooleanField(default=True)
+    person_natural = models.ForeignKey(PersonaNatural, related_name='person_natural', on_delete=False, blank=True)
+    person_juridic = models.ForeignKey(PersonaJuridica, related_name='person_juridic', on_delete=models.CASCADE, blank=True)
+    department = models.ForeignKey(AreaTrabajo, related_name='department', on_delete=False, null=True)
 
 
-#employer in charge of analyzing the complaint
-class Tecnic(models.Model):
-    perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, verbose_name="Perfil del Tecnico")
+class Technical(models.Model):
+    profile = models.ForeignKey(Perfil, on_delete=False, related_name='profile')
 
 
-#waiting for distribution in the working area
+class Documents(models.Model):
+    text = models.TextField()
+
+
 class WaitingForDistribution(models.Model):
-    complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE, verbose_name="Queja")
-    enterDate = models.DateTimeField(default=timezone.now, verbose_name="Fecha insertada la queja por PersonaNatural  para esperar la distribucion")
+    complaint = models.ForeignKey(Complaint, on_delete=False)
+    enter_date = models.DateTimeField(default=timezone.now, )
 
 
-#waiting for the tecniccian to give it an answer
-class AsignedToTecnic(models.Model):
-    complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE, verbose_name="Queja por PersonaNatural ")
-    tecnic = models.ForeignKey(Tecnic, on_delete=models.CASCADE, verbose_name="Tecnico asignado a la Queja ")
-    enterDate = models.DateTimeField(default=timezone.now,verbose_name='Now')
+class AssignedToTechnician(models.Model):
+    complaint = models.ForeignKey(Complaint, on_delete=False, )
+    technical = models.ForeignKey(Technical, on_delete=models.CASCADE,)
+    enter_date = models.DateTimeField(default=timezone.now, )
 
 
-#the tecniccian gave an answer
 class FinishedComplaint(models.Model):
-    complaint = models.ForeignKey(Complaint,on_delete=False, verbose_name="Queja por PersonaNatural ")
-    tecnic = models.ForeignKey(Tecnic, on_delete=False,verbose_name="Tecnico que atendio la Queja ")#.ForeignKey(Tecnic, on_delete=models.CASCADE)
-    arguments = models.CharField(default='', verbose_name="Respuesta del tecnico a la queja", max_length=1000)
-    enterDate = models.DateTimeField(default=timezone.now, verbose_name='now')
+    complaint = models.ForeignKey(Complaint, on_delete=False,)
+    technical = models.ForeignKey(Technical, on_delete=False,)
+    technical_args = models.ForeignKey(Documents, on_delete=False, related_name='technical_args')
+    enter_date = models.DateTimeField(default=timezone.now)
 
 
-#the answer given by the tecniccian was accepted by the boss
 class Accepted(models.Model):
-    complaint = models.ForeignKey(Complaint,on_delete=False, verbose_name="Queja por PersonaNatural ")
-    tecnicWorkInComplaint = models.ForeignKey(Tecnic,on_delete=False,default=1, verbose_name="Tecnico que atendio la Queja ")
-    argumentsOfTecnic = models.CharField(default='', verbose_name="Respuesta del tecnico a la queja", max_length=1000)
-    finalArgumnets = models.CharField(default='', verbose_name="Respuesta final del jefe a la queja", max_length=1000)
-    finishedDate = models.DateTimeField(default=timezone.now, verbose_name='now')
-    bossAccepted = models.ForeignKey(Perfil, on_delete=False, default=False)
-    ans = {
-        ('S', 'Solucion o Resuelto'), # Solucion o Resuelto
-        ('PS', 'Pendiente de Solucion'), # Pendiente de Solucion
-        ('PR', 'Pendiente de Respuesta'), # Pendiente de Respuesta
-        ('ECNS', 'Explicada Causa de no Solucion'), # Explicada Causa de no Solucion
-        ('Tramite', 'Tramite') # Tramite
-    }
-    answer = models.CharField(choices=ans, default='S',max_length=100, verbose_name='Actual Respuesta de la queja', )
+    complaint = models.ForeignKey(Complaint, on_delete=False,)
+    technical_work_in_complaint = models.ForeignKey(Technical, on_delete=False, default=1,
+                                                    related_name='technical_accepted')
+    technical_args = models.ForeignKey(Documents, on_delete=False, related_name='technical_args_accepted')
+    final_args = models.ForeignKey(Documents, False)
+    finished_date = models.DateTimeField(default=timezone.now)
+    boss_accepted = models.ForeignKey(Perfil, on_delete=False, default=False, related_name='boss_accepted')
+    answer = models.CharField(choices=ans, default='S', max_length=100, )
+
+
+class HistoryComplaint(models.Model):
+    complaint = models.ForeignKey(Complaint,  on_delete=False, )
+    technical = models.ForeignKey(Technical, on_delete=False, related_name='technical_history', blank=True)
+    boss = models.ForeignKey(Perfil, on_delete=False, blank=True)
+    state = models.CharField(choices=stat, default='Pendiente', max_length=200)
+    technical_args = models.ForeignKey(Documents, related_name='technical_args_history', on_delete=False, blank=True)
+    boss_args = models.ForeignKey(Documents, on_delete=False, related_name='boss_args_history', blank=True)
+    boss_answer = models.CharField(choices=ans, default='S', max_length=20, blank=False)
+    date_of_status = models.DateTimeField(auto_now_add=True)

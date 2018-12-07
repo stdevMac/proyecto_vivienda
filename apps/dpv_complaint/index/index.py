@@ -2,40 +2,39 @@ from django.shortcuts import render
 from apps.dpv_complaint.models import *
 
 
-def index_NaturalComplaint(request):
+def index_natural_complaint(request):
     index_name = 'Indice de las Quejas'
-    elems = Complaint.objects.filter(is_natural = True)
-    return render(request, "dpv_complaint/index_complaint.html", {'index': elems, 'index_name': index_name})
+    elms = Complaint.objects.filter(is_natural = True)
+    return render(request, "dpv_complaint/index_complaint_new.html", {'index': elms, 'index_name': index_name})
 
 
-def index_JuridicComplaint(request):
+def index_juridic_complaint(request):
     index_name = 'Indice de las Quejas'
-    elems = Complaint.objects.filter(is_natural = False)
-    return render(request, "dpv_complaint/index_complaint.html", {'index': elems, 'index_name': index_name})
+    elms = Complaint.objects.filter(is_natural = False)
+    return render(request, "dpv_complaint/index_complaint_new.html", {'index': elms, 'index_name': index_name})
 
 
-def index_WaitingForDistribution(request):
+def index_waiting_for_distribution(request):
     index_name = 'Indice de Quejas en espera de su distribucion'
-    elems = Complaint.objects.filter(department=None)
-    return render(request, "dpv_complaint/index_waiting_for_distribution.html", {'index': elems, 'index_name' : index_name })
+    elms = Complaint.objects.filter(department=None)
+    return render(request, "dpv_complaint/index_waiting_for_distribution.html", {'index': elms, 'index_name' : index_name })
 
 
-def index_AsignedToTecnic(request, tecnic_id):
-    comp = AsignedToTecnic.objects.filter(tecnic=tecnic_id)
+def index_assigned_to_technician(request, tecnic_id):
+    comp = AssignedToTechnician.objects.filter(tecnic=tecnic_id)
     index_name = 'Quejas asignadas al Tecnico Fulano de tal'
-    elems = [x.complaint for x in comp ]
-    return render(request, "dpv_complaint/index_asigned_to_tecnic.html", {'index': elems, 'index_name' : index_name , 'tecnic_id':tecnic_id})
+    elms = [x.complaint for x in comp]
+    return render(request, "dpv_complaint/index_asigned_to_tecnic.html", {'index': elms, 'index_name' : index_name , 'tecnic_id':tecnic_id})
 
 
-
-def index_FinishedComplaint(request):
+def index_finished_complaint(request):
     index_name = 'Indice de Quejas Finalizadas'
-    elems = FinishedComplaint.objects.all()
-    return render(request, "dpv_complaint/index_finished.html", { 'index': elems, 'index_name': index_name})
+    elms = FinishedComplaint.objects.all()
+    return render(request, "dpv_complaint/index_finished.html", { 'index': elms, 'index_name': index_name})
 
 
-def index_Accepted(request):
+def index_accepted(request):
     index_name = 'Indice de Quejas Aceptadas'
-    elems = Accepted.objects.all()
-    return render(request, "dpv_complaint/index_accepted.html", {'index': elems, 'index_name': index_name})
+    elms = Accepted.objects.all()
+    return render(request, "dpv_complaint/index_accepted.html", {'index': elms, 'index_name': index_name})
 

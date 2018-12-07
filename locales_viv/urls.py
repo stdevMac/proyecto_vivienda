@@ -7,6 +7,8 @@ from apps.dpv_persona import urls as persona_url
 from apps.dpv_perfil import urls as perfil_url
 from apps.dpv_viviendas import urls as vivienda_url
 from apps.dpv_complaint import urls as complaint_url
+from apps.dpv_events import urls as events_url
+from apps.email_sender import urls as email_url
 
 
 urlpatterns = [
