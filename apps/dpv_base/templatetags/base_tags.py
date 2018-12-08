@@ -1,5 +1,6 @@
 from django.apps import apps as all_apps
-# from django.template.defaultfilters import register, stringfilter
+from django.template.defaultfilters import stringfilter
+from django.utils.safestring import SafeData, mark_safe
 from django import template
 from locales_viv import settings
 
@@ -41,3 +42,13 @@ def ative_url(url=None):
     for urlpath in settings.BULK_URLS:
         pass
 
+@register.filter
+@stringfilter
+def split(value, arg):
+    if not value:
+        return
+    safe = isinstance(value, SafeData)
+    value = value.split(arg)
+    if safe:
+        return mark_safe(value)
+    return value

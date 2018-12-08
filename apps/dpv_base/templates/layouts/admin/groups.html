@@ -23,7 +23,7 @@
             <div class="card-header">
                 <strong class="card-title">Grupos</strong>
                 {% if perms.auth.add_group %}
-                <button type="button" class="pull-right btn btn-success btn-sm" data-toggle="modal" data-target="#formGroupModal"><i class="fa fa-plus"></i> Agregar Grupo</button>
+                <a href="{% url 'admin_group_add' %}" type="button" class="pull-right btn btn-success btn-sm" ><i class="fa fa-plus"></i> Agregar Grupo</a>
                 {% endif %}
             </div>
             <div class="card-body">

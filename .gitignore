@@ -1,5 +1,5 @@
 db.sqlite3
-.idea
-.idea/*
+./.idea
+./.idea/*.idea/*
 */__pycache__/*
 *.pyc

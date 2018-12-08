@@ -27,6 +27,11 @@ class Persona(models.Model):
     def __str__(self):
         return self.nombre
 
+    def clean(self):
+        if self.movil == self.telefono:
+            raise ValidationError('Los Teléfonos no pueden ser iguales.', code='same_phone')
+        return super(forms.Form, self).clean()
+
 
 class PersonaNatural(Persona):
     apellidos = models.CharField(max_length=50, validators=[MaxLengthValidator(50), only_letters])

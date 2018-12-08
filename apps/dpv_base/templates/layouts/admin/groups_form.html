@@ -4,20 +4,61 @@
 {% block breadcrumb_title %} Formulario {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% if '/admin/users/form' == request.path %}
+    {% if '/admin/groups/form' == request.path %}
     <li class="active">Crear</li>
     {% else %}
     <li>
-        <a href="{% url 'admin_user_add' %}">
+        <a href="{% url 'admin_group_add' %}">
             Crear
         </a>
     </li>
     {% endif %}
 {% endblock breadcrumbs %}
 {% block content_page %}
+    <div class="animated fadeIn">
+        <div class="row padding-short">
+            <div class="col-md-12">
+                <form novalidate method="POST">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {% if form.errors|length == 1 %}"Por favor, corrija el error señalado a continuación."{% else %}"Por favor, corrija los errores señalados a continuación."{% endif %}
+                    </div>
+                    {% endif %}
+                    <div class="card">
+                        <div class="card-header">
+                            Grupo
+                        </div>
+                        <div class="card-body">
+                                {% for field in form %}
+                                <div class="form-group" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                                    {{field.errors}}
+                                    <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
+                                    {{field}}
+                                    {{field.required }}
+                                </div>
+                                {% endfor %}
+                        </div>
+                        <div class="card-footer">
+                            <a type="button" class="btn btn-default" href="{% url 'admin_group' %}">
+                                <i class="fa fa-reply"></i>
+                                Volver
+                            </a>
+                            <button type="submit" class="pull-right btn btn-primary">
+                                <i class="fa fa-check"></i>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+      <button type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#mediumModal">
+
+      </button>
 {% endblock content_page %}
 
 
-                      <button type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#mediumModal">
-                          Medium
-                      </button>

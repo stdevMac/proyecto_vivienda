@@ -627,9 +627,13 @@ header .form-inline {
 }
 p.help-text {
     color: #3b4856;
-    font-size: 13px;
-    font-weight: 300;
-    line-height: 24px;
+    font-size: 12px;
+    font-weight: lighter;
+    line-height: 15px;
+}
+p.help-text-small {
+    font-size: 10px !important;
+    line-height: 14px !important;
 }
 .color-blue {
     color: #007bff;
@@ -650,5 +654,35 @@ p.help-text {
     margin-left: auto;
     float: left;
     margin-right: 1.03rem;
+}
+div.multi-select-box {
+    max-height: 80vh;
+    width: auto;
+    height: 40vh;
+    padding-left: 0%;
+    padding-right: 0%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+div.multi-select-box > span > label {
+    max-height: 5vh;
+    height: 5vh !important;
+    display: flex;
+    text-align: left;
+}
+div.multi-select-box > span  {
+    display: inline;
+}
+input.multi-select-box {
+    margin-right: 3px !important;
+    margin-left: 3px !important;
+    width: 5%;
+}
+ul.errorlist {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    color: #721c24;
+    font-weight: 300;
+    list-style: none;
 }
 /*# sourceMappingURL=style.css.map */
