@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.template import RequestContext
+from apps.email_sender.forms import ConfigureMailForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
@@ -12,6 +12,7 @@ from .forms import FullUserForm, UserProfileForm, UserForm, GroupForm
 from .utils import store_url_names
 from apps.dpv_persona.models import PersonaNatural
 from apps.dpv_perfil.models import Perfil
+from apps.email_sender.models import EmailConfigurate
 
 
 # Create your views here.
@@ -166,3 +167,18 @@ def users_view(request):
 @permission_required('auth.view_logentry', raise_exception=True)
 def logs_view(request):
     pass
+
+
+@permission_required('email_sender.add_emailconfigurate', raise_exception=True)
+def configure_email(request):
+    if request.method == 'POST':
+        form = ConfigureMailForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'layouts/admin/mailconf.html', {'form': form})
+        else:
+            return render(request, 'layouts/admin/mailconf.html', {'form': form})
+    else:
+        ec = EmailConfigurate.objects.all().first()
+        form = ConfigureMailForm(ec)
+        return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})

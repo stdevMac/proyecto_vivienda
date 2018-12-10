@@ -28,17 +28,17 @@
                     {% endif %}
                     <div class="card">
                         <div class="card-header">
-                            Usuario
+                            <strong class="card-title">Usuario</strong>
                         </div>
                         <div class="card-body">
-                                {% for field in form %}
-                                <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
-                                    {{field.errors}}
-                                    <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
-                                    {{field}}
-                                    {{field.required }}
-                                </div>
-                                {% endfor %}
+                            {% for field in form %}
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                                {{field.errors}}
+                                <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
+                                {{field}}
+                                {{field.required }}
+                            </div>
+                            {% endfor %}
                         </div>
                         <div class="card-footer">
                             <a type="button" class="btn btn-default" href="{% url 'admin_user' %}">

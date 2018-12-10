@@ -685,4 +685,31 @@ ul.errorlist {
     font-weight: 300;
     list-style: none;
 }
+.el-rounded {
+    border-radius: 5px !important;
+}
+.dashwidget {
+    height: 150px;
+}
+.bg-flat-color-6 {
+    background-color: #e69f35;
+}
+.bg-flat-color-7 {
+    background-color: #ba76ea;
+}
+.bg-flat-color-8 {
+    background-color: #e96179;
+}
+.bg-flat-color-9 {
+    background-color: #5ac2e4;
+}
+.bg-flat-color-0 {
+    background-color: #5355ef;
+}
+.h-list {
+    overflow-x: scroll;
+}
+.no-border {
+    border-bottom: 0px;
+}
 /*# sourceMappingURL=style.css.map */

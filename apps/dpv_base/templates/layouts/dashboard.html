@@ -1,1 +1,29 @@
 {% extends 'layouts/base.html' %}
+{% load base_tags %}
+{% block content_page %}
+    <div class="container">
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-success">Hola</span> Bienvenido {{request.user.first_name}} {{request.user.last_name}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        {% for app in menuable_apps %}
+        <div class="col-sm-6 col-md-4 col-lg-4">
+            <div class="card text-white bg-flat-color-5 el-rounded dashwidget">
+                <div class="card-body pb-0">
+                    <div class="dropdown float-right">
+                        <button class="btn bg-transparent text-light" type="button">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                    </div>
+                    <h2 class="mb-0">
+                        <span class="count">3456</span>
+                    </h2>
+                    <h4 class="text-light">Members online</h4>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content_page %}

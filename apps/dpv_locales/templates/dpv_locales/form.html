@@ -1,0 +1,112 @@
+{% extends 'dpv_locales/list.html' %}
+{% block page_title %} | Formulario {% endblock page_title %}
+{% load static %}
+{% block extra_style %}
+    <link rel="stylesheet" href="{% static 'dpv_base/css/lib/datatable/dataTables.bootstrap.min.css' %}">
+{% endblock extra_style %}
+{% block breadcrumb_title %} Crear {% endblock breadcrumb_title %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% if '/local/form/' == request.path %}
+    <li class="active">Crear</li>
+    {% else %}
+    <li>
+        <a href="{% url 'locales_form' %}">
+            Crear
+        </a>
+    </li>
+    {% endif %}
+{% endblock breadcrumbs %}
+{% block content_page %}
+    <div class="col-md-12">
+        <form novalidate method="POST">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {% if form.errors|length == 1 %}"Por favor, corrija el error señalado a continuación."{% else %}"Por favor, corrija los errores señalados a continuación."{% endif %}
+            </div>
+            {% endif %}
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Local</strong>
+                </div>
+                <div class="card-body">
+                    {% for field in form %}
+                    <div class="form-group {% if field.name == 'observaciones' %} col-md-12 {% else %} col-md-6 {% endif %}" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                        {{field.errors}}
+                        <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
+                        {{field}}
+                        {{field.required }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="card-footer">
+                    <a type="button" class="btn btn-default" href="{% url 'locales_list' %}">
+                        <i class="fa fa-reply"></i>
+                        Volver
+                    </a>
+                    <button type="submit" class="pull-right btn btn-primary">
+                        <i class="fa fa-check"></i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Viviendas del local</strong>
+                <button type="submit" class="pull-right btn btn-success">
+                    <i class="fa fa-plus"></i>
+                    Agregar Vivienda
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="h-list row">
+                    {% for vivienda in viviendas %}
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <td>Número</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Propietario</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Concepto</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Cant. Personas</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha Habitado</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Destino</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Aprobado</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {% empty %}
+                    <div class="col-sm-12">
+                        <div class="alert  alert-success alert-dismissible fade show text-center" role="alert">
+                            No hay viviendas asociadas a este local
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content_page %}

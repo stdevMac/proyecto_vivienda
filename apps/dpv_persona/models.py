@@ -1,13 +1,15 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.exceptions import ValidationError
 from apps.dpv_nomencladores.models import Municipio, Calle
 from apps.dpv_nomencladores.validators import only_letters, only_numbers
 from apps.dpv_nomencladores.models import Genero, AreaTrabajo, CentroTrabajo
+from .validators import ci_validate
 
 
 # Create your models here.
 class Persona(models.Model):
-    nombre = models.CharField(max_length=30, validators=[MaxLengthValidator(30), only_letters])
+    nombre = models.CharField(max_length=30, validators=[MaxLengthValidator(30)])
     municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE, verbose_name="Municipio", help_text="Municipio donde recide la persona")
     direccion_calle = models.ForeignKey(Calle, on_delete=models.CASCADE, verbose_name="Calle", blank=True)
     direccion_numero = models.PositiveSmallIntegerField(blank=True, verbose_name="Número")
@@ -27,17 +29,13 @@ class Persona(models.Model):
     def __str__(self):
         return self.nombre
 
-    def clean(self):
-        if self.movil == self.telefono:
-            raise ValidationError('Los Teléfonos no pueden ser iguales.', code='same_phone')
-        return super(forms.Form, self).clean()
-
 
 class PersonaNatural(Persona):
+    nombre = models.CharField(max_length=30, validators=[MaxLengthValidator(30), only_letters])
     apellidos = models.CharField(max_length=50, validators=[MaxLengthValidator(50), only_letters])
     ci = models.CharField(max_length=11, validators=[MinLengthValidator(11, message="Este campo no puede tener menos de 11 caracteres"),
                                                      MaxLengthValidator(11, message="Este campo no puede tener más de 11 caracteres"),
-                                                     only_numbers], unique=True)
+                                                     only_numbers, ci_validate, ], unique=True)
     direccion_entrecalle1 = models.ForeignKey(Calle, related_name="persona_entrecalle1", on_delete=models.CASCADE, verbose_name="Primera Entrecalle", blank=True)
     direccion_entrecalle2 = models.ForeignKey(Calle, related_name="persona_entrecalle2", on_delete=models.CASCADE, verbose_name="Segunda Entrecalle", blank=True)
     genero = models.ForeignKey(Genero, verbose_name="Género", blank=True, on_delete=models.CASCADE)

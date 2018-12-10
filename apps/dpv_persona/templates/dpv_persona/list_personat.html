@@ -23,7 +23,7 @@
             <div class="card-header">
                 <strong class="card-title">Personas</strong>
                 {% if perms.persona.add_persona %}
-                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Persona</button>
+                <a href="{% url 'persona_natural_add' %}" type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Persona</a>
                 {% endif %}
             </div>
             <div class="card-body">

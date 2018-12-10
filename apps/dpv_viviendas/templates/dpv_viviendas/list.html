@@ -23,7 +23,7 @@
             <div class="card-header">
                 <strong class="card-title">Viviendas</strong>
                 {% if perms.vivienda.add_vivienda %}
-                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Vivienda</button>
+                <a href="{% url 'vivienda_add' %}" type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Vivienda</a>
                 {% endif %}
             </div>
             <div class="card-body">

@@ -122,6 +122,7 @@ class GroupForm(forms.ModelForm):
         model = Group
         fields = ('name', 'permissions')
         widgets = {
+            'name': forms.TextInput(attrs={"placeholder": "Nombre del grupo", "class": "form-control"}),
             'permissions': DivCheckboxSelectMultiple(attrs={"class": "form-control multi-select-box" }),
         }
 
