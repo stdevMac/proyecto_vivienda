@@ -22,12 +22,12 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Quejas</strong>
-                    <a href="#form_provincia" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>
+                    <a href="{% url 'add_natural_complaint' %}" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>
                         Agregar Queja Natural</a>
-                    <a href="#form_provincia" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>
+                    <a href="{% url 'add_juridic_complaint' %}" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>
                         Agregar Queja Juridica</a>
 
-            </div>
+        </div>
             <div class="card-body">
                 {% if index %}
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">

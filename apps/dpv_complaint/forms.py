@@ -31,16 +31,16 @@ class DocumentsForm(forms.ModelForm):
 class AssignedToTechnicalForm(forms.ModelForm):
     class Meta:
         model = AssignedToTechnician
-        exclude = ('enterDate', 'complaint',)
+        exclude = ('enter_date', 'complaint',)
 
 
 class FinishedComplaintForm(forms.ModelForm):
     class Meta:
         model = FinishedComplaint
-        exclude = ('enterDate', 'tecnic', 'complaint',)
+        exclude = ('enter_date', 'technical', 'complaint',)
 
 
 class AcceptedForm(forms.ModelForm):
     class Meta:
         model = Accepted
-        exclude = ('finishedDate', 'complaint', 'bossAccepted', 'tecnicWorkInComplaint', 'argumentsOfTecnic')
+        exclude = ('finished_date', 'complaint', 'boss_accepted', 'technical_work_in_complaint', 'technical_args')

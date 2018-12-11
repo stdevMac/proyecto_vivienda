@@ -5,7 +5,6 @@
     {{ block.super }}
 {% endblock breadcrumbs %}
 
-<h1> Bienvenido {{ request.user }} </h1>
 {% block content_page %}
     <h1>Insertar {{form_name}}</h1>
     <form method="POST" class="post-form">{% csrf_token %}
@@ -13,3 +12,5 @@
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
 {% endblock content_page %}
+
+<h1> Bienvenido {{ request.user }} </h1>
