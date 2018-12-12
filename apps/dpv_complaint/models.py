@@ -1,4 +1,3 @@
-from django.db import models
 from apps.dpv_nomencladores.models import AreaTrabajo
 from apps.dpv_perfil.models import Perfil
 from django.utils import timezone
@@ -20,16 +19,38 @@ ans = {
 
 
 class Complaint(models.Model):
-    origin = models.CharField(max_length=50, )
-    body = models.CharField(max_length=1000, )
-    topic = models.CharField(max_length=200, )
-    number = models.CharField(max_length=15,)
+    origin = models.CharField(max_length=50, verbose_name='Origen')
+    body = models.CharField(max_length=1000, verbose_name='Cuerpo')
+    topic = models.CharField(max_length=200, verbose_name='Titulo')
+    number = models.CharField(max_length=15, verbose_name='Numero')
     status = models.CharField(choices=stat, default='Pendiente', max_length=20, )
     enter_date = models.DateTimeField(default=timezone.now, )
     is_natural = models.BooleanField(default=True)
     person_natural = models.ForeignKey(PersonaNatural, related_name='person_natural', on_delete=False, blank=True)
     person_juridic = models.ForeignKey(PersonaJuridica, related_name='person_juridic', on_delete=models.CASCADE, blank=True)
-    department = models.ForeignKey(AreaTrabajo, related_name='department', on_delete=False, null=True)
+    department = models.ForeignKey(AreaTrabajo, related_name='department', on_delete=False, null=True, verbose_name='Departamento')
+    anonymous = models.BooleanField(default=False)
+    expiration_time = models.IntegerField(default=60)
+
+
+class ConsejoPopular(models.Model):
+    nombre = models.CharField(max_length=50)
+
+
+class Entidad(models.Model):
+    nombre = models.CharField(max_length=50)
+
+
+class Approach(models.Model):
+    reference_number = models.IntegerField()
+    municipality = models.ForeignKey(Municipio, on_delete=False)
+    popular_council = models.ForeignKey(ConsejoPopular, on_delete=False)
+    entity = models.ForeignKey(Entidad, on_delete=False)
+    topic = models.CharField(max_length=200, verbose_name='Titulo')
+    text = models.CharField(max_length=1000)
+    made_by = models.ForeignKey(PersonaNatural, related_name='approach_made_by', on_delete=False, blank=True)
+    expiration_time = models.IntegerField(default=30)
+    # address of the one how make the approach
 
 
 class Technical(models.Model):

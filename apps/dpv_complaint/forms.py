@@ -9,7 +9,15 @@ class ComplaintForm(forms.ModelForm):
 
     class Meta:
         model = Complaint
-        exclude = ('enterDate', 'is_natural', 'person_juridic', 'person_natural', 'status',)
+        # fields = {
+        #     'origin': 'Origen',
+        #     'number': 'Numero',
+        #     'topic': 'Titulo',
+        #     'body': 'Cuerpo',
+        #     'department': 'Departamento'
+        # }
+        #
+        exclude = ('enter_date', 'is_natural', 'person_juridic', 'person_natural', 'status',)
 
 
 class AssignDepartmentForm(forms.Form):
@@ -44,3 +52,9 @@ class AcceptedForm(forms.ModelForm):
     class Meta:
         model = Accepted
         exclude = ('finished_date', 'complaint', 'boss_accepted', 'technical_work_in_complaint', 'technical_args')
+
+
+class DocumentsForm(forms.ModelForm):
+    class Meta:
+        model = Documents
+        fields = '__all__'

@@ -53,7 +53,7 @@ def form_juridic_complaint(request):
 
 
 def form_finished_complaint(request):
-    _form_name = "Queja por Para Responder"
+    _form_name = "Queja por Responder"
     if request.method == "POST":
         _form = FinishedComplaintForm(request.POST)
         if _form.is_valid():
@@ -84,7 +84,7 @@ def form_accepted(request, finished_id):
             return redirect(reverse_lazy('index_accepted'))
     else:
         _form = FinishedComplaintForm()
-    return render(request, "", {'form':_form, 'form_name': _form_name})
+    return render(request, "", {'form': _form, 'form_name': _form_name})
 
 
 def form_assign_department(request, complaint_id):

@@ -20,8 +20,8 @@ def index_waiting_for_distribution(request):
     return render(request, "dpv_complaint/index_waiting_for_distribution.html", {'index': elms, 'index_name' : index_name })
 
 
-def index_assigned_to_technician(request, tecnic_id):
-    comp = AssignedToTechnician.objects.filter(tecnic=tecnic_id)
+def index_assigned_to_technician(request, technical_id):
+    comp = AssignedToTechnician.objects.filter(technical=technical_id)
     index_name = 'Quejas asignadas al Tecnico Fulano de tal'
     elms = [x.complaint for x in comp]
     return render(request, "dpv_complaint/index_asigned_to_tecnic.html", {'index': elms, 'index_name' : index_name , 'tecnic_id':tecnic_id})
