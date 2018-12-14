@@ -61,25 +61,25 @@ class Documents(models.Model):
 
 
 class WaitingForDistribution(models.Model):
-    complaint = models.ForeignKey(Complaint, on_delete=False)
+    complaint = models.ForeignKey(Complaint, unique=True, on_delete=False)
     enter_date = models.DateTimeField(default=timezone.now, )
 
 
 class AssignedToTechnician(models.Model):
-    complaint = models.ForeignKey(Complaint, on_delete=False, )
+    complaint = models.ForeignKey(Complaint, unique=True, on_delete=False, )
     technical = models.ForeignKey(Technical, on_delete=models.CASCADE,)
     enter_date = models.DateTimeField(default=timezone.now, )
 
 
 class FinishedComplaint(models.Model):
-    complaint = models.ForeignKey(Complaint, on_delete=False,)
+    complaint = models.ForeignKey(Complaint, unique=True, on_delete=False,)
     technical = models.ForeignKey(Technical, on_delete=False,)
     technical_args = models.TextField()
     enter_date = models.DateTimeField(default=timezone.now)
 
 
 class Accepted(models.Model):
-    complaint = models.ForeignKey(Complaint, on_delete=False,)
+    complaint = models.ForeignKey(Complaint, on_delete=False, unique=True, )
     technical_work_in_complaint = models.ForeignKey(Technical, on_delete=False, default=1,
                                                     related_name='technical_accepted')
     technical_args = models.TextField()

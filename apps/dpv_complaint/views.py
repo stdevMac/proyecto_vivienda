@@ -24,7 +24,7 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
             post.complaint.save()
             post.id = post.pk
             post.save()
-            return redirect(reverse_lazy("index_assigned_to_technical", technical_id=post.technical.id))
+            return redirect(reverse_lazy('index_assigned_to_technical', args=[post.technical.id]))
     else:
         form = AssignedToTechnicalForm()
     return render(request, "dpv_complaint/single_form.html", {'form': form, 'form_name': form_name})
@@ -46,12 +46,13 @@ def from_assigned_to_technician_to_finished_complaint(request, complaint_id, tec
                 post.technical = Technical.objects.get(id=technical_id)
                 Complaint.objects.filter(id=complaint_id).update(status='Esperando aceptacion del jefe')
                 post.id = post.pk
+                AssignedToTechnician.objects.filter(technical=post.technical).filter(complaint=post.complaint).delete()
                 doc = Documents()
                 doc.text = post.technical_args
                 doc.save()
                 post.technical_args = doc
                 post.save()
-                return redirect(reverse_lazy('index_assigned_to_technical'))
+                return redirect(reverse_lazy('index_assigned_to_technical', args=technical_id))
     else:
         form = FinishedComplaintForm()
     return render(request, "dpv_complaint/asigned_to_finished.html", {'form': form, 'form_name': form_name})
@@ -75,6 +76,11 @@ def from_finished_complaint_to_accepted_complaint(request, complaint_id, technic
                 post.technical_work_in_complaint = Technical.objects.get(id=technical_id)
                 post.boss_accepted = Perfil.objects.get(id=1)
                 post.id = post.pk
+                # Set in history
+                history = HistoryComplaint()
+                # history.
+                # Delete finished complaint args
+                FinishedComplaint.objects.filter(complaint=complaint_id).filter(technical=technical_id).delete()
                 post.save()
                 return redirect(reverse_lazy('index_accepted_all'))
     else:

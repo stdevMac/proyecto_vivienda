@@ -52,7 +52,7 @@
                 {% endif %}
 
                 <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los Datos </a></td>
-                <td><a href={% url 'form_finished_complaint' complaint_id=complaint.id technical_id=tecnic_id %}> Responder Queja </a></td>
+                <td><a href={% url 'form_finished_complaint' complaint_id=complaint.id technical_id=technical_id%}> Responder Queja </a></td>
             </tr>
         {% endfor %}
         </tbody>
