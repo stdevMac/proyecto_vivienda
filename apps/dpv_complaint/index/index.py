@@ -24,7 +24,9 @@ def index_assigned_to_technician(request, technical_id):
     comp = AssignedToTechnician.objects.filter(technical=technical_id)
     index_name = 'Quejas asignadas al Tecnico Fulano de tal'
     elms = [x.complaint for x in comp]
-    return render(request, "dpv_complaint/index_asigned_to_tecnic.html", {'index': elms, 'index_name' : index_name , 'tecnic_id':tecnic_id})
+    return render(request, "dpv_complaint/index_assigned_to_technical.html",
+                  {'index': elms, 'index_name': index_name, 'technical_id': technical_id},
+    )
 
 
 def index_finished_complaint(request):

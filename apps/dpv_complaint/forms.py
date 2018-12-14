@@ -9,15 +9,8 @@ class ComplaintForm(forms.ModelForm):
 
     class Meta:
         model = Complaint
-        # fields = {
-        #     'origin': 'Origen',
-        #     'number': 'Numero',
-        #     'topic': 'Titulo',
-        #     'body': 'Cuerpo',
-        #     'department': 'Departamento'
-        # }
-        #
-        exclude = ('enter_date', 'is_natural', 'person_juridic', 'person_natural', 'status',)
+        exclude = ('enter_date', 'is_natural', 'person_juridic', 'person_natural', 'status',
+                   'anonymous', 'expiration_time',)
 
 
 class AssignDepartmentForm(forms.Form):
@@ -27,12 +20,6 @@ class AssignDepartmentForm(forms.Form):
 class TechnicianForm(forms.ModelForm):
     class Meta:
         model = Technical
-        fields = '__all__'
-
-
-class DocumentsForm(forms.ModelForm):
-    class Meta:
-        model = Documents
         fields = '__all__'
 
 
@@ -53,8 +40,3 @@ class AcceptedForm(forms.ModelForm):
         model = Accepted
         exclude = ('finished_date', 'complaint', 'boss_accepted', 'technical_work_in_complaint', 'technical_args')
 
-
-class DocumentsForm(forms.ModelForm):
-    class Meta:
-        model = Documents
-        fields = '__all__'

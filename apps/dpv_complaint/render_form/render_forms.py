@@ -5,12 +5,19 @@ from apps.dpv_complaint.models import *
 from apps.dpv_persona.forms import PersonaNaturalForm, PersonaJuridicaForm
 
 
+def check_person(form_person):
+    if form_person.is_valid():
+        return True
+    # Fix here problems of person_validation
+    return False
+
+
 def form_natural_complaint(request):
     form_name = "Queja de persona Natural"
     if request.method == "POST":
         form_complaint = ComplaintForm(request.POST)
         form_natural = PersonaNaturalForm(request.POST)
-        if form_complaint.is_valid() and form_natural.is_valid():
+        if form_complaint.is_valid() and check_person(form_natural):
 
             complaint = form_complaint.save(commit=False)
             complaint.is_natural = True

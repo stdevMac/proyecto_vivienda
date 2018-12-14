@@ -11,11 +11,11 @@ def main_view(request):
 
 
 def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_id):
-    form_name = "Quejas Aceptadas"
+    form_name = "Seleccionar Tecnico"
     if request.method == "POST":
         form = AssignedToTechnicalForm(request.POST)
         if form.is_valid():
-            history = HistoryComplaint()
+            # history = HistoryComplaint()
             post = form.save(commit=False)
             post.enter_date = timezone.now()
             post.complaint = Complaint.objects.get(id=complaint_id)
@@ -24,7 +24,7 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
             post.complaint.save()
             post.id = post.pk
             post.save()
-            return redirect(reverse_lazy("index_asigned_to_tecnic", technical_id=post.tecnic.id))
+            return redirect(reverse_lazy("index_assigned_to_technical", technical_id=post.technical.id))
     else:
         form = AssignedToTechnicalForm()
     return render(request, "dpv_complaint/single_form.html", {'form': form, 'form_name': form_name})
@@ -51,7 +51,7 @@ def from_assigned_to_technician_to_finished_complaint(request, complaint_id, tec
                 doc.save()
                 post.technical_args = doc
                 post.save()
-                return redirect(reverse_lazy('index_asigned_to_tecnic'))
+                return redirect(reverse_lazy('index_assigned_to_technical'))
     else:
         form = FinishedComplaintForm()
     return render(request, "dpv_complaint/asigned_to_finished.html", {'form': form, 'form_name': form_name})

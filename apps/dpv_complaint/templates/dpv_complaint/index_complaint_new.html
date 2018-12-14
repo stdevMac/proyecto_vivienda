@@ -54,7 +54,7 @@
                             <td>{{complaint.body}}</td>
                             <td>{{complaint.department}}</td>
                             <td>
-                                <p>De momento</p>
+                                <a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los Datos </a>
 {#                                {% if perms.provincia.view_provincia %}#}
 {#                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>#}
 {#                                {% endif %}#}

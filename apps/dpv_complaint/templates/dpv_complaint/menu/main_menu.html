@@ -1,0 +1,36 @@
+{% load static i18n %}
+{% if True %}
+    <li class="{% if '/quejas/' in request.path %} active show {% endif %} menu-item-has-children dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="menu-icon fa fa-tasks"></i>
+            Quejas
+        </a>
+        <ul class="sub-menu children dropdown-menu">
+            {% if True %} {# perms.dpv_quejases.view_provincia #}
+            <li class="{% if '/quejas/natural/' in request.path %} active {% endif %}">
+                <a href="{% url 'index_natural_complaint' %}"><i class="fa fa-tag"></i>Quejas Naturales</a>
+            </li>
+            {% endif %}
+            {% if True %} {# perms.dpv_quejases.view_municipio #}
+            <li class="{% if '/quejas/juridic/' in request.path %} active {% endif %}">
+                <a href="{% url 'index_juridic_complaint' %}"><i class="fa fa-tag"></i>Quejas Juridicas</a>
+            </li>
+            {% endif %}
+            {% if True %}
+            <li class="{% if '/quejas/wait_distribution/' in request.path %} active {% endif %}">
+                <a href="{% url 'waiting_for_distribution' %}"><i class="fa fa-tag"></i>Quejas Esperando Distribucion</a>
+            </li>
+            {% endif %}
+            {% if True %}
+            <li class="{% if '/quejas/finished/' in request.path %} active {% endif %}">
+                <a href="{% url 'index_finished_complaint' %}"><i class="fa fa-tag"></i>Quejas Finalizadas</a>
+            </li>
+            {% endif %}
+            {% if True %}
+            <li class="{% if '/quejas/accepted_all/' in request.path %} active {% endif %}">
+                <a href="{% url 'index_accepted_all' %}"><i class="fa fa-tag"></i>Quejas Aceptadas</a>
+            </li>
+            {% endif %}
+        </ul>
+    </li>
+{% endif %}
