@@ -52,7 +52,7 @@
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
                                 {% endif %}
                                 {% if perms.vivienda.change_vivienda %}
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                                    <a href="{% url 'vivienda_edit' vivienda.id %}" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
                                 {% endif %}
                                 {% if perms.vivienda.delete_vivienda %}
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>

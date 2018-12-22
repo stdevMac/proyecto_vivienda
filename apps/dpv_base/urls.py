@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, login_page, recover_pass_page, logout_page, users_view, groups_view, logs_view, user_add, group_add, configure_email
+from .views import index, login_page, recover_pass_page, logout_page, users_view, groups_view, logs_view, user_add, group_add, configure_email, user_edit, group_edit
 
 urlpatterns = [
     path('dashboard/', index, name='base_dashboard'),
@@ -11,5 +11,7 @@ urlpatterns = [
     path('admin/groups/', groups_view, name='admin_group'),
     path('admin/groups/form/', group_add, name='admin_group_add'),
     path('admin/email/', configure_email, name='admin_emailconf'),
-    path('admin/logs/', logs_view, name='admin_logs')
+    path('admin/logs/', logs_view, name='admin_logs'),
+    path('admin/groups/form/<int:id_group>', group_edit, name='admin_group_edit'),
+    path('admin/users/form/<int:id_usuario>', user_edit, name='admin_user_edit'),
 ]

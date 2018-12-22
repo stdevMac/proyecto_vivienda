@@ -160,7 +160,19 @@ def group_add(request):
 
 @permission_required('auth.view_group', raise_exception=True)
 def users_view(request):
-    usuarios = User.objects.all()
+    usuarios = User.objects.none()
+    try:
+        perfil = request.user.perfil_usuario
+        try:
+            ct = perfil.centro_trabajo
+            if ct.oc:
+                usuarios = User.objects.all().exclude(is_superuser=True)
+            else:
+                usuarios = User.objects.filter(perfil_usuario__centro_trabajo=request.user.perfil_usuario.centro_trabajo).exclude(is_superuser=True)
+        except:
+            print("no tiene centro de trabajo asociado")
+    except:
+        print("no tiene perfil asociado")
     return render(request, 'layouts/admin/users.html', {'usuarios': usuarios})
 
 
@@ -171,14 +183,40 @@ def logs_view(request):
 
 @permission_required('email_sender.add_emailconfigurate', raise_exception=True)
 def configure_email(request):
+    ec = EmailConfigurate.objects.all().first()
     if request.method == 'POST':
-        form = ConfigureMailForm(request.POST)
+        form = ConfigureMailForm(request.POST, instance=ec)
         if form.is_valid():
             form.save()
-            return render(request, 'layouts/admin/mailconf.html', {'form': form})
+            return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})
         else:
-            return render(request, 'layouts/admin/mailconf.html', {'form': form})
+            return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})
     else:
-        ec = EmailConfigurate.objects.all().first()
-        form = ConfigureMailForm(ec)
+        form = ConfigureMailForm(instance=ec)
         return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})
+
+
+@permission_required('auth.change_user', raise_exception=True)
+def user_edit(request, id_user):
+    usr = User.objects.filter(id=id_user).first()
+    if request.method == 'POST':
+        form = FullUserForm(request.POST, instance=usr)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('admin_user'))
+    else:
+        form = FullUserForm(instance=usr)
+    return render(request, 'layouts/admin/users_form.html', {'form': form})
+
+
+@permission_required('auth.change_group', raise_exception=True)
+def group_edit(request, id_group):
+    grp = Group.objects.filter(id=id_group).first()
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=grp)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('admin_group'))
+    else:
+        form = GroupForm(instance=grp)
+    return render(request, 'layouts/admin/groups_form.html', {'form': form})

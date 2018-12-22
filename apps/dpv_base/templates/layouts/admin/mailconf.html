@@ -28,7 +28,7 @@
                     <nav>
                         <div class="nav nav-tabs nav-pills mb-3 mt-2 no-border" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link btn btn-primary active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true"><i class="fa fa-eye"></i> Visualizar</a>
-                            <a class="nav-item nav-link btn btn-primary" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false"> <i class="fa fa-pencil"></i> Editar</a>
+                            <a class="nav-item nav-link btn btn-primary right-hand-xs right-hand-lg right-hand-sm right-hand-md" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false"> <i class="fa fa-pencil"></i> Editar</a>
                         </div>
                     </nav>
                     <div class="tab-content pl-3 pt-2" id="nav-tabContent" style="{margin-top: 5px;}">
@@ -58,7 +58,11 @@
                                         </tr>
                                         <tr>
                                             <th scope="row">Contraseña</th>
-                                            <td class="text-center">{{ec.password}}</td>
+                                            <td class="text-center">
+                                                {% if ec.password %}
+                                                    ************
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Seguridad</th>
@@ -77,7 +81,7 @@
                         </div>
                         <div class="tab-pane fade" id="custom-nav-profile" role="tabpanel" aria-labelledby="custom-nav-profile-tab">
                             <div>
-                                <form method="POST" novalidate>
+                                <form method="POST" novalidate>{% csrf_token %}
                                     <div class="card-body card-block">
                                         <div class="form-group col-md-6">
                                             <label class=" form-control-label">{{form.servidor.label}}</label>
@@ -85,7 +89,7 @@
                                                 <div class="input-group-addon"><i class="ti-server"></i></div>
                                                 {{form.servidor}}
                                             </div>
-                                            <small class="form-text text-muted">{{form.servidor.help_text}}</small>
+                                            <small class="form-text text-muted hidden-xs hidden-sm">{{form.servidor.help_text}}</small>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class=" form-control-label">{{form.puerto.label}}</label>
@@ -111,7 +115,7 @@
                                             </div>
                                             <small class="form-text text-muted">{{form.password.help_text}}</small>
                                         </div>
-                                        <div class="form-group col-md-12">
+                                        <div class="col-md-12 form-check">
                                             <div class="col col-md-3 col-ms-12"><label class=" form-control-label">Seguridad</label></div>
                                             <div class="col col-md-3 col-ms-12">
                                                 <label class=" form-control-label">
@@ -121,19 +125,19 @@
                                             </div>
                                             <div class="col col-md-3 col-ms-12">
                                                 <label class=" form-control-label">
-                                                    <input id="inline-radio1" name="inline-radios" value="option1" class="form-check-input" type="radio">
+                                                    {{form.use_tls}}
                                                     TLS
                                                 </label>
                                             </div>
                                             <div class="col col-md-3 col-ms-12">
                                                 <label class=" form-control-label">
-                                                    <input id="inline-radio1" name="inline-radios" value="option1" class="form-check-input" type="radio">
+                                                    {{form.use_ssl}}
                                                     SSL
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary pull-right el-rounded" disabled><i class="ti-save"></i> Guardar</button>
+                                            <button type="submit" class="btn btn-primary pull-right el-rounded"><i class="ti-save"></i> Guardar</button>
                                         </div>
                                     </div>
                                 </form>

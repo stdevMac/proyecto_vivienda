@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import permission_required, login_required
 from .forms import PersonaJuridicaForm, PersonaNaturalForm
+from .models import PersonaNatural, PersonaJuridica
 
 
 # Create your views here.
@@ -45,3 +46,26 @@ def add_personat(request):
         form = PersonaNaturalForm()
         return render(request, 'dpv_persona/form_personat.html', {'form': form})
 
+
+def edit_personat(request, id_personat):
+    pers = PersonaNatural.objects.filter(id=id_personat).first()
+    if request.method == 'POST':
+        form = PersonaNaturalForm(request.POST, instance=pers)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('persona_natural'))
+    else:
+        form = PersonaNaturalForm(instance=pers)
+    return render(request, 'dpv_persona/form_personat.html', {'form': form})
+
+
+def edit_persojur(request, id_persojur):
+    ents = PersonaJuridica.objects.filter(id=id_persojur).first()
+    if request.method == 'POST':
+        form = PersonaJuridicaForm(request.POST, instance=ents)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('persona_juridica'))
+    else:
+        form = PersonaJuridicaForm(instance=ents)
+    return render(request, 'dpv_persona/form_persojur.html', {'form': form})

@@ -712,4 +712,41 @@ ul.errorlist {
 .no-border {
     border-bottom: 0px;
 }
+@media screen and (max-width: 1024) {
+    .right-hand-md {
+        margin-right: 1%;
+        margin-left: 70%;
+    }
+}
+@media screen and (max-width: 800) {
+    .right-hand-sm {
+        margin-right: 1%;
+        margin-left: 50%;
+    }
+}
+@media screen and (min-width: 1500px) {
+    .right-hand-lg {
+        margin-right: 1%;
+        margin-left: 80%;
+    }
+}
+@media screen and (max-width: 320px) {
+    .right-hand-xs {
+        margin-right: 1%;
+        margin-left: 8%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .right-hand-xs {
+        margin-right: 1%;
+        margin-left: 33%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .right-hand-xs {
+        margin-right: 1%;
+        margin-left: 45%;
+    }
+}
+
 /*# sourceMappingURL=style.css.map */

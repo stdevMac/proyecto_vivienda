@@ -2,10 +2,12 @@ from django import forms
 from django.db.models import Q
 from django.contrib.auth.models import Group, User, Permission
 from django.core.exceptions import ValidationError
+from django.contrib.auth.hashers import make_password
 from django.core.validators import MinLengthValidator, MinValueValidator, MaxLengthValidator, MaxValueValidator, EmailValidator, URLValidator
 from apps.dpv_nomencladores.models import Calle, AreaTrabajo, CentroTrabajo, Genero, Municipio
 from apps.dpv_nomencladores.validators import only_letters, only_numbers
 from apps.dpv_persona.validators import ci_validate
+from apps.email_sender.validators import validate_fqdn
 from .models import ConfigMail
 from .Widgets import DivCheckboxSelectMultiple
 
@@ -26,7 +28,7 @@ class RecoverPassForm(forms.Form):
 class UserForm(forms.Form):
     username = forms.CharField(max_length=50, required=True, label="Nombre de Usuario", help_text="Debe ser único, no debe tener más de 30 caracteres.",
                                widget=(forms.TextInput(attrs={"placeholder": "Nombre de usuario", "class":"form-control"})),
-                               validators=[MaxLengthValidator(50)])
+                               validators=[MaxLengthValidator(50), validate_fqdn])
     email = forms.EmailField(max_length=255, required=True, label="Correo Electrónico", help_text="Correo electronico del usuario, es al que el usuario recibira las notificaciones.",
                              widget=(forms.EmailInput(attrs={"placeholder": "Correo Electronico", "class": "form-control"})),
                              validators=[MaxLengthValidator(255), EmailValidator()])
@@ -115,6 +117,110 @@ class FullUserForm(UserProfileForm):
         if entrecalle1 in entre2:
             raise ValidationError('Las entre calles no pueden ser iguales', code='betewnstreet_equals')
         return self.cleaned_data.get('direccion_entrecalle1')
+
+    def save(self):
+        usr = User.objects.filter(username=self.username).first()
+        if usr:
+            usr.username = self.username or usr.username
+            usr.first_name = self.first_name or usr.first_name
+            usr.last_name = self.last_name or usr.last_name
+            usr.email = self.email or usr.email
+            if self.password:
+                usr.password = make_password(self.password) or usr.password
+            usr.is_staff = self.is_staff or usr.is_staff
+            usr.permissions = self.permissions or usr.permissions
+            usr.groups = self.groups or usr.groups
+            usr.save()
+            if usr.perfil_usuario:
+                usr.perfil_usuario.notificacion_email = self.notificaciones_email or usr.perfil_usuario.notificacion_email
+                usr.perfil_usuario.documentacion_email = self.documentacion_email or usr.perfil_usuario.documentacion_email
+                usr.perfil_usuario.depto_trabajo = self.area_trabajo or usr.perfil_usuario.depto_trabajo
+                usr.perfil_usuario.centro_trabajo = self.centro_trabajo or usr.perfil_usuario.centro_trabajo
+                usr.perfil_usuario.save()
+                if usr.perfil_usuario.datos_personales:
+                    usr.perfil_usuario.datos_personales.nombre = self.first_name or usr.perfil_usuario.datos_personales.nombre
+                    usr.perfil_usuario.datos_personales.apellidos = self.last_name or usr.perfil_usuario.datos_personales.apellidos
+                    usr.perfil_usuario.datos_personales.ci = self.ci or usr.perfil_usuario.datos_personales.ci
+                    usr.perfil_usuario.datos_personales.telefono = self.telefono or usr.perfil_usuario.datos_personales.telefono
+                    usr.perfil_usuario.datos_personales.movil = self.movil or usr.perfil_usuario.datos_personales.movil
+                    usr.perfil_usuario.datos_personales.email_address = self.email or usr.perfil_usuario.datos_personales.email_address
+                    usr.perfil_usuario.datos_personales.municipio = self.direccion_municipio or usr.perfil_usuario.datos_personales.municipio
+                    usr.perfil_usuario.datos_personales.direccion_calle = self.direccion_calle or  usr.perfil_usuario.datos_personales.direccion_calle
+                    sr.perfil_usuario.datos_personales.direccion_numero = self.direccion_numero  or  usr.perfil_usuario.datos_personales.direccion_numero
+                    sr.perfil_usuario.datos_personales.direccion_entrecalle2 = self.direccion_entrecalle2  or  usr.perfil_usuario.datos_personales.direccion_entrecalle2
+                    sr.perfil_usuario.datos_personales.direccion_entrecalle1 = self.direccion_entrecalle1  or  usr.perfil_usuario.datos_personales.direccion_entrecalle1
+                    sr.perfil_usuario.datos_personales.genero = self.sexo  or  usr.perfil_usuario.datos_personales.genero
+                    sr.perfil_usuario.datos_personales.save()
+                else:
+                    pass
+            else:
+                try:
+                    from apps.dpv_perfil.models import Perfil
+                    prf = Perfil()
+                    prf.centro_trabajo = self.centro_trabajo
+                    prf.depto_trabajo = self.area_trabajo
+                    prf.notificacion_email = self.notificaciones_email
+                    prf.documentacion_email = self.documentacion_email
+                    if self.ci:
+                        try:
+                            from apps.dpv_persona.models import PersonaNatural
+                            pers = PersonaNatural()
+                            pers.nombre = self.first_name
+                            pers.apellidos = self.last_name
+                            pers.direccion_entrecalle1 = self.direccion_entrecalle1
+                            pers.direccion_entrecalle2 = self.direccion_entrecalle2
+                            pers.direccion_numero = self.direccion_numero
+                            pers.movil = self.movil
+                            pers.telefono = self.telefono
+                            pers.direccion_calle = self.direccion_calle
+                            pers.ci = self.ci
+                            pers.email_address = self.email
+                            pers.genero = self.sexo
+                            pers.save()
+                            prf.datos_personales = pers
+                        except:
+                            print("No se pudo importar la libreria persona para guardar los datos personales del usuario")
+                    prf.save()
+                except:
+                    print("No se pudo importar la libreria perfil para guardar los datos del perfil del usuario")
+        else:
+            us = User.objects.create_user(username=self.username, email=self.email, password=make_password(self.password), first_name=self.first_name, last_name=self.last_name, is_staff=self.is_staff)
+            us.save()
+            us.permissions = self.permissions
+            us.groups = self.groups
+            us.save()
+            if self.area_trabajo:
+                try:
+                    from apps.dpv_perfil.models import Perfil
+                    prf = Perfil()
+                    prf.centro_trabajo = self.centro_trabajo
+                    prf.depto_trabajo = self.area_trabajo
+                    prf.notificacion_email = self.notificaciones_email
+                    prf.documentacion_email = self.documentacion_email
+                    if self.ci:
+                        try:
+                            from apps.dpv_persona.models import PersonaNatural
+                            pers = PersonaNatural()
+                            pers.nombre = self.first_name
+                            pers.apellidos = self.last_name
+                            pers.direccion_entrecalle1 = self.direccion_entrecalle1
+                            pers.direccion_entrecalle2 = self.direccion_entrecalle2
+                            pers.direccion_numero = self.direccion_numero
+                            pers.movil = self.movil
+                            pers.telefono = self.telefono
+                            pers.direccion_calle = self.direccion_calle
+                            pers.ci = self.ci
+                            pers.email_address = self.email
+                            pers.genero = self.sexo
+                            pers.save()
+                            prf.datos_personales = pers
+                        except:
+                            print("No se pudo importar la libreria persona para guardar los datos personales del usuario")
+                    prf.save()
+                    us.perfil_usuario = prf
+                    us.save()
+                except:
+                    print("No se pudo importar la libreria perfil para guardar los datos del perfil del usuario")
 
 
 class GroupForm(forms.ModelForm):

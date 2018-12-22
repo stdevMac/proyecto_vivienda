@@ -50,7 +50,7 @@
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
                                 {% endif %}
                                 {% if perms.local.change_local %}
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                                    <a href="{% url 'locales_edit' local.id %}" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
                                 {% endif %}
                                 {% if perms.local.delete_local %}
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
