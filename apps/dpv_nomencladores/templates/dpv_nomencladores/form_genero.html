@@ -1,39 +1,37 @@
-{% if object %}
-    <form role="form" action="{% url 'genero_edit' object.id %}" method="post">
-    {% else %}
-    <form role="form" action="{% url 'genero_new' %}" method="post">
-    {% endif %}
-{% csrf_token %}
 <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header" >
-                    <h4 class="modal-title">Género</h4>
-                    <div class="actions">
-                        <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    </div>
-                 </div>
-                <div class="modal-body">
-                    <form class="row" role="form" method="post">
-                       <div class="col-md-6">
-                            <div class="form-control-sm">
-                                <label for="">Nombre</label>
-                                {{ form.non_field_errors }}
-                                {{ form.nombre }}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-control-sm">
-                                <label for="">Siglas</label>
-                                {{ form.non_field_errors }}
-                                {{ form.sigla}}
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Agregar</button>
-                        </div>
-                    </form>
+    <div class="modal-content">
+        {% if genero %}
+        <form role="form" action="{% url 'genero_edit' genero.id %}" method="post" id="form_genero">
+        {% else %}
+        <form role="form" action="{% url 'genero_new' %}" method="post" id="form_genero">
+        {% endif %}
+            <div class="modal-header" >
+                <h4 class="modal-title">Género</h4>
+                <div class="actions">
+                    <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+             </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                <div class="form-control-sm">
+                    <label for="">Nombre</label>
+                    {{ form.non_field_errors }}
+                    {{ form.nombre }}
+                </div>
+                <div class="form-control-sm">
+                    <label for="">Sigla</label>
+                    {{ form.non_field_errors }}
+                    {{ form.sigla }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="return cerrar_modal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
+        </form>
     </div>
-</form>
+</div>
+
+<script>
+    $('#form_genero').validate();
+</script>

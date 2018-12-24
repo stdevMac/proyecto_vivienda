@@ -38,17 +38,17 @@
             {% endif %}
             {% if perms.dpv_nomencladores.view_genero %}
             <li class="{% if '/nomenclador/genero/' in request.path %} active {% endif %}">
-                <a href="{% url 'nomenclador_genero' %}"><i class="fa fa-tag"></i>Género</a>
+                <a href="{% url 'nomenclador_genero' %}"><i class="fa fa-tag"></i>Géneros</a>
             </li>
             {% endif %}
             {% if perms.dpv_nomencladores.view_areatrabajo %}
-            <li class="{% if '/nomenclador/areadetrabajo/' in request.path %} active {% endif %}">
-                <a href="{% url 'nomenclador_areatrab' %}"><i class="fa fa-tag"></i>Departamento</a>
+            <li class="{% if '/nomenclador/departamento/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_areatrab' %}"><i class="fa fa-tag"></i>Departamentos</a>
             </li>
             {% endif %}
             {% if perms.dpv_nomencladores.view_centrotrabajo %}
-            <li class="{% if '/nomenclador/centrodetrabajo/' in request.path %} active {% endif %}">
-                <a href="{% url 'nomenclador_centrab' %}"><i class="fa fa-tag"></i>Unidad</a>
+            <li class="{% if '/nomenclador/unidad/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_centrab' %}"><i class="fa fa-tag"></i>Unidades</a>
             </li>
             {% endif %}
             {% if perms.dpv_nomencladores.view_concepto %}
