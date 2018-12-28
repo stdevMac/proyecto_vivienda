@@ -1,9 +1,9 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-from apps.dpv_nomencladores.models import Municipio, Organismo, Calle, Piso
-from .validators import validate_acta_acuerdo, start_with_number
 from django.utils.translation import gettext as _
 from django.core.exceptions import ValidationError
+from apps.dpv_nomencladores.models import Municipio, Organismo, Calle, Piso
+from .validators import validate_acta_acuerdo, start_with_number
 
 
 # Create your models here.
@@ -25,7 +25,9 @@ class Local(models.Model):
     acuerdoORG = models.CharField(max_length=9, verbose_name="Acuerdo Organismo", validators=[validate_acta_acuerdo], blank=True, default='')
     observaciones = models.TextField(max_length=600, verbose_name="Otras observaciones")
     estatal = models.BooleanField(default=True, verbose_name="Es estatal")
-    acuerdo_DPV = models.CharField(max_length=9, verbose_name="Acuerdo DPV",  unique=True, validators=[validate_acta_acuerdo], default='', blank=True)
+    acuerdo_DPV = models.CharField(max_length=9, verbose_name="Acuerdo DPV",  validators=[validate_acta_acuerdo], default='', blank=True)
+    data_ok = models.PositiveSmallIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
+    system_info = models.TextField(max_length=300, default='', blank=True)
 
     class Meta:
         verbose_name = "Local"
@@ -36,13 +38,12 @@ class Local(models.Model):
     def __str__(self):
         return self.municipio.nombre + '-' + self.direccion_calle.nombre + '-' + self.direccion_numero
 
-    # def clean(self):
-    #     if self.cleaned_field.get('direccion_calle') == self.direccion_entre1:
-    #         raise ValidationError({'direccion_entre1': _('La primera entre calle no puede ser igual a la calle de la dirección.')})
-    #     if self.direccion_entre2 == self.direccion_calle:
-    #         raise ValidationError({'direccion_entre2': _('La segunda entre calle no puede ser igual a la calle de la dirección.')})
-    #     if self.direccion_entre1 == self.direccion_entre2:
-    #         raise ValidationError({'direccion_entre2': _('Ambas entre calles no pueden ser iguales.')})
-    #     if self.no_viviendas > self.pendiente:
-    #         raise ValidationError({'pendiente': 'El número de viviendas pendientes de aprovación no puede ser mayor que el número de viviendas del local'})
-    #     return super(models.Model, self).clean()
+    def get_ok_data(self):
+        validation_text = ''
+        validation_point = 0
+
+        if self.no_viviendas != Vivienda.objects.filter(local_dado=self).count():
+            validation_point += 1
+            validation_text += "No coincide el número de viviendas que es %d declarado en el local con el número de viviendas asociadas a el que es %d. \n" % (self.no_viviendas, Vivienda.objects.filter(local_dado=self).count())
+        for viv in Vivienda.objects.filter(local_dado=self):
+            pass

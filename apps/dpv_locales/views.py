@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.db.models import F, Q, Sum, Count
+from django.db.models.query import QuerySet
 from django.views.generic import View
+from django.contrib.auth.decorators import permission_required
 from .models import Local
 from .forms import LocalForm
-from django.contrib.auth.decorators import permission_required
+from apps.dpv_nomencladores.models import Municipio
+
 
 
 # Create your views here.
@@ -40,21 +43,13 @@ def local_add(request):
         return render(request, 'dpv_locales/form.html', {'form': form})
 
 
-@permission_required('dpv_locales.view_local', raise_exception=True)
+# @permission_required('dpv_locales.view_local', raise_exception=True)
 def stats(request):
-    # if request.user.perfil_usuario:
-    #     perfil = request.user.perfil_usuario
-    #     if perfil.centro_trabajo:
-    #         if perfil.centro_trabajo.oc:
-    #             locales = Local.objects.all()
-    #         else:
-    #             locales = Local.objects.filter(municipio=perfil.centro_trabajo.municipio)
-    #     else:
-    #         locales = Local.objects.none()
-    # else:
-    #     locales = Local.objects.none()
-    locales = Local.objects.all()
-    return render(request, 'dpv_locales/estdistico.html', {'locales': locales})
+    result = []
+    for m in Municipio.objects.all():
+        q = Local.objects.filter(municipio=m).aggregate(cant_viv=Sum('no_viviendas'), cant_pend=Sum('pendiente'), cant_loc=Count('fecha'))
+        result.append(q)
+    return render(request, 'dpv_locales/estdistico.html', {'result': result})
 
 
 def local_edit(request, id_local):
