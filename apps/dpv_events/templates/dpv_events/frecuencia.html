@@ -23,8 +23,8 @@
             <div class="card-header">
                 <strong class="card-title">Frecuencias</strong>
                 {% if perms.dpv_events.add_frecuencia %}
-                    <a href="#form_frecuencia" class="pull-right btn btn-success btn-sm" role="button" data-toggle="modal">
-                        <i class="fa fa-plus"></i> {% trans 'Add' %} Frecuencia </a>
+                    <a id="btn_create_frecuencia" href="#form_frecuencia" class="pull-right btn btn-success btn-sm" role="button" data-toggle="modal">
+                        <i class="fa fa-plus"></i> Agregar Frecuencia </a>
                 {% endif %}
             </div>
             <div class="card-body">
@@ -52,11 +52,11 @@
 
                                 <td>
                                     {% if perms.dpv_events.change_frecuencia %}
-                                        <a class="edit btn btn-warning btn-sm purple" href="javascript:;">
+                                        <a href="#form_frecuencia" class="btn btn-warning btn-sm edit" role="button" data-toggle="modal" data-id="{{ model.id }}" data-name="{{ model.name }}" data-days="{{ model.days }}">
                                             <i class="fa fa-pencil"></i> </a>
                                     {% endif %}
                                     {% if perms.dpv_events.delete_frecuencia %}
-                                        <a href="#myModal{{ model.id }}" role="button" class="btn btn-danger btn-sm black" data-toggle="modal">
+                                        <a href="#myModal{{ model.id }}" role="button" class="btn btn-danger btn-sm" data-toggle="modal">
                                             <i class="fa fa-trash-o"></i> </a>
                                         <div id="myModal{{ model.id }}" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                                             <div class="modal-dialog modal-sm">
@@ -67,16 +67,16 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <p class="text-center">
-                                                            Seguro desea borrar el Frecuencia
+                                                            Seguro desea borrar la Frecuencia
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
                                                             Cancelar
                                                         </button>
-                                                        <button data-dismiss="modal" class="delete btn btn-primary">
+                                                        <a href="{% url 'dpv_events:delete_frecuencia' model.id %}" class="delete btn btn-primary">
                                                             Confirmar
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,11 +104,11 @@
                     <div class="card-header">
                         <div class="card-title">
                             <i class="fa fa-plus"></i>
-                            <span class="caption-subject bold uppercase"> {% trans 'Add' %} Frecuencia</span>
+                            <span class="caption-subject bold" style="text-transform: uppercase;"> <span class="action_frecuencia">Agregar</span> Frecuencia</span>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{% url 'dpv_events:create_frecuencia' %}" method="POST" class="form-horizontal" id="newfrecuencia_form">{% csrf_token %}
+                        <form action="#" method="POST" class="form-horizontal agregar" id="newfrecuencia_form">{% csrf_token %}
                             <div class="row">
                                 {% for field in form %}
                                 <div class="form-group col-md-12">
@@ -137,4 +137,9 @@
 {% endblock %}
 {% block extra_scripts %}
     <script src="{% static 'dpv_events/scripts/frecuencia.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            FrecuenciaScript.init();
+        });
+    </script>
 {% endblock extra_scripts %}
