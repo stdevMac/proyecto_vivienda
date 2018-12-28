@@ -3,6 +3,7 @@
 {% load static %}
 {% block extra_style %}
     <link rel="stylesheet" href="{% static 'dpv_base/css/lib/datatable/dataTables.bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dpv_nomencladores/css/nomencladores.css' %}">
 {% endblock extra_style %}
 {% block breadcrumb_title %} Gestión de Municipios {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
@@ -22,8 +23,9 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Municipios</strong>
-                {% if perms.genero.add_genero %}
-                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Municipio</button>
+                {% if perms.genero.add_mmunicipio %}
+                   <button onclick="return abrir_modal('{% url 'municipio_new' %}')" class="pull-right btn btn-success btn-sm">
+                        <i class="fa fa-plus"></i>Agregar Municipio</button>
                 {% endif %}
             </div>
             <div class="card-body">
@@ -44,14 +46,11 @@
                             <td>{{municipio.nombre}}</td>
                             <td>{{municipio.provincia}}</td>
                             <td>
-                                {% if perms.municipio.view_municipio %}
-                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
+                                {% if perms.dpv_nomencladores.change_municipio %}
+                                <a onclick="return abrir_modal('{% url 'municipio_edit' municipio.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
                                 {% endif %}
-                                {% if perms.municipio.change_municipio %}
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-                                {% endif %}
-                                {% if perms.municipio.delete_municipio %}
-                                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                                {% if perms.dpv_nomencladores.delete_municipio %}
+                                <a onclick="return abrir_modal('{% url 'municipio_delete' municipio.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -66,6 +65,9 @@
             </div>
         </div>
     </div>
+<div class="modal fade modal-show" id="popup" role="dialog">
+
+</div>
 {% endblock content_page %}
 {% block extra_scripts %}
     <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
@@ -79,6 +81,9 @@
     <script src="{% static 'dpv_base/js/lib/data-table/buttons.print.min.js' %}"></script>
     <script src="{% static 'dpv_base/js/lib/data-table/buttons.colVis.min.js' %}"></script>
     <script src="{% static 'dpv_base/js/lib/data-table/datatables-init.js' %}"></script>
+    <script src="{% static 'dpv_nomencladores/js/nomencladores.js' %}"></script>
+    <script src="{% static 'dpv_nomencladores/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'dpv_nomencladores/js/validation.functions.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();

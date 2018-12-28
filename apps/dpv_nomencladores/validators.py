@@ -14,7 +14,7 @@ only_numbers = RegexValidator('^[0-9]*[0-9]$', message=message_on)
 only_letters = RegexValidator('^[a-zA-Z ]*[a-zA-Z ]$', message=message_ol)
 not_numbers = RegexValidator('[a-zA-Z ,.:;!@#$%^&*()_+-={}[]\|~`]', message=message_nn)
 not_letters = RegexValidator('[0-9 ,.:;!@#$%^&*()_+-={}[]\|~`]', message=message_nl)
-not_special_char = RegexValidator('[a-zA-Z0-9 ]', message=message_nsc)
+not_special_char = RegexValidator('[a-zA-Z0-9]', message=message_nsc)
 
 
 '''from django.core.exceptions import ValidationError
