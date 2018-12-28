@@ -3,6 +3,7 @@
 {% load static %}
 {% block extra_style %}
     <link rel="stylesheet" href="{% static 'dpv_base/css/lib/datatable/dataTables.bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dpv_nomencladores/css/nomencladores.css' %}">
 {% endblock extra_style %}
 {% block breadcrumb_title %} Gestión de Provincias {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
@@ -22,9 +23,9 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Provincias</strong>
-                {% if perms.provincia.add_provincia %}
-                    <a href="#form_provincia" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>
-                        Agregar Provincia</a>
+                {% if perms.dpv_nomencladores.add_provincia %}
+                <button onclick="return abrir_modal('{% url 'provincia_new' %}')" class="pull-right btn btn-success btn-sm">
+                <i class="fa fa-plus"></i>Agregar Provincia</button>
                 {% endif %}
             </div>
             <div class="card-body">
@@ -43,14 +44,11 @@
                             <td>{{provincia.numero}}</td>
                             <td>{{provincia.nombre}}</td>
                             <td>
-                                {% if perms.provincia.view_provincia %}
-                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
+                                {% if perms.dpv_nomencladores.change_provincia %}
+                                <a onclick="return abrir_modal('{% url 'provincia_edit' provincia.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
                                 {% endif %}
-                                {% if perms.provincia.change_provincia %}
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-                                {% endif %}
-                                {% if perms.provincia.delete_provincia %}
-                                    <a href="#delete_provincia" role="button" data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                                {% if perms.dpv_nomencladores.delete_provincia %}
+                                <a onclick="return abrir_modal('{% url 'provincia_delete' provincia.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -66,18 +64,9 @@
         </div>
     </div>
 
-{% if perms.dpv_events.add_provincia %}
-    <div id="form_provincia" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            {% include 'dpv_nomencladores/form_provincia.html' %}
+<div class="modal fade modal-show" id="popup" role="dialog">
 
-    </div>
-{% endif %}
-{% if perms.provincia.delete_provincia %}
-    <div id="delete_provincia" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            {% include 'dpv_nomencladores/delete_provincia.html' %}
-    </div>
-{% endif %}
-
+</div>
 {% endblock content_page %}
 {% block extra_scripts %}
     <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
@@ -91,6 +80,9 @@
     <script src="{% static 'dpv_base/js/lib/data-table/buttons.print.min.js' %}"></script>
     <script src="{% static 'dpv_base/js/lib/data-table/buttons.colVis.min.js' %}"></script>
     <script src="{% static 'dpv_base/js/lib/data-table/datatables-init.js' %}"></script>
+    <script src="{% static 'dpv_nomencladores/js/nomencladores.js' %}"></script>
+    <script src="{% static 'dpv_nomencladores/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'dpv_nomencladores/js/validation.functions.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();
