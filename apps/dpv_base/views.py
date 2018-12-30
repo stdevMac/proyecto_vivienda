@@ -8,10 +8,12 @@ from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.apps import apps as all_apps
 from .forms import LoginForm, RecoverPassForm
-from .forms import FullUserForm, UserProfileForm, UserForm, GroupForm
+from .forms import FullUserForm, UserProfileForm, UserForm, GroupForm, UserMForm
 from .utils import store_url_names
 from apps.dpv_persona.models import PersonaNatural
+from apps.dpv_persona.forms import PersonaNaturalMForm
 from apps.dpv_perfil.models import Perfil
+from apps.dpv_perfil.forms import PerfilMForm
 from apps.email_sender.models import EmailConfigurate
 
 
@@ -91,57 +93,42 @@ def user_add(request):
             if 'dpv_persona' in app.label:
                 exist_persona = True
     if request.method == 'POST':
-        form = UserForm(request.POST)
+        form = UserMForm(request.POST)
+        if exist_persona:
+            formprs = PersonaNaturalMForm(request.POST)
         if exist_perfil:
-            form = UserProfileForm(request.POST)
-        if exist_persona and exist_perfil:
-            form = FullUserForm(request.POST)
-        if form.is_valid():
-            user = User()
-            user.username = form.cleaned_data.get('username')
-            user.last_name = form.cleaned_data.get('last_name')
-            user.first_name = form.cleaned_data.get('first_name')
-            user.email = form.cleaned_data.get('email')
-            user.set_password(form.cleaned_data.get('password'))
-            user.is_staff = form.cleaned_data.get('is_staff')
-            user.is_active = True
-            user.save()
-            user.user_permissions = form.cleaned_data.get('permissions')
-            user.groups = form.cleaned_data.get('groups')
-            if exist_persona:
-                persona = PersonaNatural()
-                persona.ci = form.cleaned_data.get('ci')
-                persona.genero = form.cleaned_data.get('sexo')
-                persona.movil = form.cleaned_data.get('movil')
-                persona.telefono = form.cleaned_data.get('telefono')
-                persona.direccion_calle = form.cleaned_data.get('direccion_calle')
-                persona.direccion_numero = form.cleaned_data.get('direccion_numero')
-                persona.direccion_entrecalle1 = form.cleaned_data.get('direccion_entrecalle1')
-                persona.direccion_entrecalle2 = form.cleaned_data.get('direccion_entrecalle2')
-                persona.direccion_municipio = form.cleaned_data.get('direccion_municipio')
-                persona.nombre = user.first_name
-                persona.apellidos = user.last_name
-                persona.email_address = user.email
-                persona.save()
-            if exist_perfil:
-                perfil = Perfil()
-                perfil.notifyemail = form.cleaned_data.get('notificaciones_email')
-                perfil.docemail = form.cleaned_data.get('documentacion_email')
-                perfil.depto = form.cleaned_data.get('area_trabajo')
-                perfil.unidad = form.cleaned_data.get('centro_trabajo')
-                perfil.datos_usuario = user
-                perfil.datos_personales = persona
-                perfil.save()
+            formprf = PerfilMForm(request.POST)
+        print("hay que validar")
+        if form.is_valid() and formprs.is_valid():
+            print("to esta valido sin validar perfil")
+            usr = form.save()
+            prs = formprs.save()
+            prs.nombre = usr.first_name
+            prs.apellidos = usr.last_name
+            prs.save()
+            formprf.datos_usuario = usr.id
+            formprf.datos_personales = prs.id
+            print("a validar perfil")
+            if formprf.is_valid():
+                print("perfil validao y salvo")
+                formprf.save()
+            else:
+                print("ese invento no pincho")
+                usr.delete()
+                prs.delete()
+                return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
             return redirect('admin_user')
         else:
-            return render(request, 'layouts/admin/users_form.html', {'form': form})
+            return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
     else:
-        form = UserForm()
+        form = UserMForm()
+        if exist_persona:
+            formprs = PersonaNaturalMForm()
         if exist_perfil:
-            form = UserProfileForm()
-        if exist_persona and exist_perfil:
-            form = FullUserForm()
-    return render(request, 'layouts/admin/users_form.html', {'form': form})
+            formprf = PerfilMForm()
+    return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
+
+
 
 
 @permission_required('auth.add_group', raise_exception=True)
@@ -199,14 +186,18 @@ def configure_email(request):
 @permission_required('auth.change_user', raise_exception=True)
 def user_edit(request, id_user):
     usr = User.objects.filter(id=id_user).first()
+    prf = Perfil.objects.filter(datos_usuario=usr.id).first()
+    prs = PersonaNatural.objects.filter(id=prf.datos_personales).first()
     if request.method == 'POST':
-        form = FullUserForm(request.POST, instance=usr)
-        if form.is_valid():
+        form = UserMForm(request.POST, instance=usr)
+        formprs = PersonaNaturalMForm(request.POST, instance=prs)
+        formprf = PerfilMForm(request.POST, instance=prf)
+        if form.is_valid() and formprf.is_valid() and formprs.is_valid():
             form.save()
+            formprs.save()
+            formprf.save()
             return redirect(reverse_lazy('admin_user'))
-    else:
-        form = FullUserForm(instance=usr)
-    return render(request, 'layouts/admin/users_form.html', {'form': form})
+    return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf})
 
 
 @permission_required('auth.change_group', raise_exception=True)

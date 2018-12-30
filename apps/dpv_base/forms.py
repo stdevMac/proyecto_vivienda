@@ -28,7 +28,7 @@ class RecoverPassForm(forms.Form):
 class UserForm(forms.Form):
     username = forms.CharField(max_length=50, required=True, label="Nombre de Usuario", help_text="Debe ser único, no debe tener más de 30 caracteres.",
                                widget=(forms.TextInput(attrs={"placeholder": "Nombre de usuario", "class":"form-control"})),
-                               validators=[MaxLengthValidator(50), validate_fqdn])
+                               validators=[MaxLengthValidator(50)])
     email = forms.EmailField(max_length=255, required=True, label="Correo Electrónico", help_text="Correo electronico del usuario, es al que el usuario recibira las notificaciones.",
                              widget=(forms.EmailInput(attrs={"placeholder": "Correo Electronico", "class": "form-control"})),
                              validators=[MaxLengthValidator(255), EmailValidator()])
@@ -52,7 +52,7 @@ class UserForm(forms.Form):
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
-        repeated = self.cleaned_data.get('password_repeat')
+        repeated = self.data.get('password_repeat')
         if password != repeated:
             raise ValidationError('Las contraseñas no coinciden.', code='distinct_password_and_repeated')
         return  self.cleaned_data.get('password')
@@ -146,11 +146,11 @@ class FullUserForm(UserProfileForm):
                     usr.perfil_usuario.datos_personales.email_address = self.email or usr.perfil_usuario.datos_personales.email_address
                     usr.perfil_usuario.datos_personales.municipio = self.direccion_municipio or usr.perfil_usuario.datos_personales.municipio
                     usr.perfil_usuario.datos_personales.direccion_calle = self.direccion_calle or  usr.perfil_usuario.datos_personales.direccion_calle
-                    sr.perfil_usuario.datos_personales.direccion_numero = self.direccion_numero  or  usr.perfil_usuario.datos_personales.direccion_numero
-                    sr.perfil_usuario.datos_personales.direccion_entrecalle2 = self.direccion_entrecalle2  or  usr.perfil_usuario.datos_personales.direccion_entrecalle2
-                    sr.perfil_usuario.datos_personales.direccion_entrecalle1 = self.direccion_entrecalle1  or  usr.perfil_usuario.datos_personales.direccion_entrecalle1
-                    sr.perfil_usuario.datos_personales.genero = self.sexo  or  usr.perfil_usuario.datos_personales.genero
-                    sr.perfil_usuario.datos_personales.save()
+                    usr.perfil_usuario.datos_personales.direccion_numero = self.direccion_numero  or  usr.perfil_usuario.datos_personales.direccion_numero
+                    usr.perfil_usuario.datos_personales.direccion_entrecalle2 = self.direccion_entrecalle2  or  usr.perfil_usuario.datos_personales.direccion_entrecalle2
+                    usr.perfil_usuario.datos_personales.direccion_entrecalle1 = self.direccion_entrecalle1  or  usr.perfil_usuario.datos_personales.direccion_entrecalle1
+                    usr.perfil_usuario.datos_personales.genero = self.sexo  or  usr.perfil_usuario.datos_personales.genero
+                    usr.perfil_usuario.datos_personales.save()
                 else:
                     pass
             else:
@@ -233,7 +233,40 @@ class GroupForm(forms.ModelForm):
         }
 
 
-class ConfigMail(forms.ModelForm):
+class ConfigMailForm(forms.ModelForm):
     class Meta:
         model = ConfigMail
         fields = ('servidor', 'puerto', 'usuario', 'password', 'usa_tls', 'usa_ssl', )
+
+
+class UserMForm(forms.ModelForm):
+    confirm_password = forms.CharField(max_length=255, label="Confirmar Contraseña", required=True, widget=(forms.PasswordInput(attrs={"placeholder": "Confirmar Contraseña", "class": "form-control"})))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name', 'password', 'confirm_password', 'groups', 'user_permissions', 'is_staff', )
+
+        widgets = {
+            'email': forms.EmailInput(attrs={"placeholder": "Seleccione un Municipio.", "class": "form-control"}),
+            'is_staff': forms.CheckboxInput(attrs={"placeholder": "Seleccione un Género.", "class": "form-check-input"}),
+            'username': forms.TextInput(attrs={"placeholder": "Número", "class": "form-control"}),
+            'first_name': forms.TextInput(attrs={"placeholder": "CI", "class": "form-control"}),
+            'last_name': forms.TextInput(attrs={"placeholder": "Nombre", "class": "form-control"}),
+            'password': forms.PasswordInput(attrs={"placeholder": "Apellidos", "class": "form-control"}),
+            'groups': DivCheckboxSelectMultiple(attrs={"placeholder": "Correo Electrónico", "class": "form-control multi-select-box"}),
+            'user_permissions': DivCheckboxSelectMultiple(attrs={"placeholder": "Teléfono Fijo", "class": "form-control multi-select-box"}),
+        }
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        repeated = self.data.get('confirm_password')
+        if password != repeated:
+            raise ValidationError('Las contraseñas no coinciden.', code='distinct_password_and_repeated')
+        return  self.cleaned_data.get('password')
+
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get('confirm_password')
+        repeated = self.data.get('password')
+        if password != repeated:
+            raise ValidationError('Las contraseñas no coinciden.', code='distinct_password_and_repeated')
+        return  self.cleaned_data.get('confirm_password')

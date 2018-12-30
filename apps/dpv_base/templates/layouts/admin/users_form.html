@@ -31,12 +31,40 @@
                             <strong class="card-title">Usuario</strong>
                         </div>
                         <div class="card-body">
+                            <div class="col-12 ">
+                                <div class="alert alert-info">
+                                    Datos de Usuario
+                                </div>
+                            </div>
                             {% for field in form %}
                             <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
                                 {{field.errors}}
                                 <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
                                 {{field}}
-                                {{field.required }}
+                            </div>
+                            {% endfor %}
+                            <div class="col-12 ">
+                                <div class="alert alert-info">
+                                    Datos Personales
+                                </div>
+                            </div>
+                            {% for field in formprs %}
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                                {{field.errors}}
+                                <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
+                                {{field}}
+                            </div>
+                            {% endfor %}
+                            <div class="col-12 ">
+                                <div class="alert alert-info">
+                                    Datos del Perfil
+                                </div>
+                            </div>
+                            {% for field in formprf %}
+                            <div class="form-group col-md-6" {% if field.name == 'datos_usuario' or field.name == 'datos_personales' %} hidden {% endif %} data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                                {{field.errors}}
+                                <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
+                                {{field}}
                             </div>
                             {% endfor %}
                         </div>

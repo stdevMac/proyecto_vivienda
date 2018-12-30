@@ -48,6 +48,44 @@ class PersonaNaturalForm(forms.ModelForm):
         return  super(forms.ModelForm, self).clean()
 
 
+class PersonaNaturalMForm(forms.ModelForm):
+
+    class Meta:
+        model = PersonaNatural
+        fields = ('ci',
+                  'telefono',
+                  'movil',
+                  'direccion_calle',
+                  'direccion_numero',
+                  'direccion_entrecalle1',
+                  'direccion_entrecalle2',
+                  'municipio',
+                  'genero', )
+        widgets = {
+            'direccion_calle': forms.Select(attrs={"placeholder": "Seleccione una Calle.", "class": "form-control"}),
+            'direccion_entrecalle1': forms.Select(attrs={"placeholder": "Seleccione una Calle.", "class": "form-control"}),
+            'direccion_entrecalle2': forms.Select(attrs={"placeholder": "Seleccione una Calle.", "class": "form-control"}),
+            'municipio': forms.Select(attrs={"placeholder": "Seleccione un Municipio.", "class": "form-control"}),
+            'genero': forms.Select(attrs={"placeholder": "Seleccione un Género.", "class": "form-control"}),
+            'direccion_numero': forms.TextInput(attrs={"placeholder": "Número", "class": "form-control"}),
+            'ci': forms.TextInput(attrs={"placeholder": "CI", "class": "form-control"}),
+            'telefono': forms.TextInput(attrs={"placeholder": "Teléfono Fijo", "class": "form-control"}),
+            'movil': forms.TextInput(attrs={"placeholder": "Teléfono Movil", "class": "form-control"}),
+        }
+
+    def clean(self):
+        if self.cleaned_data.get('movil') and self.cleaned_data.get('telefono'):
+            if self.cleaned_data.get('movil') == self.cleaned_data.get('telefono'):
+                raise ValidationError({'movil':'Los Teléfonos no pueden ser iguales.'}, code='same_phone')
+        if self.cleaned_data.get('direccion_calle') == self.cleaned_data.get('direccion_entrecalle1'):
+            raise ValidationError({'direccion_entrecalle1': _('La primera entre calle no puede ser igual a la calle de la dirección.')})
+        if self.cleaned_data.get('direccion_entrecalle2') == self.cleaned_data.get('direccion_calle'):
+            raise ValidationError({'direccion_entrecalle2': _('La segunda entre calle no puede ser igual a la calle de la dirección.')})
+        if self.cleaned_data.get('direccion_entrecalle1') == self.cleaned_data.get('direccion_entrecalle2'):
+            raise ValidationError({'direccion_entrecalle2': _('Ambas entre calles no pueden ser iguales.')})
+        return  super(forms.ModelForm, self).clean()
+
+
 class PersonaJuridicaForm(forms.ModelForm):
 
     class Meta:
