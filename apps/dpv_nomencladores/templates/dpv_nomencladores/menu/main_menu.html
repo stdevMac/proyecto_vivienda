@@ -16,6 +16,11 @@
                 <a href="{% url 'nomenclador_municipio' %}"><i class="fa fa-tag"></i>Municipios</a>
             </li>
             {% endif %}
+            {% if perms.dpv_nomencladores.view_consejopopular %}
+            <li class="{% if '/nomenclador/consejopopular/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_consejopopular' %}"><i class="fa fa-tag"></i>Consejos Populares</a>
+            </li>
+            {% endif %}
             {% if perms.dpv_nomencladores.view_destino %}
             <li class="{% if '/nomenclador/destino/' in request.path %} active {% endif %}">
                 <a href="{% url 'nomenclador_destino' %}"><i class="fa fa-tag"></i>Destinos</a>

@@ -13,6 +13,14 @@ urlpatterns = [
     path('nuevo_municipio/', add_municipio, name='municipio_new'),
     path('editar_municipio/<int:id_municipio>', update_municipio, name='municipio_edit'),
     path('eliminar_municipio/<int:id_municipio>', delete_municipio, name='municipio_delete'),
+<<<<<<< HEAD
+
+    path('consejopopular/', index_consejopopular, name='nomenclador_consejopopular'),
+    path('nuevo_consejopopular/', add_consejopopular, name='consejopopular_new'),
+    path('editar_consejopopular/<int:id_consejopopular>', update_consejopopular, name='consejopopular_edit'),
+    path('eliminar_consejopopular/<int:id_consejopopular>', delete_consejopopular, name='consejopopular_delete'),
+=======
+>>>>>>> 87b8f90f11e6b45efada971b42300c19b2a41ca1
 
     path('calle/', index_calle, name='nomenclador_calle'),
     path('nueva_calle/', add_calle, name='calle_new'),

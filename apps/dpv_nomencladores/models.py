@@ -30,6 +30,18 @@ class Municipio(models.Model):
     def __str__(self):
         return self.nombre
 
+class ConsejoPopular(models.Model):
+    nombre = models.CharField(max_length=30, help_text="Nombre del consejo popular", verbose_name="Consejo Popular", unique=True, validators=[not_special_char])
+    numero = models.CharField(max_length=2, verbose_name="Número", unique=True, validators=[only_numbers])
+    municipio = models.ForeignKey(Municipio, related_name="municipios", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Consejo Popular"
+        verbose_name_plural = "Consejos Populares"
+        ordering = ['numero', ]
+
+    def __str__(self):
+        return self.nombre
 
 class Organismo(models.Model):
     nombre = models.CharField(max_length=50, help_text="Nombre del organismo.", verbose_name=" Organismo", unique=True, validators=[not_special_char])

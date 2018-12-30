@@ -86,6 +86,46 @@ def delete_municipio(request, id_municipio):
         return redirect('nomenclador_municipio')
     return render(request, 'dpv_nomencladores/delete_municipio.html', {'municipio':municipio})
 
+<<<<<<< HEAD
+#------------------------------------------- ConsejoPopular -----------------------------------------------------------------
+@permission_required('consejopopular.view_consejopopular', raise_exception=True)
+def index_consejopopular(request):
+    consejopopulars = ConsejoPopular.objects.all()
+    return render(request, 'dpv_nomencladores/list_consejopopular.html', {'consejopopulars': consejopopulars})
+
+@permission_required('dpv_nomencladores.add_consejopopular')
+def add_consejopopular(request):
+    if request.method == 'POST':
+        form = ConsejoPopularForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('nomenclador_consejopopular')
+    else:
+        form = ConsejoPopularForm()
+    return render(request,'dpv_nomencladores/form_consejopopular.html',{'form':form})
+
+@permission_required('dpv_nomencladores.change_consejopopular')
+def update_consejopopular(request, id_consejopopular):
+    consejopopular = ConsejoPopular.objects.get(id=id_consejopopular)
+    if request.method == 'GET':
+        form = ConsejoPopularForm(instance=consejopopular)
+    else:
+        form = ConsejoPopularForm(request.POST, instance=consejopopular)
+        if form.is_valid():
+            form.save()
+        return redirect('nomenclador_consejopopular')
+    return render(request, 'dpv_nomencladores/form_consejopopular.html', {'form':form, 'consejopopular':consejopopular})
+
+@permission_required('dpv_nomencladores.delete_consejopopular')
+def delete_consejopopular(request, id_consejopopular):
+    consejopopular = ConsejoPopular.objects.get(id=id_consejopopular)
+    if request.method == 'POST':
+        consejopopular.delete()
+        return redirect('nomenclador_consejopopular')
+    return render(request, 'dpv_nomencladores/delete_consejopopular.html', {'consejopopular':consejopopular})
+
+=======
+>>>>>>> 87b8f90f11e6b45efada971b42300c19b2a41ca1
 #------------------------------------------- Calle -----------------------------------------------------------------
 @permission_required('calle.view_calle', raise_exception=True)
 def index_calle(request):
