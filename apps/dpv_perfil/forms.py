@@ -23,7 +23,5 @@ class PerfilMForm(forms.ModelForm):
             'documentacion_email': forms.CheckboxInput(attrs={"class": "form-check-input"}),
             'centro_trabajo': forms.Select(attrs={"placeholder": "Seleccione una Unidad.", "class": "form-control"}),
             'depto_trabajo': forms.Select(attrs={"placeholder": "Seleccione un Departamento.", "class": "form-control"}),
-            'datos_usuario': forms.Select(attrs={"hidden": "", "class": "noshow"}),
-            'datos_personales': forms.Select(attrs={"hidden": "", "class": "noshow"}),
         }
 

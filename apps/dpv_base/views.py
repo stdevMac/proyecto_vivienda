@@ -99,7 +99,7 @@ def user_add(request):
         if exist_perfil:
             formprf = PerfilMForm(request.POST)
         print("hay que validar")
-        if form.is_valid() and formprs.is_valid():
+        if form.is_valid() and formprs.is_valid() and formprf.is_valid():
             print("to esta valido sin validar perfil")
             usr = form.save()
             prs = formprs.save()
@@ -108,15 +108,14 @@ def user_add(request):
             prs.save()
             formprf.datos_usuario = usr.id
             formprf.datos_personales = prs.id
-            print("a validar perfil")
-            if formprf.is_valid():
-                print("perfil validao y salvo")
-                formprf.save()
-            else:
-                print("ese invento no pincho")
-                usr.delete()
-                prs.delete()
-                return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
+            prf = Perfil()
+            prf.centro_trabajo = formprf.cleaned_data.get('centro_trabajo')
+            prf.depto_trabajo = formprf.cleaned_data.get('depto_trabajo')
+            prf.notificacion_email = formprf.cleaned_data.get('notificacion_email')
+            prf.documentacion_email = formprf.cleaned_data.get('documentacion_email')
+            prf.datos_personales = prs
+            prf.datos_usuario = usr
+            prf.save()
             return redirect('admin_user')
         else:
             return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
