@@ -23,7 +23,7 @@
             <div class="card-header">
                 <strong class="card-title">Entidades</strong>
                 {% if perms.personajuridica.add_personajuridica %}
-                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Entidad</button>
+                <a href="{% url 'persona_juridica_add' %}" type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Entidad</a>
                 {% endif %}
             </div>
             <div class="card-body">
@@ -52,7 +52,7 @@
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
                                 {% endif %}
                                 {% if perms.personajuridica.change_personajuridica %}
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                                    <a href="{% url 'persona_juridica_edit' personajuridica.id %}"  type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
                                 {% endif %}
                                 {% if perms.personajuridica.delete_personajuridica %}
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>

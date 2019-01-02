@@ -7,7 +7,7 @@
 {% block breadcrumb_title %} Gestión de Locales {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% if '/local/' in request.path %}
+    {% if '/local/' == request.path %}
     <li class="active">Locales</li>
     {% else %}
     <li>
@@ -22,8 +22,8 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Locales</strong>
-                {% if perms.local.add_local %}
-                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Local</button>
+                {% if perms.dpv_locales.add_local %}
+                <a href="{% url 'locales_add' %}" type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Local</a>
                 {% endif %}
             </div>
             <div class="card-body">
@@ -50,7 +50,7 @@
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
                                 {% endif %}
                                 {% if perms.local.change_local %}
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                                    <a href="{% url 'locales_edit' local.id %}" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
                                 {% endif %}
                                 {% if perms.local.delete_local %}
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>

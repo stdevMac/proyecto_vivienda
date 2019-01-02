@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect
+from apps.email_sender.forms import ConfigureMailForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
-from .forms import LoginForm, RecoverPassForm
 from django.utils.translation import ugettext as _
-from .forms import FullUserForm, UserProfileForm, UserForm
 from django.apps import apps as all_apps
-from locales_viv import settings
+from .forms import LoginForm, RecoverPassForm
+from .forms import FullUserForm, UserProfileForm, UserForm, GroupForm, UserMForm
 from .utils import store_url_names
-from locales_viv import urls
+from apps.dpv_persona.models import PersonaNatural
+from apps.dpv_persona.forms import PersonaNaturalMForm
+from apps.dpv_perfil.models import Perfil
+from apps.dpv_perfil.forms import PerfilMForm
+from apps.email_sender.models import EmailConfigurate
 
 
 # Create your views here.
@@ -79,29 +83,130 @@ def groups_view(request):
 
 
 @permission_required('auth.add_user', raise_exception=True)
-def users_add(request):
+def user_add(request):
     exist_perfil = False
     exist_persona = False
-    form = UserForm()
     if all_apps.get_app_configs():
         for app in all_apps.get_app_configs():
             if 'dpv_perfil' in app.label:
                 exist_perfil = True
             if 'dpv_persona' in app.label:
                 exist_persona = True
-    if exist_perfil:
-        form = UserProfileForm
-    if exist_persona and exist_perfil:
-        form = FullUserForm
-    render(request, 'layouts/admin/users_form.html', {'form': form})
+    if request.method == 'POST':
+        form = UserMForm(request.POST)
+        if exist_persona:
+            formprs = PersonaNaturalMForm(request.POST)
+        if exist_perfil:
+            formprf = PerfilMForm(request.POST)
+        print("hay que validar")
+        if form.is_valid() and formprs.is_valid() and formprf.is_valid():
+            print("to esta valido sin validar perfil")
+            usr = form.save()
+            prs = formprs.save()
+            prs.nombre = usr.first_name
+            prs.apellidos = usr.last_name
+            prs.save()
+            formprf.datos_usuario = usr.id
+            formprf.datos_personales = prs.id
+            prf = Perfil()
+            prf.centro_trabajo = formprf.cleaned_data.get('centro_trabajo')
+            prf.depto_trabajo = formprf.cleaned_data.get('depto_trabajo')
+            prf.notificacion_email = formprf.cleaned_data.get('notificacion_email')
+            prf.documentacion_email = formprf.cleaned_data.get('documentacion_email')
+            prf.datos_personales = prs
+            prf.datos_usuario = usr
+            prf.save()
+            return redirect('admin_user')
+        else:
+            return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
+    else:
+        form = UserMForm()
+        if exist_persona:
+            formprs = PersonaNaturalMForm()
+        if exist_perfil:
+            formprf = PerfilMForm()
+    return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
+
+
+
+
+@permission_required('auth.add_group', raise_exception=True)
+def group_add(request):
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_group')
+        else:
+            return render(request, 'layouts/admin/groups_form.html', {'form': form})
+    else:
+        form = GroupForm()
+        return render(request, 'layouts/admin/groups_form.html', {'form': form})
 
 
 @permission_required('auth.view_group', raise_exception=True)
 def users_view(request):
-    usuarios = User.objects.all()
+    usuarios = User.objects.none()
+    try:
+        perfil = request.user.perfil_usuario
+        try:
+            ct = perfil.centro_trabajo
+            if ct.oc:
+                usuarios = User.objects.all().exclude(is_superuser=True)
+            else:
+                usuarios = User.objects.filter(perfil_usuario__centro_trabajo=request.user.perfil_usuario.centro_trabajo).exclude(is_superuser=True)
+        except:
+            print("no tiene centro de trabajo asociado")
+    except:
+        print("no tiene perfil asociado")
     return render(request, 'layouts/admin/users.html', {'usuarios': usuarios})
 
 
 @permission_required('auth.view_logentry', raise_exception=True)
 def logs_view(request):
     pass
+
+
+@permission_required('email_sender.add_emailconfigurate', raise_exception=True)
+def configure_email(request):
+    ec = EmailConfigurate.objects.all().first()
+    if request.method == 'POST':
+        form = ConfigureMailForm(request.POST, instance=ec)
+        if form.is_valid():
+            form.save()
+            return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})
+        else:
+            return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})
+    else:
+        form = ConfigureMailForm(instance=ec)
+        return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})
+
+
+@permission_required('auth.change_user', raise_exception=True)
+def user_edit(request, id_user):
+    usr = User.objects.filter(id=id_user).first()
+    prf = Perfil.objects.filter(datos_usuario=usr.id).first()
+    prs = PersonaNatural.objects.filter(id=prf.datos_personales).first()
+    if request.method == 'POST':
+        form = UserMForm(request.POST, instance=usr)
+        formprs = PersonaNaturalMForm(request.POST, instance=prs)
+        formprf = PerfilMForm(request.POST, instance=prf)
+        if form.is_valid() and formprf.is_valid() and formprs.is_valid():
+            form.save()
+            formprs.save()
+            formprf.save()
+            return redirect(reverse_lazy('admin_user'))
+    return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf})
+
+
+@permission_required('auth.change_group', raise_exception=True)
+def group_edit(request, id_group):
+    grp = Group.objects.filter(id=id_group).first()
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=grp)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('admin_group'))
+    else:
+        form = GroupForm(instance=grp)
+    return render(request, 'layouts/admin/groups_form.html', {'form': form})

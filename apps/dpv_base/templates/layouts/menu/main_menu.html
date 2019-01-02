@@ -23,6 +23,11 @@
             <a href="{% url 'admin_group' %}"><i class="fa fa-users"></i>Grupos</a>
         </li>
         {% endif %}
+        {% if perms.email_sender.add_emailconfigurate or perms.email_sender.change_emailconfigurate or perms.email_sender.delete_emailconfigurate or perms.email_sender.view_emailconfigurate %}
+        <li class="{% if '/admin/email/' in request.path %} active {% endif %}">
+            <a href="{% url 'admin_emailconf' %}"><i class="fa fa-envelope"></i>Configuración de Correo</a>
+        </li>
+        {% endif %}
         {% if False %}
         <li class="{% if '/logs/' in request.path %} active {% endif %}">
             <a href="{% url 'admin_logs' %}"><i class="fa fa-users"></i>Registros</a>

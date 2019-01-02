@@ -23,7 +23,7 @@
             <div class="card-header">
                 <strong class="card-title">Personas</strong>
                 {% if perms.persona.add_persona %}
-                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Persona</button>
+                <a href="{% url 'persona_natural_add' %}" type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Persona</a>
                 {% endif %}
             </div>
             <div class="card-body">
@@ -52,7 +52,7 @@
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
                                 {% endif %}
                                 {% if perms.persona.change_persona %}
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                                    <a href="{% url 'persona_natural_edit' persona.id %}" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
                                 {% endif %}
                                 {% if perms.persona.delete_persona %}
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>

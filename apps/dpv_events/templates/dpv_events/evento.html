@@ -1,4 +1,4 @@
-{% extends 'layouts/dashboard.html' %}
+{% extends 'dpv_events/events_base.html' %}
 {% load i18n %}
 {% load staticfiles %}
 {% block page_title %}
@@ -574,7 +574,7 @@
     </div>
 {% endblock %}
 {% block script %}
-    <script src="{% static "dpv_events/scripts/evento.js" %}"></script>
+    <script src="{% static 'dpv_events/scripts/evento.js' %}"></script>
     <script type="text/javascript">
         var themes = [];
         {% for theme in model.temaevento_set.all|filter:"es_sugerido:False" %}

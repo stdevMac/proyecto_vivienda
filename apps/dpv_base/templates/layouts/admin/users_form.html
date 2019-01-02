@@ -4,7 +4,7 @@
 {% block breadcrumb_title %} Formulario {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% if 'admin/users/form' in request.path %}
+    {% if '/admin/users/form' == request.path %}
     <li class="active">Crear</li>
     {% else %}
     <li>
@@ -15,12 +15,73 @@
     {% endif %}
 {% endblock breadcrumbs %}
 {% block content_page %}
-    <form>
-        {% for field in form %}
-            {{field.label}}
-            {{field}}
-            {{field.help_text}}
-        {% endfor %}
-        <input type="button" class="btn btn-primary"/>
-    </form>
+    <div class="animated fadeIn">
+        <div class="row padding-short">
+            <div class="">
+                <form novalidate method="POST">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {% if form.errors|length == 1 %}"Por favor, corrija el error señalado a continuación."{% else %}"Por favor, corrija los errores señalados a continuación."{% endif %}
+                    </div>
+                    {% endif %}
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Usuario</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-12 ">
+                                <div class="alert alert-info">
+                                    Datos de Usuario
+                                </div>
+                            </div>
+                            {% for field in form %}
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                                {{field.errors}}
+                                <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
+                                {{field}}
+                            </div>
+                            {% endfor %}
+                            <div class="col-12 ">
+                                <div class="alert alert-info">
+                                    Datos Personales
+                                </div>
+                            </div>
+                            {% for field in formprs %}
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                                {{field.errors}}
+                                <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
+                                {{field}}
+                            </div>
+                            {% endfor %}
+                            <div class="col-12 ">
+                                <div class="alert alert-info">
+                                    Datos del Perfil
+                                </div>
+                            </div>
+                            {% for field in formprf %}
+                            <div class="form-group col-md-6" {% if field.name == 'datos_usuario' or field.name == 'datos_personales' %} hidden {% endif %} data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                                {{field.errors}}
+                                <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
+                                {{field}}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="card-footer">
+                            <a type="button" class="btn btn-default" href="{% url 'admin_user' %}">
+                                <i class="fa fa-reply"></i>
+                                Volver
+                            </a>
+                            <button type="submit" class="pull-right btn btn-primary">
+                                <i class="fa fa-check"></i>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
 {% endblock content_page %}

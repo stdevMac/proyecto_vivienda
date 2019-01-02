@@ -1,0 +1,33 @@
+{% extends 'dpv_locales/list.html' %}
+{% block page_title %} | Estadístico Locales {% endblock page_title %}
+{% load static %}
+{% block extra_style %}
+    <link rel="stylesheet" href="{% static 'dpv_base/css/lib/datatable/dataTables.bootstrap.min.css' %}">
+{% endblock extra_style %}
+{% block breadcrumb_title %} Estadístico de Locales {% endblock breadcrumb_title %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% if '/local/estadistico/' == request.path %}
+    <li class="active">Estadístico</li>
+    {% else %}
+    <li>
+        <a href="{% url 'locales_stats' %}">
+            Estadístico
+        </a>
+    </li>
+    {% endif %}
+{% endblock breadcrumbs %}
+{% block content_page %}
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Estadístico de Locales</strong>
+            </div>
+            <div class="card-body">
+                {% for res in result %}
+                 {{res}}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content_page %}

@@ -7,11 +7,11 @@
 {% block breadcrumb_title %} Gestión de Usuarios {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% if 'admin/users/' in request.path %}
+    {% if '/admin/users/' == request.path %}
     <li class="active">Usuarios</li>
     {% else %}
     <li>
-        <a href="{% url 'admin_users' %}">
+        <a href="{% url 'admin_user' %}">
             Usuarios
         </a>
     </li>

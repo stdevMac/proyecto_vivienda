@@ -13,6 +13,7 @@ class ProvinciaForm(forms.ModelForm):
         fields = ['nombre', 'numero']
 
         widgets = {
+            'nombre' : forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control malpha'}),
             'nombre' : forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control mname'}),
             'numero' : forms.TextInput(attrs={'placeholder':'Número', 'class': 'form-control mnumber'}),
         }
@@ -24,9 +25,21 @@ class MunicipioForm(forms.ModelForm):
         fields = ['numero', 'nombre', 'provincia']
 
         widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
             'numero': forms.TextInput(attrs={'placeholder': 'Número', 'class': 'form-control mnumber'}),
             'provincia': forms.Select(attrs={'placeholder':'Seleccionar Provincia', 'class': 'form-control'})
+        }
+
+class ConsejoPopularForm(forms.ModelForm):
+    class Meta:
+        model = ConsejoPopular
+        fields = ['numero', 'nombre', 'municipio']
+
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'numero': forms.TextInput(attrs={'placeholder': 'Número', 'class': 'form-control mnumber'}),
+            'municipio': forms.Select(attrs={'placeholder':'Seleccionar Municipio', 'class': 'form-control'})
         }
 
 class OrganismoForm(forms.ModelForm):
@@ -36,6 +49,7 @@ class OrganismoForm(forms.ModelForm):
         fields = ['nombre', 'siglas']
 
         widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
             'siglas': forms.TextInput(attrs={'placeholder': 'Siglas', 'class': 'form-control mnum'}),
         }
@@ -47,6 +61,7 @@ class DestinoForm(forms.ModelForm):
         fields = ['nombre']
 
         widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
         }
 
@@ -57,6 +72,7 @@ class CalleForm(forms.ModelForm):
         fields = ['nombre']
 
         widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
         }
 
@@ -67,6 +83,7 @@ class PisoForm(forms.ModelForm):
         fields = ['nombre']
 
         widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
         }
 
@@ -77,6 +94,7 @@ class ConceptoForm(forms.ModelForm):
         fields = ['nombre']
 
         widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mname'}),
         }
 
@@ -88,6 +106,8 @@ class GeneroForm(forms.ModelForm):
         fields = ['nombre', 'sigla']
 
         widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control malpha'}),
+            'sigla': forms.TextInput(attrs={'placeholder':'Sigla', 'class': 'form-control mnum'}),
             'nombre': forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control mname'}),
             'sigla': forms.TextInput(attrs={'placeholder':'Sigla', 'class': 'form-control mname'}),
         }
@@ -99,6 +119,7 @@ class CentroTrabajoForm(forms.ModelForm):
         fields = ['nombre', 'numero', 'siglas', 'municipio', 'oc']
 
         widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
             'numero': forms.TextInput(attrs={'placeholder': 'Número', 'class': 'form-control mnumber'}),
             'siglas': forms.TextInput(attrs={'placeholder': 'Siglas', 'class': 'form-control mnum'}),
@@ -114,6 +135,7 @@ class AreaTrabajoForm(forms.ModelForm):
         fields = ['nombre', 'numero' ]
 
         widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
             'numero': forms.TextInput(attrs={'placeholder': 'Número', 'class': 'form-control mnumber'}),
         }

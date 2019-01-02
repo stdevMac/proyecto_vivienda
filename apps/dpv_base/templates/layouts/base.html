@@ -19,12 +19,17 @@
     {% block main_style %}
     <link rel="stylesheet" href="{% static 'dpv_base/css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'dpv_base/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dpv_base/css/bootstrap-select.css' %}">
     <link rel="stylesheet" href="{% static 'dpv_base/css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'dpv_base/css/themify-icons.css' %}">
     <link rel="stylesheet" href="{% static 'dpv_base/css/flag-icon.min.css' %}">
     <link rel="stylesheet" href="{% static 'dpv_base/css/cs-skin-elastic.css' %}">
-    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
+    <link rel="stylesheet" href="{% static 'dpv_base/css/fontsopensans.css' %}">
+    <link rel="stylesheet" href="{% static 'dpv_base/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'dpv_base/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'dpv_base/scss/style.css' %}">
+    <link rel="stylesheet" href="{% static 'dpv_base/js/lib/bootstrap-datepicker/css/datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'dpv_base/js/lib/select2/select2.css' %}">
     <link href="{% static 'dpv_base/css/lib/vector-map/jqvmap.min.css' %}" rel="stylesheet">
     {% endblock main_style %}
     {% block extra_style %}{% endblock extra_style %}
@@ -255,6 +260,7 @@
     {% block main_cripts %}
     <script src="{% static 'dpv_base/js/vendor/jquery-2.1.4.min.js' %}"></script>
     <script src="{% static 'dpv_base/js/popper.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/popper.min.js' %}"></script>
     <script src="{% static 'dpv_base/js/plugins.js' %}"></script>
     <script src="{% static 'dpv_base/js/main.js' %}"></script>
 
@@ -265,31 +271,20 @@
     <script src="{% static 'dpv_base/js/lib/vector-map/jquery.vmap.js' %}"></script>
     <script src="{% static 'dpv_base/js/lib/vector-map/jquery.vmap.min.js' %}"></script>
     <script src="{% static 'dpv_base/js/lib/vector-map/jquery.vmap.sampledata.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/vector-map/country/jquery.vmap.world.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/jquery-validation/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/jquery-validation/js/additional-methods.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/bootstrap-maxlength/bootstrap-maxlength.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/select2/select2.min.js' %}"></script>
+
+    <script src="{% static 'dpv_base/js/plugins.js' %}"></script>
+    <script src="{% static 'dpv_base/js/main.js' %}"></script>
     {% endblock main_cripts %}
     
     {% block extra_scripts %}{% endblock extra_scripts %}
         
  
     {% block init_jquery %}
-    <script>
-        ( function ( $ ) {
-            "use strict";
-
-            jQuery( '#vmap' ).vectorMap( {
-                map: 'world_en',
-                backgroundColor: null,
-                color: '#ffffff',
-                hoverOpacity: 0.7,
-                selectedColor: '#1de9b6',
-                enableZoom: true,
-                showTooltip: true,
-                values: sample_data,
-                scaleColors: [ '#1de9b6', '#03a9f5' ],
-                normalizeFunction: 'polynomial'
-            } );
-        } )( jQuery );
-    </script>
     {% endblock init_jquery %}
 
 

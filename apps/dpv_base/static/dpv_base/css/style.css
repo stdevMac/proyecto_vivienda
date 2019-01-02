@@ -627,9 +627,13 @@ header .form-inline {
 }
 p.help-text {
     color: #3b4856;
-    font-size: 13px;
-    font-weight: 300;
-    line-height: 24px;
+    font-size: 12px;
+    font-weight: lighter;
+    line-height: 15px;
+}
+p.help-text-small {
+    font-size: 10px !important;
+    line-height: 14px !important;
 }
 .color-blue {
     color: #007bff;
@@ -639,6 +643,114 @@ p.help-text {
 }
 .background-lightblue {
     background: #bed7f3 !important;
+}
+.padding-short {
+    padding-right: 3%;
+    padding-left: 3%;
+}
+.form-check-input {
+    position: relative;
+    margin-top: .3rem;
+    margin-left: auto;
+    float: left;
+    margin-right: 1.03rem;
+}
+div.multi-select-box {
+    max-height: 80vh;
+    width: auto;
+    height: 40vh;
+    padding-left: 0%;
+    padding-right: 0%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+div.multi-select-box > span > label {
+    max-height: 5vh;
+    height: 5vh !important;
+    display: flex;
+    text-align: left;
+}
+div.multi-select-box > span  {
+    display: inline;
+}
+input.multi-select-box {
+    margin-right: 3px !important;
+    margin-left: 3px !important;
+    width: 5%;
+}
+ul.errorlist {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    color: #721c24;
+    font-weight: 300;
+    list-style: none;
+}
+.el-rounded {
+    border-radius: 5px !important;
+}
+.dashwidget {
+    height: 150px;
+}
+.bg-flat-color-6 {
+    background-color: #e69f35;
+}
+.bg-flat-color-7 {
+    background-color: #ba76ea;
+}
+.bg-flat-color-8 {
+    background-color: #e96179;
+}
+.bg-flat-color-9 {
+    background-color: #5ac2e4;
+}
+.bg-flat-color-0 {
+    background-color: #5355ef;
+}
+.h-list {
+    overflow-x: scroll;
+}
+.no-border {
+    border-bottom: 0px;
+}
+@media screen and (max-width: 1024) {
+    .right-hand-md {
+        margin-right: 1%;
+        margin-left: 70%;
+    }
+}
+@media screen and (max-width: 800) {
+    .right-hand-sm {
+        margin-right: 1%;
+        margin-left: 50%;
+    }
+}
+@media screen and (min-width: 1500px) {
+    .right-hand-lg {
+        margin-right: 1%;
+        margin-left: 80%;
+    }
+}
+@media screen and (max-width: 320px) {
+    .right-hand-xs {
+        margin-right: 1%;
+        margin-left: 8%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .right-hand-xs {
+        margin-right: 1%;
+        margin-left: 33%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .right-hand-xs {
+        margin-right: 1%;
+        margin-left: 45%;
+    }
+}
+.no-show {
+    display: none !important;
+    visibility: hidden !important;
 }
 
 /*# sourceMappingURL=style.css.map */

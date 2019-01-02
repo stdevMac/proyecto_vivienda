@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import permission_required
+from django.contrib.contenttypes.models import ContentType
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+
 from .models import *
 from .forms import *
 
@@ -29,22 +32,12 @@ def create_tipoevento(request):
         model.frecuencia_id = request.POST["frecuencia_tipoevento"]
     model.permission_id = permission.id
     model.save()
-    
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(TipoEvento)
-    log.object = model.id
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
 
     data['id'] = model.id
     data['type'] = model.type
     data['frecuencia'] = str(model.frecuencia)
-    
 
-    return JsonResponse(data)
+    return redirect('dpv_events:tipoevento')
 
 
 @permission_required('dpv_events.change_tipoevento')
@@ -54,15 +47,6 @@ def update_tipoevento(request):
     model = TipoEvento.objects.get(pk=request.POST['id'])
     model.type = request.POST["type_tipoevento"]
     model.save()
-    
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(TipoEvento)
-    log.object = model.id
-    log.action = 2
-    log.date = timezone.now()
-    log.save()
 
     data['id'] = model.id
     data['type'] = model.type
@@ -86,13 +70,6 @@ def delete_tipoevento(request):
         model.delete()
         permission.delete()
 
-        log = Log()
-        log.user_id = request.user.id
-        log.content_type = ContentType.objects.get_for_model(TipoEvento)
-        log.object = object
-        log.action = 3
-        log.date = timezone.now()
-        log.save()
     return JsonResponse(data)
 
 
@@ -104,78 +81,35 @@ def FrecuenciaView(request):
 @permission_required('dpv_events.add_frecuencia')
 def create_frecuencia(request):
     data = {}
+    form = FrecuenciaForm(request.POST or None)
 
-    if not Frecuencia.objects.all():
-        data['isfirst'] = True
-
-    model = Frecuencia()
-    model.name = request.POST["name_frecuencia"]
-    model.days = request.POST["days_frecuencia"]
-    model.save()
-    
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(Frecuencia)
-    log.object = model.id
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
-
-    data['id'] = model.id
-    data['name'] = model.name
-    data['days'] = model.days
-    
-
+    if form.is_valid():
+        model = Frecuencia()
+        model.name = form.cleaned_data["name_frecuencia"]
+        model.days = form.cleaned_data["days_frecuencia"]
+        model.save()
     return JsonResponse(data)
 
 
 @permission_required('dpv_events.change_frecuencia')
 def update_frecuencia(request):
     data = {}
+    form = FrecuenciaForm(request.POST or None)
 
-    model = Frecuencia.objects.get(pk=request.POST['id'])
-    model.name = request.POST["name_frecuencia"]
-    model.days = request.POST["days_frecuencia"]
-    model.save()
-    
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(Frecuencia)
-    log.object = model.id
-    log.action = 2
-    log.date = timezone.now()
-    log.save()
-
-    data['id'] = model.id
-    data['name'] = model.name
-    data['days'] = model.days
-    
+    if form.is_valid():
+        model = Frecuencia.objects.get(pk=request.POST['id'])
+        model.name = form.cleaned_data["name_frecuencia"]
+        model.days = form.cleaned_data["days_frecuencia"]
+        model.save()
 
     return JsonResponse(data)
 
 
 @permission_required('dpv_events.delete_frecuencia')
-def delete_frecuencia(request):
-    data = {}
-
-    try:
-        model = Frecuencia.objects.get(pk=request.POST['id'])
-    except:
-        data['iserror'] = True
-    else:
-        object = model.id
-        model.delete()
-
-        log = Log()
-        log.user_id = request.user.id
-        log.content_type = ContentType.objects.get_for_model(Frecuencia)
-        log.object = object
-        log.action = 3
-        log.date = timezone.now()
-        log.save()
-    return JsonResponse(data)
+def delete_frecuencia(request, frecuencia_id):
+    model = Frecuencia.objects.get(pk=frecuencia_id)
+    model.delete()
+    return redirect('dpv_events:frecuencia')
 
 
 @permission_required('dpv_events.view_evento')
@@ -239,14 +173,6 @@ def create_evento(request):
     tema.responsable_id = request.user.id
     tema.save()
 
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(Evento)
-    log.object = model.type.type
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
-
     data['id'] = model.id
     data['type'] = str(model.type)
     data['date_programed'] = model.get_datetime_programed
@@ -289,14 +215,6 @@ def update_evento(request):
         themes.append({"id":i+1,"asunto": tema.asunto, "responsable_id": tema.responsable_id, "responsable_name": tema.responsable.username})
         i += 1
 
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(Evento)
-    log.object = model.id
-    log.action = 2
-    log.date = timezone.now()
-    log.save()
-
     data['event'] = {
         "id": model.id,
         "type": {
@@ -329,13 +247,6 @@ def delete_evento(request):
         object = model.id
         model.delete()
 
-        log = Log()
-        log.user_id = request.user.id
-        log.content_type = ContentType.objects.get_for_model(Evento)
-        log.object = object
-        log.action = 3
-        log.date = timezone.now()
-        log.save()
     return JsonResponse(data)
 
 
@@ -373,14 +284,6 @@ def create_temaevento(request):
     model.es_sugerido = True
     model.save()
 
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(TemaEvento)
-    log.object = model.asunto
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
-
     data["id"] = model.id
     data["asunto"] = model.asunto
     data["responsable_name"] = model.responsable.username
@@ -412,14 +315,6 @@ def create_acta(request):
     model.body = request.POST['body_acta_evento']
     model.date_created = timezone.now()
     model.save()
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(TemaEvento)
-    log.object = model.code
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
 
     data['id'] = model.id
     data['code'] = model.code

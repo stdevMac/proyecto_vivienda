@@ -31,6 +31,20 @@ class Municipio(models.Model):
         return self.nombre
 
 
+class ConsejoPopular(models.Model):
+    nombre = models.CharField(max_length=30, help_text="Nombre del consejo popular", verbose_name="Consejo Popular", blank=False, null=False, unique=True, validators=[not_special_char])
+    numero = models.CharField(max_length=2, verbose_name="Número", unique=True, validators=[only_numbers])
+    municipio = models.ForeignKey(Municipio, related_name="municipios", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Consejo Popular"
+        verbose_name_plural = "Consejos Populares"
+        ordering = ['numero', ]
+
+    def __str__(self):
+        return self.nombre
+
+
 class Organismo(models.Model):
     nombre = models.CharField(max_length=50, help_text="Nombre del organismo.", verbose_name=" Organismo", unique=True, validators=[not_special_char])
     siglas = models.CharField(max_length=7, help_text="Siglas representativas del organismo", unique=True, validators=[not_special_char])
@@ -69,7 +83,7 @@ class Calle(models.Model):
 
 
 class Piso(models.Model):
-    nombre = models.CharField(max_length=2, help_text="Nombre del piso", verbose_name="Piso", unique=True, validators=[only_numbers])
+    nombre = models.CharField(max_length=20, help_text="Nombre del piso", verbose_name="Piso", unique=True, validators=[not_special_char])
 
     class Meta:
         verbose_name = "Piso"
