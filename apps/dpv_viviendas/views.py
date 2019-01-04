@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 
 
 # Create your views here.
-@permission_required('vivienda.view_vivienda', raise_exception=True)
+@permission_required('dpv_viviendas.view_vivienda', raise_exception=True)
 def index(request):
     viviendas = Vivienda.objects.none()
     try:
@@ -23,7 +23,7 @@ def index(request):
         print("no tiene perfil asociado")
     return render(request, "dpv_viviendas/list.html", {'viviendas': viviendas})
 
-
+@permission_required('dpv_viviendas.add_vivienda', raise_exception=True)
 def vivienda_add(request):
     if request.method == 'POST':
         form = ViviendaForm(request.POST)
@@ -36,7 +36,7 @@ def vivienda_add(request):
         form = ViviendaForm()
         return render(request, 'dpv_viviendas/form.html', {'form': form})
 
-
+@permission_required('dpv_viviendas.change_vivienda', raise_exception=True)
 def vivienda_edit(request, id_vivienda):
     viv = Vivienda.objects.filter(id=id_vivienda).first()
     if request.method == 'POST':

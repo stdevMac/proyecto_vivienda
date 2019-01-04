@@ -22,7 +22,7 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Viviendas</strong>
-                {% if perms.vivienda.add_vivienda %}
+                {% if perms.dpv_viviendas.add_vivienda %}
                 <a href="{% url 'vivienda_add' %}" type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Vivienda</a>
                 {% endif %}
             </div>
@@ -48,13 +48,13 @@
                             <td>{{vivienda.cantidad_persona}}</td>
                             <td>{{vivienda.concepto}}</td>
                             <td>
-                                {% if perms.vivienda.view_vivienda %}
+                                {% if perms.dpv_viviendas.view_vivienda %}
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
                                 {% endif %}
-                                {% if perms.vivienda.change_vivienda %}
+                                {% if perms.dpv_viviendas.change_vivienda %}
                                     <a href="{% url 'vivienda_edit' vivienda.id %}" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
                                 {% endif %}
-                                {% if perms.vivienda.delete_vivienda %}
+                                {% if perms.dpv_viviendas.delete_vivienda %}
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
                                 {% endif %}
                             </td>

@@ -247,14 +247,60 @@ class UserMForm(forms.ModelForm):
         fields = ('username', 'email', 'first_name', 'last_name', 'password', 'confirm_password', 'groups', 'user_permissions', 'is_staff', )
 
         widgets = {
-            'email': forms.EmailInput(attrs={"placeholder": "Seleccione un Municipio.", "class": "form-control"}),
-            'is_staff': forms.CheckboxInput(attrs={"placeholder": "Seleccione un Género.", "class": "form-check-input"}),
-            'username': forms.TextInput(attrs={"placeholder": "Número", "class": "form-control"}),
-            'first_name': forms.TextInput(attrs={"placeholder": "CI", "class": "form-control"}),
-            'last_name': forms.TextInput(attrs={"placeholder": "Nombre", "class": "form-control"}),
-            'password': forms.PasswordInput(attrs={"placeholder": "Apellidos", "class": "form-control"}),
-            'groups': DivCheckboxSelectMultiple(attrs={"placeholder": "Correo Electrónico", "class": "form-control multi-select-box"}),
-            'user_permissions': DivCheckboxSelectMultiple(attrs={"placeholder": "Teléfono Fijo", "class": "form-control multi-select-box"}),
+            'email': forms.EmailInput(attrs={"placeholder": "Correo electrónico", "class": "form-control"}),
+            'is_staff': forms.CheckboxInput(attrs={"placeholder": "Administrador", "class": "form-check-input"}),
+            'username': forms.TextInput(attrs={"placeholder": "Nombre de usuario", "class": "form-control"}),
+            'first_name': forms.TextInput(attrs={"placeholder": "Nombre", "class": "form-control"}),
+            'last_name': forms.TextInput(attrs={"placeholder": "Apellidos", "class": "form-control"}),
+            'password': forms.PasswordInput(attrs={"placeholder": "Contraseña", "class": "form-control"}),
+            'groups': DivCheckboxSelectMultiple(attrs={"class": "form-control multi-select-box"}),
+            'user_permissions': DivCheckboxSelectMultiple(attrs={"class": "form-control multi-select-box"}),
+        }
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        repeated = self.data.get('confirm_password')
+        if password != repeated:
+            raise ValidationError('Las contraseñas no coinciden.', code='distinct_password_and_repeated')
+        return  self.cleaned_data.get('password')
+
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get('confirm_password')
+        repeated = self.data.get('password')
+        if password != repeated:
+            raise ValidationError('Las contraseñas no coinciden.', code='distinct_password_and_repeated')
+        return  self.cleaned_data.get('confirm_password')
+
+
+class UserNPForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = (
+        'username', 'email', 'first_name', 'last_name', 'groups', 'user_permissions', 'is_staff',)
+
+        widgets = {
+            'email': forms.EmailInput(attrs={"placeholder": "Correo electrónico", "class": "form-control"}),
+            'is_staff': forms.CheckboxInput(attrs={"placeholder": "Administrador", "class": "form-check-input"}),
+            'username': forms.TextInput(attrs={"placeholder": "Nombre de usuario", "class": "form-control"}),
+            'first_name': forms.TextInput(attrs={"placeholder": "Nombre", "class": "form-control"}),
+            'last_name': forms.TextInput(attrs={"placeholder": "Apellidos", "class": "form-control"}),
+            'groups': DivCheckboxSelectMultiple(attrs={"class": "form-control multi-select-box"}),
+            'user_permissions': DivCheckboxSelectMultiple(attrs={"class": "form-control multi-select-box"}),
+        }
+
+
+class UserPasswordForm(forms.ModelForm):
+    confirm_password = forms.CharField(max_length=255, required=True, label="Confirmar Contraseña", help_text="Recuerde que la contraseña debe tener mas de 8 caracteres.\nLa contraseña debe contener letras minúsculas, mayúsculas, números y caracteres especiales.",
+                               widget=(forms.PasswordInput(attrs={"placeholder": "Confirmar Contraseña", "class": "form-control"})),
+                               validators=[MaxLengthValidator(255), MinLengthValidator(8)])
+
+    class Meta:
+        model = User
+        fields = ( 'password', 'confirm_password', )
+
+        widgets = {
+            'password': forms.PasswordInput(attrs={"placeholder": "Contraseña", "class": "form-control"}),
         }
 
     def clean_password(self):

@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.apps import apps as all_apps
 from .forms import LoginForm, RecoverPassForm
-from .forms import FullUserForm, UserProfileForm, UserForm, GroupForm, UserMForm
+from .forms import GroupForm, UserMForm, UserNPForm, UserPasswordForm
 from .utils import store_url_names
 from apps.dpv_persona.models import PersonaNatural
 from apps.dpv_persona.forms import PersonaNaturalMForm
@@ -98,24 +98,31 @@ def user_add(request):
             formprs = PersonaNaturalMForm(request.POST)
         if exist_perfil:
             formprf = PerfilMForm(request.POST)
-        print("hay que validar")
         if form.is_valid() and formprs.is_valid() and formprf.is_valid():
-            print("to esta valido sin validar perfil")
             usr = form.save()
-            prs = formprs.save()
-            prs.nombre = usr.first_name
-            prs.apellidos = usr.last_name
-            prs.save()
-            formprf.datos_usuario = usr.id
-            formprf.datos_personales = prs.id
-            prf = Perfil()
-            prf.centro_trabajo = formprf.cleaned_data.get('centro_trabajo')
-            prf.depto_trabajo = formprf.cleaned_data.get('depto_trabajo')
-            prf.notificacion_email = formprf.cleaned_data.get('notificacion_email')
-            prf.documentacion_email = formprf.cleaned_data.get('documentacion_email')
-            prf.datos_personales = prs
-            prf.datos_usuario = usr
-            prf.save()
+            usr.set_password(form.cleaned_data.get('password'))
+            usr.save()
+            try:
+                prs = formprs.save()
+                prs.nombre = usr.first_name
+                prs.apellidos = usr.last_name
+                prs.email_address = usr.email
+                prs.save()
+                try:
+                    prf = Perfil()
+                    prf.centro_trabajo = formprf.cleaned_data.get('centro_trabajo')
+                    prf.depto_trabajo = formprf.cleaned_data.get('depto_trabajo')
+                    prf.notificacion_email = formprf.cleaned_data.get('notificacion_email')
+                    prf.documentacion_email = formprf.cleaned_data.get('documentacion_email')
+                    prf.datos_personales = prs
+                    prf.datos_usuario = usr
+                    prf.save()
+                except:
+                    usr.delete()
+                    prs.delete()
+            except:
+                form.add_error('email', 'ya existe algún usuario que está usando ese email')
+                return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
             return redirect('admin_user')
         else:
             return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
@@ -144,7 +151,7 @@ def group_add(request):
         return render(request, 'layouts/admin/groups_form.html', {'form': form})
 
 
-@permission_required('auth.view_group', raise_exception=True)
+@permission_required('auth.view_user', raise_exception=True)
 def users_view(request):
     usuarios = User.objects.none()
     try:
@@ -183,12 +190,12 @@ def configure_email(request):
 
 
 @permission_required('auth.change_user', raise_exception=True)
-def user_edit(request, id_user):
-    usr = User.objects.filter(id=id_user).first()
+def user_edit(request, id_usuario):
+    usr = User.objects.filter(id=id_usuario).first()
     prf = Perfil.objects.filter(datos_usuario=usr.id).first()
-    prs = PersonaNatural.objects.filter(id=prf.datos_personales).first()
+    prs = PersonaNatural.objects.filter(id=prf.datos_personales.id).first()
     if request.method == 'POST':
-        form = UserMForm(request.POST, instance=usr)
+        form = UserNPForm(request.POST, instance=usr)
         formprs = PersonaNaturalMForm(request.POST, instance=prs)
         formprf = PerfilMForm(request.POST, instance=prf)
         if form.is_valid() and formprf.is_valid() and formprs.is_valid():
@@ -196,6 +203,9 @@ def user_edit(request, id_user):
             formprs.save()
             formprf.save()
             return redirect(reverse_lazy('admin_user'))
+    form = UserNPForm(instance=usr)
+    formprs = PersonaNaturalMForm(instance=prs)
+    formprf = PerfilMForm(instance=prf)
     return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf})
 
 
@@ -210,3 +220,53 @@ def group_edit(request, id_group):
     else:
         form = GroupForm(instance=grp)
     return render(request, 'layouts/admin/groups_form.html', {'form': form})
+
+
+@permission_required('auth.delete_user', raise_exception=True)
+def user_deactivate(request, id_usr):
+    if id_usr != request.user.id:
+        usr = User.objects.filter(id=id_usr).first()
+        if request.method == 'POST':
+            usr.is_active = not usr.is_active
+            usr.save()
+            return redirect(reverse_lazy('admin_user'))
+        return render(request, 'layouts/admin/user_deactivate.html', {'usr': usr})
+    return redirect(reverse_lazy('admin_user'))
+
+
+@permission_required('auth.change_user', raise_exception=True)
+def user_setpass(request, id_usr):
+    usr = User.objects.filter(id=id_usr).first()
+    form = UserPasswordForm(instance=usr)
+    if request.method == 'POST':
+        form = UserPasswordForm(request.POST, instance=usr)
+        if form.is_valid():
+            usr.set_password(form.cleaned_data.get('password'))
+            usr.save()
+            return redirect(reverse_lazy('admin_user'))
+    return render(request, 'layouts/admin/user_setpass.html', {'form': form, 'usr': usr})
+
+
+@permission_required('auth.view_user', raise_exception=True)
+def user_detail(request, id_usuario):
+    usuario = User.objects.filter(id=id_usuario).first()
+    return render(request, 'layouts/admin/user_detail.html', {'usuario': usuario})
+
+
+@permission_required('auth.view_group', raise_exception=True)
+def group_detail(request, id_grp):
+    grupo = Group.objects.filter(id=id_grp).first()
+    return render(request, 'layouts/admin/groups_view.html', {'grupo': grupo})
+
+
+@permission_required('auth.view_group', raise_exception=True)
+def group_delete(request, id_grp):
+    grupo = Group.objects.filter(id=id_grp).first()
+    if request.method == 'POST':
+        grupo.delete()
+        return redirect(reverse_lazy('admin_group'))
+    return render(request, 'layouts/admin/groups_delete.html', {'grupo': grupo})
+
+@login_required
+def error_403(request, reason):
+    return render(request, 'layouts/error403.html')

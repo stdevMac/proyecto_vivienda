@@ -12,7 +12,7 @@ def index(request):
 
 
 #------------------------------------------- Provincia -----------------------------------------------------------------
-@permission_required('provincia.view_provincia', raise_exception=True)
+@permission_required('dpv_nomencladores.view_provincia', raise_exception=True)
 def index_provincia(request):
     provincias = Provincia.objects.all()
     return render(request, 'dpv_nomencladores/list_provincia.html', {'provincias': provincias})
@@ -50,7 +50,7 @@ def delete_provincia(request, id_provincia):
     return render(request, 'dpv_nomencladores/delete_provincia.html', {'provincia':provincia})
 
 #------------------------------------------- Municipio -----------------------------------------------------------------
-@permission_required('municipio.view_municipio', raise_exception=True)
+@permission_required('dpv_nomencladores.view_municipio', raise_exception=True)
 def index_municipio(request):
     municipios = Municipio.objects.all()
     return render(request, 'dpv_nomencladores/list_municipio.html', {'municipios': municipios})
@@ -87,7 +87,7 @@ def delete_municipio(request, id_municipio):
     return render(request, 'dpv_nomencladores/delete_municipio.html', {'municipio':municipio})
 
 #------------------------------------------- ConsejoPopular -----------------------------------------------------------------
-@permission_required('consejopopular.view_consejopopular', raise_exception=True)
+@permission_required('dpv_nomencladores.view_consejopopular', raise_exception=True)
 def index_consejopopular(request):
     consejopopulars = ConsejoPopular.objects.all()
     return render(request, 'dpv_nomencladores/list_consejopopular.html', {'consejopopulars': consejopopulars})
@@ -124,7 +124,7 @@ def delete_consejopopular(request, id_consejopopular):
     return render(request, 'dpv_nomencladores/delete_consejopopular.html', {'consejopopular':consejopopular})
 
 #------------------------------------------- Calle -----------------------------------------------------------------
-@permission_required('calle.view_calle', raise_exception=True)
+@permission_required('dpv_nomencladores.view_calle', raise_exception=True)
 def index_calle(request):
     calles = Calle.objects.all()
     return render(request, 'dpv_nomencladores/list_calle.html', {'calles': calles})
@@ -161,7 +161,7 @@ def delete_calle(request, id_calle):
     return render(request, 'dpv_nomencladores/delete_calle.html', {'calle':calle})
 
 #------------------------------------------- Piso -----------------------------------------------------------------
-@permission_required('piso.view_piso', raise_exception=True)
+@permission_required('dpv_nomencladores.view_piso', raise_exception=True)
 def index_piso(request):
     pisos = Piso.objects.all()
     return render(request, 'dpv_nomencladores/list_piso.html', {'pisos': pisos})
@@ -198,7 +198,7 @@ def delete_piso(request, id_piso):
     return render(request, 'dpv_nomencladores/delete_piso.html', {'piso':piso})
 
 #------------------------------------------- Organismo -----------------------------------------------------------------
-@permission_required('organismo.view_organismo', raise_exception=True)
+@permission_required('dpv_nomencladores.view_organismo', raise_exception=True)
 def index_organismo(request):
     organismos = Organismo.objects.all()
     return render(request, 'dpv_nomencladores/list_organismo.html', {'organismos': organismos})
@@ -235,7 +235,7 @@ def delete_organismo(request, id_organismo):
     return render(request, 'dpv_nomencladores/delete_organismo.html', {'organismo':organismo})
 
 #------------------------------------------- Destino -----------------------------------------------------------------
-@permission_required('destino.view_destino', raise_exception=True)
+@permission_required('dpv_nomencladores.view_destino', raise_exception=True)
 def index_destino(request):
     destinos = Destino.objects.all()
     return render(request, 'dpv_nomencladores/list_destino.html', {'destinos': destinos})
@@ -272,7 +272,7 @@ def delete_destino(request, id_destino):
     return render(request, 'dpv_nomencladores/delete_destino.html', {'destino':destino})
 
 #------------------------------------------- Concepto -----------------------------------------------------------------
-@permission_required('concepto.view_concepto', raise_exception=True)
+@permission_required('dpv_nomencladores.view_concepto', raise_exception=True)
 def index_concepto(request):
     conceptos = Concepto.objects.all()
     return render(request, 'dpv_nomencladores/list_concepto.html', {'conceptos': conceptos})
@@ -309,7 +309,7 @@ def delete_concepto(request, id_concepto):
     return render(request, 'dpv_nomencladores/delete_concepto.html', {'concepto':concepto})
 
 #------------------------------------------- Genero -----------------------------------------------------------------
-@permission_required('genero.view_genero', raise_exception=True)
+@permission_required('dpv_nomencladores.view_genero', raise_exception=True)
 def index_genero(request):
     generos = Genero.objects.all()
     return render(request, 'dpv_nomencladores/list_genero.html', {'generos': generos})
@@ -348,7 +348,7 @@ def delete_genero(request, id_genero):
 
 
 #------------------------------------------- AreaTrabajo -----------------------------------------------------------------
-@permission_required('areatrabajo.view_areatrabajo', raise_exception=True)
+@permission_required('dpv_nomencladores.view_areatrabajo', raise_exception=True)
 def index_areatrabajo(request):
     departamentos = AreaTrabajo.objects.all()
     return render(request, 'dpv_nomencladores/list_areatrabajo.html', {'departamentos': departamentos})
@@ -385,7 +385,7 @@ def delete_areatrabajo(request, id_areatrabajo):
     return render(request, 'dpv_nomencladores/delete_areatrabajo.html', {'areatrabajo':areatrabajo})
 
 #------------------------------------------- CentroTrabajo -----------------------------------------------------------------
-@permission_required('centrotrabajo.view_centrotrabajo', raise_exception=True)
+@permission_required('dpv_nomencladores.view_centrotrabajo', raise_exception=True)
 def index_centrotrabajo(request):
     unidades = CentroTrabajo.objects.all()
     return render(request, 'dpv_nomencladores/list_centrotrabajo.html', {'unidades': unidades})
