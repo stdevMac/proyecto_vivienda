@@ -2,7 +2,9 @@
 {% load i18n %}
 {% load static %}
 {% block page_title %}| Eventos{% endblock page_title %}
-{% block extra_style %}{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'dpv_base/js/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css' %}">
+{% endblock %}
 {% block breadcrumb_title %}Eventos{% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
@@ -64,7 +66,7 @@
                                             <i class="fa fa-eye"></i> </a>
                                         {% endif %}
                                         {% if perms.dpv_events.delete_evento and model.in_time %}
-                                        <a href="#myModal{{ model.id }}" role="button" class="btn default btn-xs black" data-toggle="modal">
+                                        <a href="#myModal{{ model.id }}" role="button" class="btn btn-danger btn-sm " data-toggle="modal">
                                             <i class="fa fa-trash-o"></i> </a>
                                         <div id="myModal{{ model.id }}" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                                             <div class="modal-dialog modal-sm">
@@ -82,9 +84,9 @@
                                                         <button class="btn default" data-dismiss="modal" aria-hidden="true">
                                                             Cancelar
                                                         </button>
-                                                        <button data-dismiss="modal" class="delete btn blue" data-id="{{ model.id }}">
+                                                        <a href="{% url 'dpv_events:delete_evento' model.id %}" class="btn btn-primary">
                                                             Confirmar
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -201,7 +203,7 @@
                     <div class="portlet-title">
                         <div class="caption theme-font">
                             <i class="icon-plus theme-font"></i>
-                            <span class="caption-subject bold uppercase"> {% trans 'Add' %} Tema</span>
+                            <span class="caption-subject bold uppercase"> Agregar Tema</span>
                         </div>
                         <div class="actions">
                             <button type="button" id="close_theme_event" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -239,11 +241,11 @@
     </div>
 {% endblock content_page %}
 {% block extra_scripts %}
-    <script src="{% static 'dpv_events/scripts/eventos.js' %}">
-    <script>
-        $(document).ready(function() {
-           EventosScript.init();
-          $('#bootstrap-data-table-export').DataTable();
+    <script src="{% static 'dpv_events/scripts/eventos.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            EventosScript.init();
         });
     </script>
 {% endblock extra_scripts %}
