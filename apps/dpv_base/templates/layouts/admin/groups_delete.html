@@ -15,11 +15,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="return cerrar_modal()">Cancelar</button>
-                {% if usr.is_active %}
-                <button type="submit" class="btn btn-danger">Desactivar</button>
-                {% else %}
                 <button type="submit" class="btn btn-danger" {% if grupo.user_set.count > 0 %} disabled="true" {% endif %}>Eliminar</button>
-                {% endif %}
             </div>
         </form>
     </div>
