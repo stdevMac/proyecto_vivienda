@@ -13,12 +13,14 @@ def index(request):
 
 @permission_required('dpv_persona.view_personajuridica', raise_exception=True)
 def index_persojur(request):
-    return render(request, 'dpv_persona/list_persojur.html')
+    persojurs = PersonaJuridica.objects.all()
+    return render(request, 'dpv_persona/list_persojur.html', {'personajuridicas': persojurs})
 
 
 @permission_required('dpv_persona.view_personanatural', raise_exception=True)
 def index_personat(request):
-    return render(request, 'dpv_persona/list_personat.html')
+    person = PersonaNatural.objects.all()
+    return render(request, 'dpv_persona/list_personat.html', {'personas': person})
 
 
 @permission_required('dpv_persona.add_personajuridica', raise_exception=True)
@@ -78,7 +80,7 @@ def edit_persojur(request, id_persojur):
 @permission_required('dpv_persona.view_personajuridica', raise_exception=True)
 def detail_persojur(request, id_persojur):
     persojur = PersonaJuridica.objects.filter(id=id_persojur).first()
-    return render(request, 'dvp_persona/detail_persojur.html', {'persojur': persojur})
+    return render(request, 'dpv_persona/detail_persojur.html', {'persojur': persojur})
 
 
 @permission_required('dpv_persona.view_personanatural', raise_exception=True)
@@ -89,17 +91,17 @@ def detail_personat(request, id_personat):
 
 @permission_required('dpv_persona.delete_personajuridica', raise_exception=True)
 def delete_persojur(request, id_persojur):
-    persojur = PersonaJuridica.objects.filter(id=id_persojur)
+    persojur = PersonaJuridica.objects.filter(id=id_persojur).first()
     if request.method == 'POST':
         persojur.delete()
         return redirect(reverse_lazy('persona_juridica'))
-    return render(request, 'dvp_persona/delete_persojur.html', {'persojur': persojur})
+    return render(request, 'dpv_persona/delete_persojur.html', {'persojur': persojur})
 
 
-@permission_required('dpv_persona.delete_personajuridica', raise_exception=True)
+@permission_required('dpv_persona.delete_personanatural', raise_exception=True)
 def delete_personat(request, id_personat):
     personat = PersonaNatural.objects.filter(id=id_personat).first()
     if request.method == 'POST':
         personat.delete()
         return redirect(reverse_lazy('persona_natural'))
-    return render(request, 'dvp_persona/delete_personat.html', {'personat': personat})
+    return render(request, 'dpv_persona/delete_personat.html', {'personat': personat})

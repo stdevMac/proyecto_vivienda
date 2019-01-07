@@ -10,10 +10,8 @@
     {% if '/persona/juridica/form/' == request.path %}
     <li class="active">Crear</li>
     {% else %}
-    <li>
-        <a href="{% url 'persona_juridica' %}">
-            Crear
-        </a>
+    <li class="active">
+            Actualizar
     </li>
     {% endif %}
 {% endblock breadcrumbs %}

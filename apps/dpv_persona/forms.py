@@ -91,8 +91,10 @@ class PersonaJuridicaForm(forms.ModelForm):
     class Meta:
         model = PersonaJuridica
         fields = ('nombre',
+                  'sigla',
                   'telefono',
                   'movil',
+                  'nombre_contacto',
                   'email_address',
                   'direccion_calle',
                   'direccion_numero',
@@ -109,6 +111,8 @@ class PersonaJuridicaForm(forms.ModelForm):
             'direccion_numero': forms.TextInput(attrs={"placeholder": "Número", "class": "form-control"}),
             'codigo_nit': forms.TextInput(attrs={"placeholder": "Código NiT", "class": "form-control"}),
             'nombre': forms.TextInput(attrs={"placeholder": "Nombre", "class": "form-control"}),
+            'sigla': forms.TextInput(attrs={"placeholder": "Nombre", "class": "form-control"}),
+            'nombre_contacto': forms.TextInput(attrs={"placeholder": "Nombre", "class": "form-control"}),
             'codigo_reuup': forms.TextInput(attrs={"placeholder": "Código Reeup", "class": "form-control"}),
             'email_address': forms.EmailInput(attrs={"placeholder": "Correo Electrónico", "class": "form-control"}),
             'telefono': forms.TextInput(attrs={"placeholder": "Teléfono Fijo", "class": "form-control"}),

@@ -10,10 +10,8 @@
     {% if '/persona/natural/form/' == request.path %}
     <li class="active">Crear</li>
     {% else %}
-    <li>
-        <a href="{% url 'persona_natural' %}">
-            Crear
-        </a>
+    <li class="active">
+            Actualizar
     </li>
     {% endif %}
 {% endblock breadcrumbs %}
@@ -42,7 +40,7 @@
                     {% endfor %}
                 </div>
                 <div class="card-footer">
-                    <a type="button" class="btn btn-default" href="{% url 'locales_list' %}">
+                    <a type="button" class="btn btn-default" href="{% url 'persona_natural' %}">
                         <i class="fa fa-reply"></i>
                         Volver
                     </a>

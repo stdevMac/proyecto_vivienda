@@ -7,7 +7,8 @@
         </div>
             <div class="modal-body">
                 <div class="col-md-12"><span class="text-muted">Nombre:</span>  {{persojur.nombre}}</div>
-                <div class="col-md-12"><span class="text-muted">Siglas:</span> {{persojur.sigla}}</div>
+                <div class="col-md-6"><span class="text-muted">Siglas:</span> {{persojur.sigla}}</div>
+                <div class="col-md-6"><span class="text-muted">Municipio:</span> {{persojur.municipio| upper}}</div>
                 <div class="col-md-12"><span class="text-muted">Dirección:</span></div>
                 <div class="col-md-12">Calle {{persojur.direccion_calle}} # {{persojur.direccion_numero}} entre {{persojur.direccion_entrecalle1}} y {{persojur.direccion_entrecalle2}}, Municipio {{persojur.municipio}}</div>
                 <div class="col-md-6"><span class="text-muted">Código NiT:</span> {{persojur.codigo_nit}}</div>
