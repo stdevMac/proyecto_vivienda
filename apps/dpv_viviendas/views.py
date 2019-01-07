@@ -48,3 +48,37 @@ def vivienda_edit(request, id_vivienda):
         form = ViviendaForm(instance=viv)
     return render(request, 'dpv_viviendas/form.html', {'form': form})
 
+
+@permission_required('dpv_viviendas.view_vivienda', raise_exception=True)
+def vivienda_detail(request, id_vivienda):
+    viv = Vivienda()
+    try:
+        perfil = request.user.perfil_usuario
+        viv = Vivienda.objects.filter(id=id_vivienda).first()
+        if not perfil.centro_trabajo.oc:
+            if perfil.centro_trabajo.municipio != viv.local_dado.municpio:
+                viv = Vivienda()
+    except:
+        print("El susuario no tiene perfil asociado")
+    return  render(request, 'dpv_vivienda/detail.html', {'vivienda': viv})
+
+
+@permission_required('dpv_viviendas.view_vivienda', raise_exception=True)
+def viviedna_delete(request, id_vivienda):
+    viv = Vivienda()
+    try:
+        perfil = request.user.perfil_usuario
+        viv = Vivienda.objects.filter(id=id_vivienda).first()
+        if not perfil.centro_trabajo.oc:
+            if perfil.centro_trabajo.municipio != viv.local_dado.municpio:
+                if request.method == 'POST':
+                    viv.delete()
+                    return redirect(reverse_lazy('vivienda_list'))
+                viv = Vivienda()
+        else:
+            if request.method == 'POST':
+                viv.delete()
+                return redirect(reverse_lazy('vivienda_list'))
+    except:
+        print("El susuario no tiene perfil asociado")
+    return  render(request, 'dpv_vivienda/detail.html', {'vivienda': viv})

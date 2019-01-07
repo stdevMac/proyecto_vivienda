@@ -36,7 +36,7 @@ class Local(models.Model):
         unique_together = (('municipio', 'direccion_calle', 'direccion_numero', 'piso', ),)
 
     def __str__(self):
-        return self.municipio.nombre + '-' + self.direccion_calle.nombre + '-' + self.direccion_numero
+        return self.municipio.nombre + '-' + self.direccion_calle.nombre + ' # ' + self.direccion_numero
 
     def get_ok_data(self):
         validation_text = ''
