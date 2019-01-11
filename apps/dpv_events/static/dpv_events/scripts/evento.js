@@ -107,8 +107,8 @@ var EventoScript = function () {
             jQuery('#id_responsables_acuerdo_evento').select2({placeholder: "Seleccione los Responsables",allowClear: true});
             jQuery("#id_responsables_acuerdo_evento-error").remove();
 
-            jQuery('.todo-taskbody-due').datepicker({
-                rtl: true,
+            jQuery('#id_date_finish_acuerdo_evento').datepicker({
+                rtl: false,
                 format: 'yyyy-mm-dd',
                 orientation: "left",
                 autoclose: true,
@@ -201,7 +201,7 @@ var EventoScript = function () {
             submitHandler: function (form) {
 
                 if(temas.length == 0){
-                    alert_error('Debe añadir al menos otro tema.');
+                    alert('Debe añadir al menos otro tema.');
                     return;
                 }
 
@@ -251,7 +251,7 @@ var EventoScript = function () {
                             tableThemes.append('<tr><td>' + theme.id + '</td><td>' + theme.asunto + '</td><td>' + theme.responsable_name + '</td></tr>');
                         }
 
-                        jQuery('#to_info_evento').click();
+                        jQuery('#cancelar').click();
                         alert('Se Ha Modificado Exitosamente El Evento.');
                     },
                 });
@@ -354,14 +354,9 @@ var EventoScript = function () {
                     contentType: false,
                     processData: false,
                     success: function(data){
-                        if(data.isfirst){
-                            tableThemesSugeridos.find('tbody').html('');
-                        }
-                        var count = tableThemesSugeridos.find('tbody').find('tr').length + 1;
-                        jQuery('#cantidad_temas_sugeridos').html(count);
-                        tableThemesSugeridos.append('<tr><td>' + count + '</td><td>' + data.asunto + '</td><td>' + data.responsable_name + '</td><td><button type="button" class="btn green btn-xs tooltips done" data-theme="' + data.id + '"><i class="icon-check"></i> Aprobar</button></td></tr>');
-                        jQuery('#cancelar_theme_sugerido').click();
-                        alert('Se Ha Creado Exitosamente El Tema Para Sugerir.');
+                        setTimeout(function() {
+                            jQuery(location).attr('href',"");
+                        }, 0);
                     }
                 });
 
@@ -415,16 +410,9 @@ var EventoScript = function () {
                     contentType: false,
                     processData: false,
                     success: function(data){
-                        infoacta.find('.portlet').removeClass('hidden');
-                        infoacta.find('.code_acta_evento').each(function () {
-                            jQuery(this).html(data.code);
-                        });
-                        infoacta.find('.body_acta_evento').each(function () {
-                            jQuery(this).html(data.body);
-                        });
-                        jQuery('#to_create_acta').addClass('hidden');
-                        jQuery('#cancelar_acta_evento').click();
-                        alert_success('Se Ha Creado Exitosamente El Acta Para Este Evento.');
+                        setTimeout(function() {
+                            jQuery(location).attr('href',"");
+                        }, 0);
                     }
                 });
 
@@ -513,15 +501,9 @@ var EventoScript = function () {
                 url: "/dpv_events/aprobar_temaevento/",
                 data: {"theme_id":input.attr('data-theme')},
                 success: function(data){
-                    input.closest('tr').remove();
-                    var count_ts = tableThemesSugeridos.find('tbody').find('tr').length;
-                    var count_t = tableThemes.find('tr').length;
-                    if(count_ts === 0){
-                        tableThemesSugeridos.append('<tr><td colspan="4" class="text-center text-danger">SIN TEMAS SUGERIDOS</td></tr>');
-                        count_ts = ''
-                    }
-                    jQuery('#cantidad_temas_sugeridos').html(count_ts);
-                    tableThemes.append('<tr><td>' + count_t + '</td><td>' + data.asunto + '</td><td>' + data.responsable_name + '</td></tr>')
+                    setTimeout(function() {
+                            jQuery(location).attr('href',"");
+                    }, 0);
                 }
             });
         });
@@ -551,8 +533,8 @@ var EventoScript = function () {
                     month.attr("readonly", false).attr("disabled", false);
 
                     if(data.exist){
-                        info('Para El Mes Seleccionado Existe Un(a) "' + data.type + '" Ordinario.');
-                        is_extraordinario.attr("checked", true).attr("disabled", true).parent().addClass("checked");
+                        alert('Para El Mes Seleccionado Existe Un(a) "' + data.type + '" Ordinario.');
+                        is_extraordinario.attr("checked", true).attr("disabled", true);
                     }
                     if(!data.exist){
                         is_extraordinario.attr("disabled", false);

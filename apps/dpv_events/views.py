@@ -171,8 +171,8 @@ def update_evento(request):
     if request.POST.get("is_extraordinario_evento"):
         model.is_extraordinario = True
     else:
+        model.is_extraordinario = False
         for event in Evento.objects.filter(type_id=request.POST['type_evento'],month=int(request.POST['month_evento'])).exclude(pk=model.id):
-
             if not event.is_extraordinario:
                 model.is_extraordinario = True
     model.save()
@@ -208,6 +208,14 @@ def update_evento(request):
     }
 
     return JsonResponse(data)
+
+
+@permission_required('dpv_events.change_evento')
+def done_evento(request, evento_id):
+    model = Evento.objects.get(pk=evento_id)
+    model.is_done = True
+    model.save()
+    return redirect('dpv_events:eventos')
 
 
 @permission_required('dpv_events.delete_evento')
@@ -264,11 +272,7 @@ def aprobar_temaevento(request):
     model.es_sugerido = False
     model.save()
 
-    data = {
-        "id": model.id,
-        "asunto": model.asunto,
-        "responsable_name": model.responsable.username,
-    }
+    data = {}
 
     return JsonResponse(data)
 

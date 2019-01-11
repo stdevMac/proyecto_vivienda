@@ -246,7 +246,7 @@ var EventosScript = function () {
 
                     if(data.exist){
                         alert('Para El Mes Seleccionado Existe Un(a) "' + data.type + '" Ordinario.');
-                        is_extraordinario.attr("checked", true).attr("disabled", true).parent().addClass("checked");
+                        is_extraordinario.attr("checked", true).attr("disabled", true);
                     }
                     if(!data.exist){
                         is_extraordinario.attr("disabled", false);

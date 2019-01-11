@@ -3,7 +3,7 @@
 {% load static %}
 {% block page_title %}| Eventos{% endblock page_title %}
 {% block extra_style %}
-<link rel="stylesheet" href="{% static 'dpv_base/js/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'dpv_base/js/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css' %}">
 {% endblock %}
 {% block breadcrumb_title %}Eventos{% endblock breadcrumb_title %}
 {% block breadcrumbs %}
@@ -28,7 +28,7 @@
                     Eventos
                     <nav class="pull-right">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                            <a class="nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Eventos</a>
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
                                 <i class="fa fa-plus"></i> Agregar Evento</a>
                             </a>
@@ -62,8 +62,35 @@
                                     <td>{{ model.get_is_extraordinario }}</td>
                                     <td>
                                         {% if perms.dpv_events.view_evento %}
-                                        <a class="edit btn btn-primary btn-sm" href="{% url 'dpv_events:evento' model.id %}">
+                                        <a class="btn btn-primary btn-sm" href="{% url 'dpv_events:evento' model.id %}">
                                             <i class="fa fa-eye"></i> </a>
+                                        {% endif %}
+                                        {% if perms.dpv_events.change_evento and not model.in_time and not model.is_done %}
+                                        <a href="#myModalisDone{{ model.id }}" role="button" class="btn btn-warning btn-sm" data-toggle="modal">
+                                            <i class="fa fa-check"></i> </a>
+                                        <div id="myModalisDone{{ model.id }}" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                        <h4 class="modal-title">Confirmar </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="text-center">
+                                                            Seguro desea dar por cumplido el Evento
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn default" data-dismiss="modal" aria-hidden="true">
+                                                            Cancelar
+                                                        </button>
+                                                        <a href="{% url 'dpv_events:done_evento' model.id %}" class="btn btn-primary">
+                                                            Confirmar
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         {% endif %}
                                         {% if perms.dpv_events.delete_evento and model.in_time %}
                                         <a href="#myModal{{ model.id }}" role="button" class="btn btn-danger btn-sm " data-toggle="modal">
@@ -241,6 +268,7 @@
     </div>
 {% endblock content_page %}
 {% block extra_scripts %}
+    <script src="{% static 'dpv_events/scripts/DjangoAjax.js' %}"></script>
     <script src="{% static 'dpv_events/scripts/eventos.js' %}"></script>
     <script src="{% static 'dpv_base/js/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js' %}"></script>
     <script type="text/javascript">

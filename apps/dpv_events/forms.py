@@ -75,5 +75,5 @@ class EventoForm(forms.Form):
     asunto_tema_sugerido_evento = forms.CharField(label="Asunto", required=True, widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Asunto","maxlength":255}))
     body_acta_evento = forms.CharField(label="Texto", required=True, widget=forms.Textarea(attrs={"class": "form-control", "placeholder": "Texto", "style": "height: 110px"}))
     asunto_acuerdo_evento = forms.CharField(label="Acuerdo", required=True, widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Acuerdo","maxlength":255}))
-    date_finish_acuerdo_evento = forms.DateField(label= "Fecha de Cumplimiento", required=True, widget=forms.TextInput(attrs={'class':'form-control todo-taskbody-due','placeholder': "Fecha de Cumplimiento", 'data-date-start-date': '+0d'}))
+    date_finish_acuerdo_evento = forms.DateField(label= "Fecha de Cumplimiento", required=True, widget=forms.TextInput(attrs={'class':'form-control','placeholder': "Fecha de Cumplimiento", 'data-date-start-date': '+0d'}))
     responsables_acuerdo_evento = forms.ModelChoiceField(label="Responsables", required=True, queryset=User.objects.all().exclude(is_staff=True), empty_label="", widget=forms.SelectMultiple(attrs={"class":"form-control select2","prompt":"", "title":"Campo Obligatorio"}))
