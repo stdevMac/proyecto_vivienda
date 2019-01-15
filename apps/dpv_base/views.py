@@ -2,20 +2,21 @@ from django.shortcuts import render, redirect
 from apps.email_sender.forms import ConfigureMailForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.apps import apps as all_apps
 from .forms import LoginForm, RecoverPassForm
-from .forms import GroupForm, UserMForm, UserNPForm, UserPasswordForm
+from .forms import GroupForm, UserMForm, UserNPForm, UserPasswordForm, SetPasswordCAForm, PasswordResetCAForm
 from .utils import store_url_names
 from apps.dpv_persona.models import PersonaNatural
 from apps.dpv_persona.forms import PersonaNaturalMForm
 from apps.dpv_perfil.models import Perfil
 from apps.dpv_perfil.forms import PerfilMForm
 from apps.email_sender.models import EmailConfigurate
-from .utils import set_settings_email_conf, main_email_candy_conf, comapare_db_settings_conf, get_settings_email_conf
+from .utils import set_settings_email_conf, comapare_db_settings_conf, get_settings_email_conf
 
 # Create your views here.
 @login_required()
@@ -37,8 +38,6 @@ def login_page(request):
                 not_expiry = form_data.get('remenber_me')
                 user = User.objects.filter(Q(email=user_name) | Q(username=user_name)).first()
                 if user and user.is_active:
-                    if user.is_authenticated:
-                        form.add_error('username_login', _('Ese usuario ya se encuetra logueado.'))
                     access = authenticate(username=user.username, password=user_pass)
                     if access:
                         login(request, access)
@@ -46,11 +45,12 @@ def login_page(request):
                             request.session.set_expiry(4838400)
                         return redirect(reverse_lazy('base_dashboard'))
                     else:
-                        form.add_error('username_login', _('Combinación no válida de usuario y contraseña'))
+                        form.add_error('password_login', _('Combinación no válida de usuario y contraseña'))
                 else:
                     form.add_error('username_login', _('Ese usuario no exitse o está incativo contacte con el administrador del sistema'))
             else:
-                form.add_error('username_login', _('Error de usuario o contraseña no valido'))
+                form.add_error('password_login', _('Error de usuario o contraseña no valido'))
+            print(form.errors)
             return render(request, 'layouts/login.html', { 'form': form })
         else:
             form = LoginForm()
@@ -65,9 +65,9 @@ def recover_pass_page(request):
             pass
         else:
             form = RecoverPassForm
-            return render(request, 'layouts/recoverpass.html', {'form': form})
+            return render(request, 'layouts/recoverpass/recoverpass.html', {'form': form})
 
-    return render(request, 'layouts/recoverpass.html')
+    return render(request, 'layouts/recoverpass/recoverpass.html')
 
 
 @login_required
@@ -278,3 +278,22 @@ def group_delete(request, id_grp):
 @login_required
 def error_403(request, reason):
     return render(request, 'layouts/error403.html')
+
+
+class RecoverPassBaseView(auth_views.PasswordResetView):
+    email_template_name = 'layouts/recoverpass/recoverpass_email.html'
+    template_name = 'layouts/recoverpass/recoverpass.html'
+    form_class = PasswordResetCAForm
+
+
+class RecoverPassDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'layouts/recoverpass/recoverpass_done.html'
+
+
+class RecoverPassConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'layouts/recoverpass/recoverpass_confirm.html'
+    form_class = SetPasswordCAForm
+
+
+class RecoverPassCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = 'layouts/recoverpass/recoverpass_complete.html'

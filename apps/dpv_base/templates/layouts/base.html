@@ -1,11 +1,7 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<html class="no-js" lang="">
 <head>
     {% load static base_tags i18n %}
-
     {% local_apps as local_apps %}
     {% menuable_apps as menuable_apps %}
     <meta charset="utf-8">
@@ -276,11 +272,9 @@
     {% endblock main_cripts %}
     
     {% block extra_scripts %}{% endblock extra_scripts %}
-        
  
     {% block init_jquery %}
     {% endblock init_jquery %}
-
 
 </body>
 </html>

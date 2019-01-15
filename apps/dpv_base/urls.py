@@ -1,11 +1,15 @@
 from django.urls import path
 from .views import index, login_page, recover_pass_page, logout_page, users_view, groups_view, logs_view, user_add, group_add, configure_email, \
-                   user_edit, group_edit, user_deactivate, user_detail, user_setpass, group_delete, group_detail
+                   user_edit, group_edit, user_deactivate, user_detail, user_setpass, group_delete, group_detail, RecoverPassBaseView, \
+                   RecoverPassDoneView, RecoverPassCompleteView, RecoverPassConfirmView
 
 urlpatterns = [
     path('dashboard/', index, name='base_dashboard'),
     path('login/', login_page, name='base_login'),
-    path('recoverpass/', recover_pass_page, name='base_recoverpass'),
+    path('recoverpass/', RecoverPassBaseView.as_view(), name='password_reset'),
+    path('recoverpass/done', RecoverPassDoneView.as_view(), name='password_reset_done'),
+    path('recoverpass/<uidb64>/<token>/', RecoverPassConfirmView.as_view(), name='password_reset_confirm'),
+    path('recoverpass/complete', RecoverPassCompleteView.as_view(), name='password_reset_complete'),
     path('logout/', logout_page, name='base_logout'),
     path('admin/users/', users_view, name='admin_user'),
     path('admin/users/form/', user_add, name='admin_user_add'),

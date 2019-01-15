@@ -1,6 +1,7 @@
 from django import forms
 from django.db.models import Q
 from django.contrib.auth.models import Group, User, Permission
+from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
 from django.core.validators import MinLengthValidator, MinValueValidator, MaxLengthValidator, MaxValueValidator, EmailValidator, URLValidator
@@ -10,7 +11,7 @@ from apps.dpv_persona.validators import ci_validate
 from apps.email_sender.validators import validate_fqdn
 from .models import ConfigMail
 from .Widgets import DivCheckboxSelectMultiple
-
+# confirm-SetPasswordForm  normal-PasswordResetForm
 
 class LoginForm(forms.Form):
     username_login = forms.CharField(max_length=255, required=True, label="Nombre de usuario ó Correo electrónico", help_text="Aqui introdusca su nombre de usuario o email para entrar al sistema.",
@@ -316,3 +317,18 @@ class UserPasswordForm(forms.ModelForm):
         if password != repeated:
             raise ValidationError('Las contraseñas no coinciden.', code='distinct_password_and_repeated')
         return  self.cleaned_data.get('confirm_password')
+
+
+class SetPasswordCAForm(SetPasswordForm):
+
+    widgets = {
+        'new_password1': forms.PasswordInput(attrs={"placeholder": "Nueva Contraseña", "class": "form-control"}),
+        'new_password2': forms.PasswordInput(attrs={"placeholder": "Nueva Contraseña(Confirmación)", "class": "form-control"}),
+    }
+
+
+class PasswordResetCAForm(PasswordResetForm):
+
+    widgets = {
+        'email': forms.EmailInput(attrs={"placeholder": "Correo electrónico", "class": "form-control"}),
+    }

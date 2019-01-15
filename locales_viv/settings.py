@@ -142,7 +142,7 @@ SESSION_COOKIE_AGE = 84600
 BULK_URLS = []
 
 # Email configuration to do
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 EMAIL_HOST = "mail.dpvhab.gob.cu"
 EMAIL_HOST_PASSWORD = ""

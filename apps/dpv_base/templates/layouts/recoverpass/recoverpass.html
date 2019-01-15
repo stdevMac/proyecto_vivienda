@@ -19,21 +19,32 @@
                     <div class="login-content">
                         <div class="login-logo imagat_center">
                             <a href="index.html">
-                                <img class="align-content" src="{% static 'dpv_base/images/logo-solo.png' %}" alt="Logo DPV">
+                                <img class="align-content" src="{% static 'dpv_base/images/logo2.png' %}" alt="Logo DPV">
                             </a>
                         </div>
                         <div class="login-form">
-                            <form>
+                            <form method="POST" >
                                 {% csrf_token %}
                                 <div class="form-group" role="alert">
-                                        <p class="alert alert-warning">Escriba su nombre de usuario o correo electrónico
+                                    <p class="alert alert-warning">
+                                        Escriba su nombre de usuario o correo electrónico
                                         para recibir instrucciones por correo para reinciar
-                                            su contraseña.</p>
+                                        su contraseña.
+                                    </p>
                                 </div>
+                                {% for field in form %}
                                 <div class="form-group">
+                                    <p class="text-danger">{{field.errors}}</p>
+                                    <label>{{field.label}}</label>
+                                    {{field}}
+                                    <p class="help-text">{{field.help_text}}</p>
+                                </div>
+                                {% endfor %}
+                                <!--<div class="form-group">
                                     <label>Nombre de Usuario ó Correo Electrónico</label>
                                     <input id="username_recover" name="username_recover" type="text" class="form-control" placeholder="Nombre de usuario">
-                                </div>
+                                </div>-->
+
                                 <div >
                                     <label class="pull-right">
                                         <a class="color-blue" href="{% url 'base_login' %}">Regresar a la entrada</a>

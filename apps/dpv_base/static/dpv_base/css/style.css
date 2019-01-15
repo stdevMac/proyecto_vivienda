@@ -625,7 +625,7 @@ header .form-inline {
     margin-top: 5px !important;
     padding-top: 0px !important;
 }
-p.help-text {
+p.help-text, span.help-text  {
     color: #3b4856;
     font-size: 12px;
     font-weight: lighter;
@@ -767,4 +767,51 @@ div.multi-view-box {
     overflow-y: scroll;
     overflow-x: hidden;
 }
+input#id_email, input#id_new_password1, input#id_new_password2 {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+input#id_email:-ms-expand, input#id_new_password1:-ms-expand, input#id_new_password2:-ms-expand {
+  background-color: transparent;
+  border: 0;
+}
+input#id_email:focus, input#id_new_password1:focus, input#id_new_password2:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+input#id_email::-webkit-input-placeholder, input#id_new_password1::-webkit-input-placeholder, input#id_new_password2::-webkit-input-placeholder {
+  color: #868e96;
+  opacity: 1;
+}
+input#id_email::-moz-placeholder, input#id_new_password1::-moz-placeholder, input#id_new_password2::-moz-placeholder {
+  color: #868e96;
+  opacity: 1;
+}
+input#id_email:-ms-input-placeholder, input#id_new_password1:-ms-input-placeholder, input#id_new_password2:-ms-input-placeholder {
+  color: #868e96;
+  opacity: 1;
+}
+
+input#id_email::-ms-input-placeholder, input#id_new_password1::-ms-input-placeholder, input#id_new_password2::-ms-input-placeholder {
+  color: #868e96;
+  opacity: 1;
+}
+
+input#id_email::placeholder, input#id_new_password1::placeholder, input#id_new_password2::placeholder {
+  color: #868e96;
+  opacity: 1;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
-{% load static base_tags %}
-{% block page_title %} | Entrada {% endblock page_title %}
+
+{% block page_title %} | Contraseña solicitada {% endblock page_title %}
 {% load static %}
 {% block main_style %}
     <link rel="stylesheet" href="{% static 'dpv_base/css/normalize.css' %}">
@@ -13,16 +13,7 @@
 {% endblock main_style %}
 {% block full_page_content %}
     <div class="page_background_kuki">
-
-        {% if form.errors %}
-        <div class="col-md-8 offset-md-2 col-sm-10 padding-d-15">
-            <br/>
-            <div class="alert alert-danger text-center">
-                {{form.errors }}
-            </div>
-        </div>
-        {% endif %}
-        <div class="col-sm-10 col-md-5">
+        <div class="col-sm-10 offset-sm-1">
             <div class="sufee-login d-flex align-content-center flex-wrap snow_white_glass">
                 <div class="container">
                     <div class="login-content">
@@ -31,28 +22,28 @@
                                 <img class="align-content" src="{% static 'dpv_base/images/logo2.png' %}" alt="Logo DPV">
                             </a>
                         </div>
-                        <div class="login-form">
-                            <form method="post">
-                                {% csrf_token %}
-                                {% for field in form %}
-                                <div class="form-group">
-                                    <p class="text-danger">{{field.errors}}</p>
-                                    <label>{{field.label}}</label>
-                                    {{field}}
-                                    <p class="help-text">{{field.help_text}}</p>
-                                </div>
-                                {% endfor %}
-                                <label class="pull-right">
-                                    <a class="color-blue" href="{% url 'password_reset' %}">A olvidado su contraseña?</a>
-                                </label>
-                                <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Entrar</button>
-                            </form>
+                        <div class="container">
+                            <div class="alert alert-primary">
+                                Te hemos enviado un email con las instrucciones para recuperar tu contraseña, siempre y cuando la dirección email introducidad pertenesca a un usuario registrado.
+                                Debes recibir el email en unos instantes.
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>
+                                        Si no recibes el email revisa que los datos introducidos son los que se usaron para tu registro en el sistema.
+                                    </li>
+                                    <li>
+                                        Prueba tambien revisar la carpeta 'SPAM' y 'Correo no Deseado' de tu buson de correo electrónico.
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 {% endblock full_page_content %}
 {% block main_cripts %}
     <script src="{% static 'dpv_base/js/vendor/jquery-2.1.4.min.js' %}"></script>
