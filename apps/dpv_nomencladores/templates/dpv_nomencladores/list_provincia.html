@@ -45,10 +45,10 @@
                             <td>{{provincia.nombre}}</td>
                             <td>
                                 {% if perms.dpv_nomencladores.change_provincia %}
-                                <a onclick="return abrir_modal('{% url 'provincia_edit' provincia.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                <a onclick="return abrir_modal('{% url 'provincia_edit' provincia.id %}')" class=" btn btn-sm btn-warning" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
                                 {% endif %}
                                 {% if perms.dpv_nomencladores.delete_provincia %}
-                                <a onclick="return abrir_modal('{% url 'provincia_delete' provincia.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                <a onclick="return abrir_modal('{% url 'provincia_delete' provincia.id %}')" class="btn btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
                                 {% endif %}
                             </td>
                         </tr>

@@ -8,7 +8,9 @@ from .models import PersonaNatural, PersonaJuridica
 # Create your views here.
 @login_required()
 def index(request):
-    return render(request, 'dpv_persona/list.html')
+    cantpers = PersonaNatural.objects.all().count()
+    cantents = PersonaJuridica.objects.all().count()
+    return render(request, 'dpv_persona/list.html', {'cantpers': cantpers, 'cantents': cantents})
 
 
 @permission_required('dpv_persona.view_personajuridica', raise_exception=True)

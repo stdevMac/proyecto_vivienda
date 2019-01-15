@@ -22,6 +22,8 @@ def menuable_apps():
         for app in all_apps.get_app_configs():
             if hasattr(app, 'owned') and app.active:
                 if hasattr(app, 'menuable') and app.menuable:
+                    if hasattr(app, 'model_data'):
+                        setattr(app, 'count_data', app.get_model(app.model_data).objects.all().count())
                     menuable_apps.append(app)
     return menuable_apps
 

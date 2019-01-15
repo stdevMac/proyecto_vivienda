@@ -15,7 +15,7 @@ from apps.dpv_persona.forms import PersonaNaturalMForm
 from apps.dpv_perfil.models import Perfil
 from apps.dpv_perfil.forms import PerfilMForm
 from apps.email_sender.models import EmailConfigurate
-
+from .utils import set_settings_email_conf, main_email_candy_conf, comapare_db_settings_conf, get_settings_email_conf
 
 # Create your views here.
 @login_required()
@@ -135,8 +135,6 @@ def user_add(request):
     return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
 
 
-
-
 @permission_required('auth.add_group', raise_exception=True)
 def group_add(request):
     if request.method == 'POST':
@@ -177,16 +175,25 @@ def logs_view(request):
 @permission_required('email_sender.add_emailconfigurate', raise_exception=True)
 def configure_email(request):
     ec = EmailConfigurate.objects.all().first()
+    sd = get_settings_email_conf()
+    equal_data = comapare_db_settings_conf(ec, sd)
+    messageok = "Todo concuerda en la configuración de correo guardada en la Base de datos con la información cargada en el settings"
+    messageerror = "Existe falta de concordancia entre la cofiguración de correo guarda en la base de datos y la cargada en el settings"
+    if equal_data:
+        message = messageok
+    else:
+        message = messageerror
     if request.method == 'POST':
         form = ConfigureMailForm(request.POST, instance=ec)
         if form.is_valid():
-            form.save()
-            return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})
+            conf = form.save()
+            set_settings_email_conf(conf)
+            return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec, 'message': message})
         else:
-            return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})
+            return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec, 'message': message})
     else:
         form = ConfigureMailForm(instance=ec)
-        return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec})
+        return render(request, 'layouts/admin/mailconf.html', {'form': form, 'ec': ec, 'message': message})
 
 
 @permission_required('auth.change_user', raise_exception=True)
@@ -266,6 +273,7 @@ def group_delete(request, id_grp):
         grupo.delete()
         return redirect(reverse_lazy('admin_group'))
     return render(request, 'layouts/admin/groups_delete.html', {'grupo': grupo})
+
 
 @login_required
 def error_403(request, reason):

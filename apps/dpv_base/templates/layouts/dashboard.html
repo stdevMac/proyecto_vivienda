@@ -10,7 +10,7 @@
         </div>
         {% for app in menuable_apps %}
         <div class="col-sm-6 col-md-4 col-lg-4">
-            <div class="card text-white bg-flat-color-5 el-rounded dashwidget">
+            <div class="card text-white bg-flat-color-{{app.count_data}} el-rounded dashwidget">
                 <div class="card-body pb-0">
                     <div class="dropdown float-right">
                         <button class="btn bg-transparent text-light" type="button">
@@ -18,9 +18,9 @@
                         </button>
                     </div>
                     <h2 class="mb-0">
-                        <span class="count">3456</span>
+                        <span class="count">{{app.count_data}}</span>
                     </h2>
-                    <h4 class="text-light">Members online</h4>
+                    <h4 class="text-light">{{app.name_data}}</h4>
                 </div>
             </div>
         </div>

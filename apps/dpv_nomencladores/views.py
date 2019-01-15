@@ -8,7 +8,19 @@ from .models import *
 # Create your views here.
 @login_required()
 def index(request):
-    return render(request, 'dpv_nomencladores/list.html')
+    muns = Municipio.objects.all().count()
+    pros = Provincia.objects.all().count()
+    cpps = ConsejoPopular.objects.all().count()
+    cocp = Concepto.objects.all().count()
+    dest = Destino.objects.all().count()
+    orgs = Organismo.objects.all().count()
+    gnes = Genero.objects.all().count()
+    piso = Piso.objects.all().count()
+    call = Calle.objects.all().count()
+    cent = CentroTrabajo.objects.all().count()
+    artr = AreaTrabajo.objects.all().count()
+    return render(request, 'dpv_nomencladores/list.html', {'municipios': muns, 'provincias': pros, 'consejos': cpps, 'conceptos': cocp, 'destinos': dest, 'organismos': orgs, \
+                                                           'generos': gnes, 'pisos': piso, 'calles': call, 'unidades': cent, 'deptos': artr})
 
 
 #------------------------------------------- Provincia -----------------------------------------------------------------

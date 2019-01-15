@@ -8,9 +8,11 @@ from apps.dpv_perfil import urls as perfil_url
 from apps.dpv_viviendas import urls as vivienda_url
 from apps.dpv_events import urls as events_url
 from apps.email_sender import urls as email_url
+# from apps.dpv_base.views import tesview
 
 
 urlpatterns = [
+    # path('1234', tesview),
     path('dj-admin/', admin.site.urls),
     path('', include(base_url)),
     path('nomenclador/', include(nomencladores_url)),

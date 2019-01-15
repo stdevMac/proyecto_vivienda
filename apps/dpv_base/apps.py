@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+# from django.contrib.auth.models import User
 
 
 class DpvBaseConfig(AppConfig):
@@ -10,3 +11,6 @@ class DpvBaseConfig(AppConfig):
     active = True       # Si el modulo esta activo, es como si esta instalado
     parent = True      # Si el modulo es un submodulo de otro en el menu (y solo en el menu)
     child_of = ''     # Si el modulo es hijo de otro en el menu se coloca aqui el nombre(atributo name) del modulo padre
+    # count_data = User.objects.all().count() # Cantidad de registros del elemento funcamental del modulo o app
+    name_data = 'Usuarios Registrados' # Nombre o texto a mostrar del sisginificado de dichos registros
+    route_data = 'admin_user' # ruta principal del modulo
