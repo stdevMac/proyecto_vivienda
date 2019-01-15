@@ -11,6 +11,6 @@ class DpvNomencladoresConfig(AppConfig):
     parent = True      # Si el modulo es un submodulo de otro en el menu (y solo en el menu)
     child_of = ''     # Si el modulo es hijo de otro en el menu se coloca aqui el nombre(atributo name) del modulo padre
     # count_data = ConsejoPopular.objects.all().count() # Cantidad de registros del elemento funcamental del modulo o app
-    model_data = 'ConsejoPopular'
+    model_data = ['ConsejoPopular']
     name_data = 'Consejos Populares Registrados' # Nombre o texto a mostrar del sisginificado de dichos registros
     route_data = 'nomenclador_index' # ruta principal del modulo

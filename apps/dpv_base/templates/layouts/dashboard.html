@@ -10,17 +10,17 @@
         </div>
         {% for app in menuable_apps %}
         <div class="col-sm-6 col-md-4 col-lg-4">
-            <div class="card text-white bg-flat-color-{{app.count_data}} el-rounded dashwidget">
+            <div class="card text-white {% if app.count_data < 10 %} bg-flat-color-{{app.count_data}} {% else %} bg-flat-color-{{ app.count_data|restof:10 }}  {% endif %} el-rounded dashwidget">
                 <div class="card-body pb-0">
-                    <div class="dropdown float-right">
-                        <button class="btn bg-transparent text-light" type="button">
-                            <i class="fa fa-cog"></i>
-                        </button>
+                    <div class="float-right float-middle">
+                        <a href="{% url app.route_data %}" class="text-light icon-container text-center">
+                            <span class="ti-arrow-circle-right text-light"></span>
+                        </a>
                     </div>
-                    <h2 class="mb-0">
+                    <h1 class="mb-0">
                         <span class="count">{{app.count_data}}</span>
-                    </h2>
-                    <h4 class="text-light">{{app.name_data}}</h4>
+                    </h1>
+                    <h3 class="text-light">{{app.name_data}}</h3>
                 </div>
             </div>
         </div>

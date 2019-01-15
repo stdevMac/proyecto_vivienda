@@ -30,31 +30,33 @@
             </div>
             <div class="card-body">
                 {% if unidades %}
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Número</th>
-                            <th>Nombre</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for unidad in unidades %}
-                        <tr>
-                            <td>{{unidad.numero}}</td>
-                            <td>{{unidad.nombre}}</td>
-                            <td>
-                                {% if perms.dpv_nomencladores.change_centrotrabajo %}
-                                    <a onclick="return abrir_modal('{% url 'centrotrabajo_edit' unidad.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
-                                {% endif %}
-                                {% if perms.dpv_nomencladores.delete_centrotrabajo %}
-                                    <a onclick="return abrir_modal('{% url 'centrotrabajo_delete' unidad.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for unidad in unidades %}
+                            <tr>
+                                <td>{{unidad.numero}}</td>
+                                <td>{{unidad.nombre}}</td>
+                                <td>
+                                    {% if perms.dpv_nomencladores.change_centrotrabajo %}
+                                        <a onclick="return abrir_modal('{% url 'centrotrabajo_edit' unidad.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_nomencladores.delete_centrotrabajo %}
+                                        <a onclick="return abrir_modal('{% url 'centrotrabajo_delete' unidad.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                 <div class="alert alert-info">
                     <h2 class="text-center">No hay Unidades registradas que mostrar</h2>

@@ -13,6 +13,6 @@ class Dpv_eventsConfig(AppConfig):
     menuable = True
     parent = True      # Si el modulo es un submodulo de otro en el menu (y solo en el menu)
     child_of = ''
-    model_data = 'Evento'#.objects.all().count() # Cantidad de registros del elemento funcamental del modulo o app
+    model_data = ['Evento'] #.objects.all().count() # Cantidad de registros del elemento funcamental del modulo o app
     name_data = 'Eventos Registrados' # Nombre o texto a mostrar del sisginificado de dichos registros
-    route_data = 'dpv_eventos:eventos' # ruta principal del modulo
+    route_data = 'dpv_events:eventos' # ruta principal del modulo

@@ -17,7 +17,7 @@ urlpatterns = [
     path('delete_frecuencia/<int:frecuencia_id>', views.delete_frecuencia, name='delete_frecuencia'),
 
     #   EVENTO
-    path('eventos/',views.EventosView, name='eventos'),
+    path('eventos/', views.EventosView, name='eventos'),
     path('evento/<int:event_id>/',views.EventoView, name='evento'),
     path('create_evento/', views.create_evento, name='create_evento'),
     path('update_evento/', views.update_evento, name='update_evento'),

@@ -12,6 +12,6 @@ class DpvViviendasConfig(AppConfig):
     parent = False      # Si el modulo es un submodulo de otro en el menu (y solo en el menu)
     child_of = 'apps.dpv_locales'     # Si el modulo es hijo de otro en el menu se coloca aqui el nombre(atributo name) del modulo padre
     # count_data = Vivienda.objects.all().count() # Cantidad de registros del elemento funcamental del modulo o app
-    model_data = 'Vivienda'
+    model_data = ['Vivienda']
     name_data = 'Viviendas Registradas' # Nombre o texto a mostrar del sisginificado de dichos registros
     route_data = 'vivienda_list' # ruta principal del modulo

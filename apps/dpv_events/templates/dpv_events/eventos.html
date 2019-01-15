@@ -39,62 +39,64 @@
                     <div class="tab-content pl-3 pt-2" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             {% if models %}
-                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Evento</th>
-                                    <th>Fecha Programada</th>
-                                    <th>Lugar</th>
-                                    <th>Mes</th>
-                                    <th>Tipo</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for model in models|dictsort:"date_programed" %}
-                                <tr>
-                                    <td>{{ model.type.type }}</td>
-                                    <td>{{ model.date_programed }}</td>
-                                    <td>{{ model.site }}</td>
-                                    <td>{{ model.get_month }}</td>
-                                    <td>{{ model.get_is_extraordinario }}</td>
-                                    <td>
-                                        {% if perms.dpv_events.view_evento %}
-                                        <a class="edit btn btn-primary btn-sm" href="{% url 'dpv_events:evento' model.id %}">
-                                            <i class="fa fa-eye"></i> </a>
-                                        {% endif %}
-                                        {% if perms.dpv_events.delete_evento and model.in_time %}
-                                        <a href="#myModal{{ model.id }}" role="button" class="btn default btn-xs black" data-toggle="modal">
-                                            <i class="fa fa-trash-o"></i> </a>
-                                        <div id="myModal{{ model.id }}" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                                            <div class="modal-dialog modal-sm">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                        <h4 class="modal-title">Confirmar </h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p class="text-center">
-                                                            Seguro desea borrar el Evento
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn default" data-dismiss="modal" aria-hidden="true">
-                                                            Cancelar
-                                                        </button>
-                                                        <button data-dismiss="modal" class="delete btn blue" data-id="{{ model.id }}">
-                                                            Confirmar
-                                                        </button>
+                            <div class="table-responsive">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Evento</th>
+                                        <th>Fecha Programada</th>
+                                        <th>Lugar</th>
+                                        <th>Mes</th>
+                                        <th>Tipo</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for model in models|dictsort:"date_programed" %}
+                                    <tr>
+                                        <td>{{ model.type.type }}</td>
+                                        <td>{{ model.date_programed }}</td>
+                                        <td>{{ model.site }}</td>
+                                        <td>{{ model.get_month }}</td>
+                                        <td>{{ model.get_is_extraordinario }}</td>
+                                        <td>
+                                            {% if perms.dpv_events.view_evento %}
+                                            <a class="edit btn btn-primary btn-sm" href="{% url 'dpv_events:evento' model.id %}">
+                                                <i class="fa fa-eye"></i> </a>
+                                            {% endif %}
+                                            {% if perms.dpv_events.delete_evento and model.in_time %}
+                                            <a href="#myModal{{ model.id }}" role="button" class="btn default btn-xs black" data-toggle="modal">
+                                                <i class="fa fa-trash-o"></i> </a>
+                                            <div id="myModal{{ model.id }}" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                                                <div class="modal-dialog modal-sm">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                            <h4 class="modal-title">Confirmar </h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p class="text-center">
+                                                                Seguro desea borrar el Evento
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn default" data-dismiss="modal" aria-hidden="true">
+                                                                Cancelar
+                                                            </button>
+                                                            <button data-dismiss="modal" class="delete btn blue" data-id="{{ model.id }}">
+                                                                Confirmar
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                             {% else %}
                             <div class="alert alert-info">
                                 <h2 class="text-center">No hay Eventos registrados</h2>

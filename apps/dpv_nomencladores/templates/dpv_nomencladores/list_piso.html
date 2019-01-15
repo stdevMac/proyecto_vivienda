@@ -30,29 +30,31 @@
             </div>
             <div class="card-body">
                 {% if pisos %}
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for piso in pisos %}
-                        <tr>
-                            <td>{{piso.nombre}}</td>
-                            <td>
-                                {% if perms.dpv_nomencladores.change_piso %}
-                                <a onclick="return abrir_modal('{% url 'piso_edit' piso.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
-                                {% endif %}
-                                {% if perms.dpv_nomencladores.delete_piso %}
-                                <a onclick="return abrir_modal('{% url 'piso_delete' piso.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for piso in pisos %}
+                            <tr>
+                                <td>{{piso.nombre}}</td>
+                                <td>
+                                    {% if perms.dpv_nomencladores.change_piso %}
+                                    <a onclick="return abrir_modal('{% url 'piso_edit' piso.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_nomencladores.delete_piso %}
+                                    <a onclick="return abrir_modal('{% url 'piso_delete' piso.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                 <div class="alert alert-info">
                     <h2 class="text-center">No hay Pisos registrados que mostrar</h2>

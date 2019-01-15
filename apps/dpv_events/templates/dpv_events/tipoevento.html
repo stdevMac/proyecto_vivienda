@@ -29,6 +29,7 @@
             </div>
             <div class="card-body">
                 {% if models %}
+                <div class="table-responsive">
                     <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                         <thead>
                         <tr>
@@ -86,6 +87,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                </div>
                 {% else %}
                     <div class="alert alert-info">
                         <h2 class="text-center">No hay Tipos de Eventos</h2>

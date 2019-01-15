@@ -23,7 +23,10 @@ def menuable_apps():
             if hasattr(app, 'owned') and app.active:
                 if hasattr(app, 'menuable') and app.menuable:
                     if hasattr(app, 'model_data'):
-                        setattr(app, 'count_data', app.get_model(app.model_data).objects.all().count())
+                        if len(app.model_data) == 1:
+                            setattr(app, 'count_data', app.get_model(app.model_data[0]).objects.all().count())
+                        else:
+                            setattr(app, 'count_data', all_apps.get_model(app.model_data[0], app.model_data[1]).objects.all().count())
                     menuable_apps.append(app)
     return menuable_apps
 
@@ -54,3 +57,18 @@ def split(value, arg):
     if safe:
         return mark_safe(value)
     return value
+
+@register.filter
+def restof( value, arg):
+    '''
+    Divides the value; the argument is the divisor and it is ok return rest of division
+    Returns empty string if some error
+    '''
+    try:
+        value = int(value)
+        arg = int(arg)
+        if arg:
+            return value % arg
+    except:
+        pass
+    return ''

@@ -30,29 +30,31 @@
             </div>
             <div class="card-body">
                 {% if conceptos %}
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for concepto in conceptos %}
-                        <tr>
-                            <td>{{concepto.nombre}}</td>
-                            <td>
-                                 {% if perms.dpv_nomencladores.change_concepto %}
-                                <a onclick="return abrir_modal('{% url 'concepto_edit' concepto.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
-                                {% endif %}
-                                {% if perms.dpv_nomencladores.delete_concepto %}
-                                <a onclick="return abrir_modal('{% url 'concepto_delete' concepto.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for concepto in conceptos %}
+                            <tr>
+                                <td>{{concepto.nombre}}</td>
+                                <td>
+                                     {% if perms.dpv_nomencladores.change_concepto %}
+                                    <a onclick="return abrir_modal('{% url 'concepto_edit' concepto.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_nomencladores.delete_concepto %}
+                                    <a onclick="return abrir_modal('{% url 'concepto_delete' concepto.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                 <div class="alert alert-info">
                     <h2 class="text-center">No hay Conceptos registradas que mostrar</h2>
