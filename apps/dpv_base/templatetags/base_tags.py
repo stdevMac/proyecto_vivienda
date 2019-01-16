@@ -72,3 +72,35 @@ def restof( value, arg):
     except:
         pass
     return ''
+
+
+@register.filter
+def valuetoint(value):
+    '''
+    Return the value converted to int if posibile
+    Returns empty string if some error
+    '''
+    try:
+        value = int(value)
+        return value
+    except:
+        pass
+    if value is None:
+        value = 0
+    return value
+
+
+@register.filter
+def tosub(value, arg):
+    '''
+    Sub this values and args if is posibile
+    Returns empty string if some error
+    '''
+    try:
+        value = int(value)
+        arg = int(arg)
+        if arg:
+            return value - arg
+    except:
+        pass
+    return value

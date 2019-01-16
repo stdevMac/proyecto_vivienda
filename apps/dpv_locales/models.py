@@ -48,3 +48,9 @@ class Local(models.Model):
             validation_text += "No coincide el número de viviendas que es %d declarado en el local con el número de viviendas asociadas a el que es %d. \n" % (self.no_viviendas, Vivienda.objects.filter(local_dado=self).count())
         for viv in Vivienda.objects.filter(local_dado=self):
             pass
+
+    def count_statal(self):
+        if self.estatal:
+            return 1
+        else:
+            return 0

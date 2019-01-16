@@ -19,7 +19,7 @@
                     {% if form.errors or formprs.errors or formprf.errors %}
                     <div class="alert alert-danger alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        Por favor, corrija {% if form.errors|length  + formprs.errors|length + formprf.errors|length == 1 %}"el error señalado"{% else %}"los errores señalados"{% endif %} a continuación.
+                        Por favor, corrija {% if form.errors|length == 1 %}"el error señalado"{% else %}"los errores señalados"{% endif %} a continuación.
                     </div>
                     {% endif %}
                     <div class="card">

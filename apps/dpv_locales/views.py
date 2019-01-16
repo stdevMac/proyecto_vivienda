@@ -44,11 +44,30 @@ def local_add(request):
 
 
 # @permission_required('dpv_locales.view_local', raise_exception=True)
-def stats(request):
+def stats(request, id_municipio=None):
     result = []
-    for m in Municipio.objects.all():
-        q = Local.objects.filter(municipio=m).aggregate(cant_viv=Sum('no_viviendas'), cant_pend=Sum('pendiente'), cant_loc=Count('fecha'))
-        result.append(q)
+    # try:
+    print(request.user.perfil_usuario.centro_trabajo.oc)
+    if not id_municipio and request.user.perfil_usuario.centro_trabajo.oc:
+        for m in Municipio.objects.all():
+            q = Local.objects.filter(municipio=m).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('fecha'), statales=Sum('estatal'))
+            qm = {"nombre": m.nombre, "id": m.id, "tipo": 'municpio'}
+            qr = dict(qm, **q)
+            result.append(qr)
+    elif not id_municipio and not request.user.perfil_usuario.centro_trabajo.oc:
+        for cp in request.user.perfil_usuario.centro_trabajo.municipio.consejos.all():
+            q = Local.objects.filter(consejo_popular=cp).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('fecha'), statales=Sum('estatal'))
+            qm = {"nombre": cp.nombre, "id": cp.id, "tipo": 'consejo'}
+            qr = dict(q, **qm)
+            result.append(qr)
+    else:
+        for cp in Municipio.objects.filter(id=id_municipio).first().consejos.all():
+            q = Local.objects.filter(consejo_popular=cp).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('fecha'), statales=Sum('estatal'))
+            qm = {"nombre": cp.nombre, "id": cp.id, "tipo": 'consejo'}
+            qr = dict(q, **qm)
+            result.append(qr)
+    # except:
+    #     print("Problemas con la configuracion del perfil")
     return render(request, 'dpv_locales/estdistico.html', {'result': result})
 
 
