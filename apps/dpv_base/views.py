@@ -17,6 +17,7 @@ from apps.dpv_perfil.models import Perfil
 from apps.dpv_perfil.forms import PerfilMForm
 from apps.email_sender.models import EmailConfigurate
 from .utils import set_settings_email_conf, comapare_db_settings_conf, get_settings_email_conf
+from django.views.defaults import page_not_found, server_error, bad_request, permission_denied
 
 # Create your views here.
 @login_required()
@@ -275,11 +276,6 @@ def group_delete(request, id_grp):
     return render(request, 'layouts/admin/groups_delete.html', {'grupo': grupo})
 
 
-@login_required
-def error_403(request, reason):
-    return render(request, 'layouts/error403.html')
-
-
 class RecoverPassBaseView(auth_views.PasswordResetView):
     email_template_name = 'layouts/recoverpass/recoverpass_email.html'
     template_name = 'layouts/recoverpass/recoverpass.html'
@@ -297,3 +293,24 @@ class RecoverPassConfirmView(auth_views.PasswordResetConfirmView):
 
 class RecoverPassCompleteView(auth_views.PasswordResetCompleteView):
     template_name = 'layouts/recoverpass/recoverpass_complete.html'
+
+
+# def tesview(request):
+#     return  render(request, '500.html')
+
+
+def error400(request):
+    return bad_request(request, template_name='400.html')
+
+
+def error403(request):
+    return permission_denied(request, template_name='403.html')
+
+
+def error404(request):
+    return page_not_found(request, template_name='404.html')
+
+
+def error500(request):
+    return server_error(request, template_name='500.html')
+
