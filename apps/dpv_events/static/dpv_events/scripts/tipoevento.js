@@ -3,6 +3,8 @@ var TipoEventoScript = function () {
     var tipoevento;
     tipoevento = function () {
 
+        var id = null;
+
         function initInput(){
             jQuery("#id_type_tipoevento").val("").closest(".form-group").removeClass("has-success").closest(".form-group").removeClass("has-error");
             jQuery("#id_type_tipoevento-error").remove();
@@ -57,38 +59,74 @@ var TipoEventoScript = function () {
 
             submitHandler: function (form) {
 
-                var formData = new FormData(jQuery("#newtipoevento_form")[0]);
+                var form = jQuery("#newtipoevento_form");
+                var formData = new FormData(form[0]);
 
-                jQuery.ajax({
-                    type: "POST",
-                    url: "/dpv_events/create_tipoevento/",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
+                if(form.hasClass('agregar')){
+                    jQuery.ajax({
+                        type: "POST",
+                        url: "/dpv_events/create_tipoevento/",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
 
-                        if (data.isfirst) {
-                            jQuery('#cancelar').click();
-                            alert_success('Se Ha Agregado Un Nuevo Tipo De Evento.');
                             setTimeout(function() {
                                 jQuery(location).attr('href',"");
-                            }, 1250);
-                            return;
-                        }
+                            }, 0);
 
-                        var aiNew = oTable.fnAddData([data.id, data.type,data.frecuencia, '']);
-                        var nRow = oTable.fnGetNodes(aiNew[0]);
-                        addRow(oTable, nRow);
-                        jQuery('#cancelar').click();
-                        alert_success('Se Ha Agregado Un Nuevo TipoEvento.');
-                    },
-                });
+                        },
+                    });
+                }
+
+                if(form.hasClass('modificar')){
+                    formData.append("id",id);
+
+                    jQuery.ajax({
+                        type: "POST",
+                        url: "/dpv_events/update_tipoevento/",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+
+                            setTimeout(function() {
+                                jQuery(location).attr('href',"");
+                            }, 0);
+
+                        },
+                    });
+                }
 
             }
 
         });
 
         var table = jQuery('#sample_editable_1');
+        
+        jQuery('#btn_create_tipoevento').on('click',function(){
+            id = null;
+            if(!jQuery("#newtipoevento_form").hasClass('agregar')){
+                jQuery("#newtipoevento_form").removeClass('modificar').addClass('agregar');
+            }
+            jQuery('#form_tipoevento').find('.action_tipoevento').each(function(){
+                jQuery(this).html('agregar');
+            });
+        });
+        
+        table.on('click','.edit',function(){
+            var model = jQuery(this);
+            id = model.attr('data-id');
+            if(jQuery("#newtipoevento_form").hasClass('agregar')){
+                jQuery("#newtipoevento_form").removeClass('agregar').addClass('modificar');
+            }
+            jQuery('#form_tipoevento').find('.action_tipoevento').each(function(){
+                jQuery(this).html('modificar');
+            });
+            jQuery('#id_type_tipoevento').val(model.attr('data-type'));
+            jQuery('#id_frecuencia_tipoevento').val(model.attr('data-frecuencia'));
+            jQuery("#id_frecuencia_tipoevento").select2({placeholder: "Seleccione Frecuencia...",allowClear: true,escapeMarkup: function (m) {return m;}});
+        });
 
     };
 
