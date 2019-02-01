@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             {% for field in formprf %}
-                            <div class="form-group col-md-6" {% if field.name == 'datos_usuario' or field.name == 'datos_personales' %} hidden {% endif %} data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                            <div class="form-group col-md-6 {% if field.name == 'centro_trabajo' and not request.user.perfil_usuario.centro_trabajo.oc %} disabled {% endif %}" {% if field.name == 'datos_usuario' or field.name == 'datos_personales' %} hidden {% endif %} data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
                                 {{field.errors}}
                                 <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
                                 {{field}}

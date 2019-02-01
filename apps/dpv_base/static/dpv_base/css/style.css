@@ -813,5 +813,7 @@ input#id_email::placeholder, input#id_new_password1::placeholder, input#id_new_p
   color: #868e96;
   opacity: 1;
 }
-
+.disabled, .disabled label, .disabled select, .disabled input, .disabled a, .disabled button {
+  pointer-events: none;
+}
 /*# sourceMappingURL=style.css.map */

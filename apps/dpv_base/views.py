@@ -132,7 +132,13 @@ def user_add(request):
         if exist_persona:
             formprs = PersonaNaturalMForm()
         if exist_perfil:
-            formprf = PerfilMForm()
+            if request.user.perfil_usuario.centro_trabajo.oc:
+                formprf = PerfilMForm()
+            else:
+                prfl = Perfil()
+                prfl.centro_trabajo = request.user.perfil_usuario.centro_trabajo
+                formprf = PerfilMForm(instance=prfl)
+
     return render(request, 'layouts/admin/users_form.html', {'form': form, 'formprs': formprs, 'formprf': formprf })
 
 
