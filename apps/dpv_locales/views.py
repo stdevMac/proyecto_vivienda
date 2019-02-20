@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.http import Http404
 from django.db.models import F, Q, Sum, Count
 from django.db.models.query import QuerySet
 from django.views.generic import View
@@ -33,8 +34,8 @@ def local_add(request):
     if request.method == "POST":
         form = LocalForm(request.POST)
         if form.is_valid():
-            form.save()
-            return render(request, 'dpv_locales/form.html', {'form': form})
+            local = form.save()
+            return redirect(to=reverse_lazy('locales_edit', kwargs={'id_local': local.id}))
         else:
             return render(request, 'dpv_locales/form.html', {'form': form})
     else:
@@ -78,12 +79,31 @@ def stats(request, id_municipio=None):
 
 def local_edit(request, id_local):
     lol = Local.objects.filter(id=id_local).first()
+    form = LocalForm(instance=lol)
     if request.method == 'POST':
         form = LocalForm(request.POST, instance=lol)
         if form.is_valid():
             form.save()
             return redirect(reverse_lazy('locales_list'))
+    return render(request, 'dpv_locales/form.html', {'form': form, 'local': lol})
+
+
+def local_detail(request, id_local):
+    lol = Local.objects.filter(id=id_local).first()
+    if lol:
+        return render(request, 'dpv_locales/detail.html', {'local': lol})
     else:
-        form = LocalForm(instance=lol)
-    return render(request, 'dpv_locales/form.html', {'form': form})
+        raise Http404()
+
+
+def local_remove(request, id_local):
+    lol = Local.objects.filter(id=id_local).first()
+    if lol:
+        if request.method == 'POST':
+            if lol.vivienda_local.count() < 1:
+                lol.delete()
+                return redirect(reverse_lazy('locales_list'))
+        return render(request, 'dpv_locales/delete.html', {'local': lol})
+    else:
+        raise Http404()
 

@@ -55,6 +55,6 @@ class LocalForm(forms.ModelForm):
         if self.cleaned_data.get('direccion_entre1') == self.cleaned_data.get('direccion_entre2'):
             raise ValidationError({'direccion_entre2': _('Ambas entre calles no pueden ser iguales.')})
         if self.cleaned_data.get('no_viviendas') and self.cleaned_data.get('pendiente'):
-            if self.cleaned_data.get('no_viviendas') > self.cleaned_data.get('pendiente'):
+            if self.cleaned_data.get('no_viviendas') < self.cleaned_data.get('pendiente'):
                 raise ValidationError({'pendiente': 'El número de viviendas pendientes de aprovación no puede ser mayor que el número de viviendas del local'})
         return super(forms.ModelForm, self).clean()

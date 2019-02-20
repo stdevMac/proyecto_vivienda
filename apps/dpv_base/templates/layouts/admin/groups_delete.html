@@ -8,9 +8,9 @@
             <div class="modal-body">
                 {% if grupo.user_set.count > 0 %}
                 <h5 class="text-center">No puede eliminar el grupo {{ grupo.name }} porque tiene {{ grupo.user_set.count }} {% if grupo.user_set.count == 1 %} usuario {% else %} usuarios {% endif %}</h5>
-                <p class="help-text text-center">Para borra el grupo debe desasociar todos los usuario unidos al mismo.</p>
+                <p class="help-text text-center">Para borrar el grupo debe desasociar todos los usuario unidos al mismo.</p>
                 {% else %}
-                <h5>¿Seguro desea eliminar el grupo {{grupo.name}}?</h5>
+                <h5 class="text-center">¿Seguro desea eliminar el grupo {{grupo.name}}?</h5>
                 {% endif %}
             </div>
             <div class="modal-footer">

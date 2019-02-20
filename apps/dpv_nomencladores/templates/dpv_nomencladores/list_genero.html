@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Géneros</strong>
-                {% if perms.genero.add_genero %}
+                {% if perms.dpv_nomencladores.add_genero %}
                 <button onclick="return abrir_modal('{% url 'genero_new' %}')" class="pull-right btn btn-success btn-sm">
                     <i class="fa fa-plus"></i>Agregar Género</button>
                 {% endif %}

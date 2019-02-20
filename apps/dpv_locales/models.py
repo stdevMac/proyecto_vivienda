@@ -7,6 +7,9 @@ from .validators import validate_acta_acuerdo, start_with_number
 
 
 # Create your models here.
+registring = False
+
+
 class Local(models.Model):
     direccion_calle = models.ForeignKey(Calle, related_name="calle_principal", help_text="Calle de la direccion", on_delete=models.CASCADE, verbose_name="Calle", blank=False, null=False)
     direccion_numero = models.CharField(max_length=10, help_text="Numero de la dirección", verbose_name="Número", validators=[start_with_number])
@@ -42,15 +45,50 @@ class Local(models.Model):
     def get_ok_data(self):
         validation_text = ''
         validation_point = 0
+        validation_house_point = 0
 
-        if self.no_viviendas != Vivienda.objects.filter(local_dado=self).count():
+        if self.no_viviendas != self.vivienda_local.count():
             validation_point += 1
-            validation_text += "No coincide el número de viviendas que es %d declarado en el local con el número de viviendas asociadas a el que es %d. \n" % (self.no_viviendas, Vivienda.objects.filter(local_dado=self).count())
-        for viv in Vivienda.objects.filter(local_dado=self):
-            pass
+            validation_text += "No coincide el número de viviendas que es %d declarado en el local con el número de viviendas asociadas a el que es %d. \n" % (self.no_viviendas, self.vivienda_local.count())
+        for viv in self.vivienda_local.all():
+            tmp_point = validation_point
+            if not viv.numero:
+                validation_text += "La " + str(self.vivienda_local.index(viv)) + " no tiene número. \n"
+                validation_point += 1
+            if not viv.destino:
+                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado el destino. \n"
+                validation_point += 1
+            if not viv.cantidad_persona:
+                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado la cantidad de personas que la habitan. \n"
+                validation_point += 1
+            if not viv.propietario:
+                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado el propietario. \n"
+                validation_point += 1
+            if not viv.fecha_propietario:
+                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado la fecha a partir de donde se conmenzo a habitar. \n"
+                validation_point += 1
+            if not viv.concepto:
+                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado el concepto. \n"
+                validation_point += 1
+            if not viv.aprobada:
+                validation_text += "La vivienda " + str(viv.numero) + "no está aprobada."
+                validation_point += 1
+            if not viv.add_concepto:
+                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado el destino"
+            if tmp_point > validation_point:
+                validation_house_point += 1
 
-    def count_statal(self):
-        if self.estatal:
-            return 1
-        else:
-            return 0
+        #Seteo las variables data_ok y system_info segun los errores encontrados
+        if validation_point == 0:
+            self.data_ok = validation_point
+            self.system_info = "No existen errores o anomalías en la información de este local."
+        if validation_point > 0 and self.vivienda_local.count() == 0:
+            self.data_ok = 2
+            self.system_info = "Este local no tiene viviendas asociadas."
+        if validation_point > 0 and validation_house_point > 0 and validation_house_point < 2:
+            self.data_ok = 1
+            self.system_info = validation_text
+        elif validation_point > 0 and validation_house_point > 1:
+            self.data_ok = 2
+            self.system_info = validation_text
+        self.save()

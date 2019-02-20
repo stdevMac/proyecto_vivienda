@@ -23,18 +23,20 @@ def index(request):
         print("no tiene perfil asociado")
     return render(request, "dpv_viviendas/list.html", {'viviendas': viviendas})
 
+
 @permission_required('dpv_viviendas.add_vivienda', raise_exception=True)
 def vivienda_add(request):
     if request.method == 'POST':
         form = ViviendaForm(request.POST)
         if form.is_valid():
             form.save()
-            redirect(reverse_lazy('vivienda_list'))
+            return redirect(reverse_lazy('vivienda_list'))
         else:
             return render(request, 'dpv_viviendas/form.html', {'form': form})
     else:
         form = ViviendaForm()
         return render(request, 'dpv_viviendas/form.html', {'form': form})
+
 
 @permission_required('dpv_viviendas.change_vivienda', raise_exception=True)
 def vivienda_edit(request, id_vivienda):
@@ -60,11 +62,11 @@ def vivienda_detail(request, id_vivienda):
                 viv = Vivienda()
     except:
         print("El susuario no tiene perfil asociado")
-    return  render(request, 'dpv_vivienda/detail.html', {'vivienda': viv})
+    return  render(request, 'dpv_viviendas/detail.html', {'vivienda': viv})
 
 
-@permission_required('dpv_viviendas.view_vivienda', raise_exception=True)
-def viviedna_delete(request, id_vivienda):
+@permission_required('dpv_viviendas.delete_vivienda', raise_exception=True)
+def vivienda_delete(request, id_vivienda):
     viv = Vivienda()
     try:
         perfil = request.user.perfil_usuario
@@ -81,4 +83,18 @@ def viviedna_delete(request, id_vivienda):
                 return redirect(reverse_lazy('vivienda_list'))
     except:
         print("El susuario no tiene perfil asociado")
-    return  render(request, 'dpv_vivienda/detail.html', {'vivienda': viv})
+    return render(request, 'dpv_viviendas/delete.html', {'vivienda': viv})
+
+
+@permission_required('dpv_viviendas.add_vivienda', raise_exception=True)
+def vivienda_add_modal(request):
+    if request.method == 'POST':
+        form = ViviendaForm(request.POST)
+        if form.is_valid():
+            viv = form.save()
+            return redirect(reverse_lazy('locales_edit', kwargs={'id_local': viv.local_dado.id}))
+        else:
+            return redirect(reverse_lazy('locales_list'))
+    else:
+        form = ViviendaForm()
+        return render(request, 'dpv_viviendas/formodal.html', {'form': form})

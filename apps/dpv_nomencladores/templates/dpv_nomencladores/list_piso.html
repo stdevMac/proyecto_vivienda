@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Pisos</strong>
-                {% if perms.piso.add_piso %}
+                {% if perms.dpv_nomencladores.add_piso %}
                 <button onclick="return abrir_modal('{% url 'piso_new' %}')" class="pull-right btn btn-success btn-sm">
                 <i class="fa fa-plus"></i>Agregar Piso</button>
                 {% endif %}

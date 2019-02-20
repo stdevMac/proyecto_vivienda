@@ -30,6 +30,6 @@ class ViviendaForm(forms.ModelForm):
         }
 
     def clean_fecha_propietario(self):
-        if self.cleaned_data.get('fecha_propietario') >= timezone.datetime.today():
-            raise ValidationError('la fecha de habilitado de la vivienda no debe ser de hoy o del futuro')
+        if self.cleaned_data.get('fecha_propietario') >= timezone.datetime.today().date():
+            raise ValidationError('La fecha de habitado de la vivienda no debe ser de hoy ni del futuro')
         return self.cleaned_data.get('fecha_propietario')

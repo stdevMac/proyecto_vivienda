@@ -3,6 +3,7 @@
 {% load static %}
 {% block extra_style %}
     <link rel="stylesheet" href="{% static 'dpv_base/css/lib/datatable/dataTables.bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dpv_base/js/lib/jquery-ui/css/jquery-ui.css' %}">
 {% endblock extra_style %}
 {% block breadcrumb_title %} Crear {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
@@ -10,11 +11,7 @@
     {% if '/local/form/' == request.path %}
     <li class="active">Crear</li>
     {% else %}
-    <li>
-        <a href="{% url 'locales_form' %}">
-            Crear
-        </a>
-    </li>
+    <li class="active">Actualizar</li>
     {% endif %}
 {% endblock breadcrumbs %}
 {% block content_page %}
@@ -56,44 +53,44 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Viviendas del local</strong>
-                <button type="submit" class="pull-right btn btn-success">
+                <button onclick="return abrir_modal('{% url 'vivienda_add_mod' %}')" type="submit" class="pull-right btn btn-success" {% if '/local/form/' == request.path %}disabled="true" title="Para poder agregar viviendas al local debe guardarlo primero"  data-toggle="tooltip" data-placement="top"{% endif %}>
                     <i class="fa fa-plus"></i>
                     Agregar Vivienda
                 </button>
             </div>
             <div class="card-body">
                 <div class="h-list row">
-                    {% for vivienda in viviendas %}
+                    {% for vivienda in local.vivienda_local.all %}
                     <div class="card-body">
                         <table class="table table-bordered table-striped">
                             <tbody>
                                 <tr>
-                                    <td>Número</td>
-                                    <td></td>
+                                    <th>Número</th>
+                                    <td>{{ vivienda.numero }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Propietario</td>
-                                    <td></td>
+                                    <th>Propietario</th>
+                                    <td>{{ vivienda.propietario }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Concepto</td>
-                                    <td></td>
+                                    <th>Concepto</th>
+                                    <td>{{ vivienda.concepto }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Cant. Personas</td>
-                                    <td></td>
+                                    <th>Cant. Personas</th>
+                                    <td>{{ vivienda.cantidad_persona }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Fecha Habitado</td>
-                                    <td></td>
+                                    <th>Fecha Habitado</th>
+                                    <td>{{ vivienda.fecha_propietario }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Destino</td>
-                                    <td></td>
+                                    <th>Destino</th>
+                                    <td>{{ vivienda.destino }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Aprobado</td>
-                                    <td></td>
+                                    <th>Aprobado</th>
+                                    <td>{% if vivienda.aprobada %} <i class="fa fa-check-square-o text-success"></i> {% else %}<i class="fa fa-square-o text-danger"></i> {% endif %}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -109,4 +106,22 @@
             </div>
         </div>
     </div>
+    <div class="modal fade modal-show modal-center" id="popup" role="dialog">
+
+    </div>
 {% endblock content_page %}
+{% block extra_scripts %}
+    <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/jszip.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/pdfmake.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/vfs_fonts.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.print.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.colVis.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/datatables-init.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/jquery-ui/js/jquery-ui.js' %}"></script>
+    <script src="{% static 'dpv_locales/js/locales.js' %}"></script>
+{% endblock extra_scripts %}

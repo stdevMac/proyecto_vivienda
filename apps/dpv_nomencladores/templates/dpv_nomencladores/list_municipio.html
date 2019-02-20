@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Municipios</strong>
-                {% if perms.genero.add_mmunicipio %}
+                {% if perms.dpv_nomencladores.add_municipio %}
                    <button onclick="return abrir_modal('{% url 'municipio_new' %}')" class="pull-right btn btn-success btn-sm">
                         <i class="fa fa-plus"></i>Agregar Municipio</button>
                 {% endif %}

@@ -20,6 +20,7 @@ class Vivienda(models.Model):
         verbose_name = "Vivienda"
         verbose_name_plural = "Viviendas"
         ordering = ['numero']
+        unique_together = ('numero', 'local_dado', )
 
     def __str__(self):
         return str(self.numero)

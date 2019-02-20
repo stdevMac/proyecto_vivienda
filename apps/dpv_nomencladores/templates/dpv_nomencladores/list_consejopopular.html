@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Consejo Popular</strong>
-                {% if perms.genero.add_mconsejopopular %}
+                {% if perms.dpv_nomencladores.add_consejopopular %}
                    <button onclick="return abrir_modal('{% url 'consejopopular_new' %}')" class="pull-right btn btn-success btn-sm">
                         <i class="fa fa-plus"></i>Agregar Consejo Popular</button>
                 {% endif %}
