@@ -18,6 +18,9 @@ from apps.dpv_perfil.forms import PerfilMForm
 from apps.email_sender.models import EmailConfigurate
 from .utils import set_settings_email_conf, comapare_db_settings_conf, get_settings_email_conf
 from django.views.defaults import page_not_found, server_error, bad_request, permission_denied
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
 
 # Create your views here.
 @login_required()
@@ -301,8 +304,15 @@ class RecoverPassCompleteView(auth_views.PasswordResetCompleteView):
     template_name = 'layouts/recoverpass/recoverpass_complete.html'
 
 
-# def tesview(request):
-#     return  render(request, '500.html')
+def change_pass(request):
+    passform = PasswordChangeForm(request.user)
+    if request.method == 'POST':
+        passform = PasswordChangeForm(request.user, request.POST)
+        if passform.is_valid():
+            usr = passform.save()
+            update_session_auth_hash(request, usr)
+            return redirect(reverse_lazy('perfil_detail'))
+    return render(request, 'layouts/admin/change_pass.html', {'passform': passform})
 
 
 def error400(request):

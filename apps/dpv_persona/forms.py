@@ -131,3 +131,14 @@ class PersonaJuridicaForm(forms.ModelForm):
             raise ValidationError({'direccion_entrecalle2': _('Ambas entre calles no pueden ser iguales.')})
         return super(forms.ModelForm, self).clean()
 
+
+class PersonaNaturalProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = PersonaNatural
+        fields = ('telefono', 'email_address', )
+
+        widgets = {
+            'telefono': forms.TextInput(attrs={"placeholder": "Teléfono Fijo", "class": "form-control"}),
+            'email_address': forms.EmailInput(attrs={"placeholder": "Correo Electrónico", "class": "form-control"}),
+        }

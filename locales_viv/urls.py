@@ -11,6 +11,8 @@ from apps.email_sender import urls as email_url
 from django.conf.urls import handler404, handler403, handler500, handler400
 from apps.dpv_base.views import error400, error403, error404, error500
 # from apps.dpv_base.views import tesview
+from django.conf.urls.static import static
+from django.conf import settings
 
 handler400 = error400
 handler403 = error403
@@ -18,7 +20,7 @@ handler404 = error404
 handler500 = error500
 
 
-urlpatterns = [
+urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
 #     path('1234', tesview),
     path('dj-admin/', admin.site.urls),
     path('', include(base_url)),

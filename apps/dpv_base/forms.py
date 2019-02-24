@@ -13,6 +13,7 @@ from .models import ConfigMail
 from .Widgets import DivCheckboxSelectMultiple
 # confirm-SetPasswordForm  normal-PasswordResetForm
 
+
 class LoginForm(forms.Form):
     username_login = forms.CharField(max_length=255, required=True, label="Nombre de usuario ó Correo electrónico", help_text="Aqui introdusca su nombre de usuario o email para entrar al sistema.",
                                widget=(forms.TextInput(attrs={"placeholder": "Nombre de usuario ó Email", "class": "form-control"})))
@@ -298,7 +299,7 @@ class UserPasswordForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ( 'password', 'confirm_password', )
+        fields = ('password', 'confirm_password', )
 
         widgets = {
             'password': forms.PasswordInput(attrs={"placeholder": "Contraseña", "class": "form-control"}),
