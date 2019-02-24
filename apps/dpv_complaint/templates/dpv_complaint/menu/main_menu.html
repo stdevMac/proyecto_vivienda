@@ -1,36 +1,59 @@
 {% load static i18n %}
-{% if True %}
-    <li class="{% if '/quejas/' in request.path %} active show {% endif %} menu-item-has-children dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="menu-icon fa fa-tasks"></i>
-            Quejas
-        </a>
-        <ul class="sub-menu children dropdown-menu">
-            {% if True %} {# perms.dpv_quejases.view_provincia #}
-            <li class="{% if '/quejas/natural/' in request.path %} active {% endif %}">
-                <a href="{% url 'index_natural_complaint' %}"><i class="fa fa-tag"></i>Quejas Naturales</a>
+<li class="{% if '/quejas/' in request.path %} active show {% endif %} menu-item-has-children dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="menu-icon fa fa-tasks"></i>
+        Quejas
+    </a>
+    <ul class="sub-menu children dropdown-menu">
+{#        {% if perms.dpv_nomencladores.view_provincia %}#}
+            <li class="active">
+                <a href="{% url 'add_natural_complaint' %}"><i class="fa fa-tag"></i>Adicionar Queja Natural</a>
             </li>
-            {% endif %}
-            {% if True %} {# perms.dpv_quejases.view_municipio #}
-            <li class="{% if '/quejas/juridic/' in request.path %} active {% endif %}">
-                <a href="{% url 'index_juridic_complaint' %}"><i class="fa fa-tag"></i>Quejas Juridicas</a>
+{#        {% endif %}#}
+{#        {% if perms.dpv_nomencladores.view_municipio %}#}
+            <li class="active">
+                <a href="{% url 'add_juridic_complaint' %}"><i class="fa fa-tag"></i>Adicionar Queja Juridica</a>
             </li>
-            {% endif %}
-            {% if True %}
-            <li class="{% if '/quejas/wait_distribution/' in request.path %} active {% endif %}">
-                <a href="{% url 'waiting_for_distribution' %}"><i class="fa fa-tag"></i>Quejas Esperando Distribucion</a>
+{#        {% endif %}#}
+{#        {% if perms.dpv_nomencladores.view_destino %}#}
+            <li class="{% if '/nomenclador/destino/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_destino' %}"><i class="fa fa-tag"></i>Destinos</a>
             </li>
-            {% endif %}
-            {% if True %}
-            <li class="{% if '/quejas/finished/' in request.path %} active {% endif %}">
-                <a href="{% url 'index_finished_complaint' %}"><i class="fa fa-tag"></i>Quejas Finalizadas</a>
+{#        {% endif %}#}
+{#        {% if perms.dpv_nomencladores.view_organismo %}#}
+            <li class="{% if '/nomenclador/organismo/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_organismo' %}"><i class="fa fa-tag"></i>Organismos</a>
             </li>
-            {% endif %}
-            {% if True %}
-            <li class="{% if '/quejas/accepted_all/' in request.path %} active {% endif %}">
-                <a href="{% url 'index_accepted_all' %}"><i class="fa fa-tag"></i>Quejas Aceptadas</a>
+{#        {% endif %}#}
+{#        {% if perms.dpv_nomencladores.view_calle %}#}
+            <li class="{% if '/nomenclador/calle/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_calle' %}"><i class="fa fa-tag"></i>Calles</a>
             </li>
-            {% endif %}
-        </ul>
-    </li>
-{% endif %}
+{#        {% endif %}#}
+{#        {% if perms.dpv_nomencladores.view_piso %}#}
+            <li class="{% if '/nomenclador/piso/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_piso' %}"><i class="fa fa-tag"></i>Pisos</a>
+            </li>
+{#        {% endif %}#}
+{#        {% if perms.dpv_nomencladores.view_genero %}#}
+            <li class="{% if '/nomenclador/genero/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_genero' %}"><i class="fa fa-tag"></i>Género</a>
+            </li>
+{#        {% endif %}#}
+{#        {% if perms.dpv_nomencladores.view_areatrabajo %}#}
+            <li class="{% if '/nomenclador/areadetrabajo/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_areatrab' %}"><i class="fa fa-tag"></i>Departamento</a>
+            </li>
+{#        {% endif %}#}
+{#        {% if perms.dpv_nomencladores.view_centrotrabajo %}#}
+            <li class="{% if '/nomenclador/centrodetrabajo/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_centrab' %}"><i class="fa fa-tag"></i>Unidad</a>
+            </li>
+{#        {% endif %}#}
+{#        {% if perms.dpv_nomencladores.view_concepto %}#}
+            <li class="{% if '/nomenclador/concepto/' in request.path %} active {% endif %}">
+                <a href="{% url 'nomenclador_concepto' %}"><i class="fa fa-tag"></i>Conceptos</a>
+            </li>
+{#        {% endif %}#}
+    </ul>
+</li>
