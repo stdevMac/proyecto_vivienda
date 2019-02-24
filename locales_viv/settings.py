@@ -151,6 +151,9 @@ SESSION_COOKIE_AGE = 84600
 
 BULK_URLS = []
 
+
+UPDATING_LOCALS = 0
+
 # Email configuration to do
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

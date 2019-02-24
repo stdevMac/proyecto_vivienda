@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import Http404
-from django.db.models import F, Q, Sum, Count
-from django.db.models.query import QuerySet
-from django.views.generic import View
+from django.db.models import Sum, Count
 from django.contrib.auth.decorators import permission_required
 from .models import Local
 from .forms import LocalForm
 from apps.dpv_nomencladores.models import Municipio
+from locales_viv import settings
 
 
 # Create your views here.
@@ -107,3 +106,24 @@ def local_remove(request, id_local):
     else:
         raise Http404()
 
+
+def local_revision(request, id_local=None):
+    if not id_local:
+        if settings.UPDATING_LOCALS == 0:
+            settings.UPDATING_LOCALS = 1
+            if request.user.perfil_usuario.centro_trabajo.oc:
+                for local in Local.objects.all():
+                    local.get_ok_data()
+            else:
+                for local in Local.objects.filter(municipio=request.user.perfil_usuario.centro_trabajo.municipio):
+                    local.get_ok_data()
+            settings.UPDATING_LOCALS = 0
+            return redirect(reverse_lazy('locales_list'))
+    else:
+        Local.objects.filter(id=id_local).first().get_ok_data()
+        return redirect(reverse_lazy('locales_list'))
+
+
+def local_systeminfo(reques, id_local):
+    local = Local.objects.filter(id=id_local).first()
+    return render(reques, 'dpv_locales/system_data.html', {'local': local})

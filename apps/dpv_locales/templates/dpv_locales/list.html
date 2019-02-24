@@ -23,7 +23,10 @@
             <div class="card-header">
                 <strong class="card-title">Locales</strong>
                 {% if perms.dpv_locales.add_local %}
-                <a href="{% url 'locales_add' %}" type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Local</a>
+                <span class="pull-right">
+                    <a href="{% url 'locales_revs' %}" type="button" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Revisar Locales</a>
+                    <a href="{% url 'locales_add' %}" type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Local</a>
+                </span>
                 {% endif %}
             </div>
             <div class="card-body">
@@ -55,6 +58,12 @@
                                     {% endif %}
                                     {% if perms.dpv_locales.delete_local %}
                                         <a onclick="return abrir_modal('{% url 'locales_delete' local.id %}')" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_locales.change_local %}
+                                        <a href="{% url 'locales_rev' local.id %}" type="button" class="btn btn-sm {% if local.data_ok == 0 %}btn-success{% elif local.data_ok == 1 %}btn-warning{% elif local.data_ok == 2 %}btn-danger{% endif %}"><i class="fa fa-caret-square-o-right"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_locales.view_local %}
+                                        <a onclick="return abrir_modal('{% url 'locales_data' local.id %}')" type="button" class="btn btn-sm {% if local.data_ok == 0 %}btn-success{% elif local.data_ok == 1 %}btn-warning{% elif local.data_ok == 2 %}btn-danger{% endif %}"><i class="fa fa-align-justify"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>

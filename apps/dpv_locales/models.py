@@ -78,17 +78,19 @@ class Local(models.Model):
             if tmp_point > validation_point:
                 validation_house_point += 1
 
-        #Seteo las variables data_ok y system_info segun los errores encontrados
+        # Seteo las variables data_ok y system_info segun los errores encontrados
         if validation_point == 0:
             self.data_ok = validation_point
             self.system_info = "No existen errores o anomalías en la información de este local."
         if validation_point > 0 and self.vivienda_local.count() == 0:
             self.data_ok = 2
             self.system_info = "Este local no tiene viviendas asociadas."
-        if validation_point > 0 and validation_house_point > 0 and validation_house_point < 2:
-            self.data_ok = 1
-            self.system_info = validation_text
-        elif validation_point > 0 and validation_house_point > 1:
-            self.data_ok = 2
-            self.system_info = validation_text
+        if validation_point > 0 and self.vivienda_local.count() > 0:
+            if validation_point + validation_house_point < 3:
+                self.data_ok = 1
+                self.system_info = validation_text
+            else:
+                self.data_ok = 2
+                self.system_info = validation_text
+
         self.save()
