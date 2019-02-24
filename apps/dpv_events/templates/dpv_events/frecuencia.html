@@ -29,6 +29,7 @@
             </div>
             <div class="card-body">
                 {% if models %}
+                <div class="table-responsive">
                     <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                         <thead>
                         <tr>
@@ -74,7 +75,7 @@
                                                         <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
                                                             Cancelar
                                                         </button>
-                                                        <a href="{% url 'dpv_events:delete_frecuencia' model.id %}" class="delete btn btn-primary">
+                                                        <a href="{% url 'dpv_events:delete_frecuencia' model.id %}" class="btn btn-primary">
                                                             Confirmar
                                                         </a>
                                                     </div>
@@ -87,6 +88,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                </div>
                 {% else %}
                     <div class="alert alert-info">
                         <h2 class="text-center">No hay Frecuencias</h2>
@@ -136,6 +138,7 @@
     {% endif %}
 {% endblock %}
 {% block extra_scripts %}
+    <script src="{% static 'dpv_events/scripts/DjangoAjax.js' %}"></script>
     <script src="{% static 'dpv_events/scripts/frecuencia.js' %}"></script>
     <script type="text/javascript">
         jQuery(document).ready(function(){

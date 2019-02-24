@@ -23,12 +23,13 @@
             <div class="card-header">
                 <strong class="card-title">Tipos de Eventos</strong>
                 {% if perms.dpv_events.add_tipoevento %}
-                    <a href="#form_tipoevento" class="pull-right btn btn-success btn-sm" role="button" data-toggle="modal">
-                        <i class="fa fa-plus"></i> {% trans 'Add' %} Tipo de Evento </a>
+                    <a id="btn_create_tipoevento" href="#form_tipoevento" class="pull-right btn btn-success btn-sm" role="button" data-toggle="modal">
+                        <i class="fa fa-plus"></i> Agregar Tipo de Evento </a>
                 {% endif %}
             </div>
             <div class="card-body">
                 {% if models %}
+                <div class="table-responsive">
                     <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                         <thead>
                         <tr>
@@ -51,7 +52,7 @@
 
                                 <td>
                                     {% if perms.dpv_events.change_tipoevento %}
-                                        <a class="edit btn btn-warning btn-sm purple" href="javascript:;">
+                                        <a href="#form_tipoevento" class="btn btn-warning btn-sm edit" data-toggle="modal" data-id="{{ model.id }}" data-type="{{ model.type }}" data-frecuencia="{{ model.frecuencia_id }}">
                                             <i class="fa fa-pencil"></i> </a>
                                     {% endif %}
                                     {% if perms.dpv_events.delete_tipoevento %}
@@ -73,9 +74,9 @@
                                                         <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
                                                             Cancelar
                                                         </button>
-                                                        <button data-dismiss="modal" class="delete btn btn-primary">
+                                                        <a href="{% url 'dpv_events:delete_tipoevento' model.id %}" class="btn btn-primary">
                                                             Confirmar
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,6 +87,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                </div>
                 {% else %}
                     <div class="alert alert-info">
                         <h2 class="text-center">No hay Tipos de Eventos</h2>
@@ -103,11 +105,11 @@
                     <div class="card-header">
                         <div class="card-title">
                             <i class="fa fa-plus"></i>
-                            <span class="caption-subject bold uppercase"> {% trans 'Add' %} Tipo de Evento</span>
+                            <span class="caption-subject bold" style="text-transform: uppercase;"> <span class="action_tipoevento">Agregar</span> Tipo de Evento</span>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{% url 'dpv_events:create_tipoevento' %}" method="POST" class="form-horizontal" id="newtipoevento_form">{% csrf_token %}
+                        <form action="#" method="POST" class="form-horizontal agregar" id="newtipoevento_form">{% csrf_token %}
                             <div class="row">
                                 {% for field in form %}
                                 <div class="form-group col-md-12">
@@ -135,5 +137,11 @@
     {% endif %}
 {% endblock %}
 {% block extra_scripts %}
+    <script src="{% static 'dpv_events/scripts/DjangoAjax.js' %}"></script>
     <script src="{% static 'dpv_events/scripts/tipoevento.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            TipoEventoScript.init();
+        });
+    </script>
 {% endblock extra_scripts %}

@@ -22,6 +22,11 @@ def menuable_apps():
         for app in all_apps.get_app_configs():
             if hasattr(app, 'owned') and app.active:
                 if hasattr(app, 'menuable') and app.menuable:
+                    if hasattr(app, 'model_data'):
+                        if len(app.model_data) == 1:
+                            setattr(app, 'count_data', app.get_model(app.model_data[0]).objects.all().count())
+                        else:
+                            setattr(app, 'count_data', all_apps.get_model(app.model_data[0], app.model_data[1]).objects.all().count())
                     menuable_apps.append(app)
     return menuable_apps
 
@@ -51,4 +56,51 @@ def split(value, arg):
     value = value.split(arg)
     if safe:
         return mark_safe(value)
+    return value
+
+@register.filter
+def restof( value, arg):
+    '''
+    Divides the value; the argument is the divisor and it is ok return rest of division
+    Returns empty string if some error
+    '''
+    try:
+        value = int(value)
+        arg = int(arg)
+        if arg:
+            return value % arg
+    except:
+        pass
+    return ''
+
+
+@register.filter
+def valuetoint(value):
+    '''
+    Return the value converted to int if posibile
+    Returns empty string if some error
+    '''
+    try:
+        value = int(value)
+        return value
+    except:
+        pass
+    if value is None:
+        value = 0
+    return value
+
+
+@register.filter
+def tosub(value, arg):
+    '''
+    Sub this values and args if is posibile
+    Returns empty string if some error
+    '''
+    try:
+        value = int(value)
+        arg = int(arg)
+        if arg:
+            return value - arg
+    except:
+        pass
     return value

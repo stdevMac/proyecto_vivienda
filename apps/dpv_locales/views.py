@@ -9,7 +9,6 @@ from .forms import LocalForm
 from apps.dpv_nomencladores.models import Municipio
 
 
-
 # Create your views here.
 @permission_required('dpv_locales.view_local', raise_exception=True)
 def index(request):
@@ -39,16 +38,41 @@ def local_add(request):
         else:
             return render(request, 'dpv_locales/form.html', {'form': form})
     else:
-        form = LocalForm()
+        if not request.user.perfil_usuario.centro_trabajo.oc:
+            local = Local()
+            local.municipio = request.user.perfil_usuario.centro_trabajo.municipio
+            form = LocalForm(instance=local)
+        else:
+            form = LocalForm()
         return render(request, 'dpv_locales/form.html', {'form': form})
 
 
 # @permission_required('dpv_locales.view_local', raise_exception=True)
-def stats(request):
+def stats(request, id_municipio=None):
     result = []
-    for m in Municipio.objects.all():
-        q = Local.objects.filter(municipio=m).aggregate(cant_viv=Sum('no_viviendas'), cant_pend=Sum('pendiente'), cant_loc=Count('fecha'))
-        result.append(q)
+
+    if not id_municipio and request.user.perfil_usuario.centro_trabajo.oc:
+        if Local.objects.all().count() > 0:
+            for m in Municipio.objects.all():
+                q = Local.objects.filter(municipio=m).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('fecha'), statales=Sum('estatal'))
+                qm = {"nombre": m.nombre, "id": m.id, "tipo": 'municpio'}
+                qr = dict(qm, **q)
+                result.append(qr)
+    elif not id_municipio and not request.user.perfil_usuario.centro_trabajo.oc:
+        if Local.objects.all().count() > 0:
+            for cp in request.user.perfil_usuario.centro_trabajo.municipio.consejos.all():
+                q = Local.objects.filter(consejo_popular=cp).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('fecha'), statales=Sum('estatal'))
+                qm = {"nombre": cp.nombre, "id": cp.id, "tipo": 'consejo'}
+                qr = dict(q, **qm)
+                result.append(qr)
+    else:
+        if Local.objects.filter(id=id_municipio).count() > 0:
+            for cp in Municipio.objects.filter(id=id_municipio).first().consejos.all():
+                q = Local.objects.filter(consejo_popular=cp).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('fecha'), statales=Sum('estatal'))
+                qm = {"nombre": cp.nombre, "id": cp.id, "tipo": 'consejo'}
+                qr = dict(q, **qm)
+                result.append(qr)
+
     return render(request, 'dpv_locales/estdistico.html', {'result': result})
 
 

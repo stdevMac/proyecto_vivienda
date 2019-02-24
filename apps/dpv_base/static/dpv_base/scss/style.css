@@ -2241,5 +2241,12 @@ header .form-inline {
 .background-lightblue {
     background: #bed7f3 !important;
 }
-
+.modal {
+    opacity: 1 !important;
+    margin-top: 5%;
+    padding-top: 10%;
+}
+.padding-d-15 {
+    padding-top: 15px !important;
+}
 /*# sourceMappingURL=style.css.map */

@@ -2,6 +2,7 @@
 {% block page_title %} | Formulario {% endblock page_title %}
 {% load static %}
 {% block extra_style %}
+    <link rel="stylesheet" href="{% static 'dpv_base/js/lib/jquery-ui/css/jquery-ui.css' %}">
 {% endblock extra_style %}
 {% block breadcrumb_title %} Crear {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
@@ -20,10 +21,10 @@
     <div class="col-md-12">
         <form novalidate method="POST">
             {% csrf_token %}
-            {% if form.non_field_errors %}
+            {% if form.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {% if form.errors|length == 1 %}"Por favor, corrija el error señalado a continuación."{% else %}"Por favor, corrija los errores señalados a continuación."{% endif %}
+                Por favor, corrija {% if form.errors|length == 1 %}"el error señalado"{% else %}"los errores señalados"{% endif %} a continuación.
             </div>
             {% endif %}
             <div class="card">
@@ -54,3 +55,8 @@
         </form>
     </div>
 {% endblock content_page %}
+{% block extra_scripts %}
+    {{block.super}}
+    <script src="{% static 'dpv_base/js/lib/jquery-ui/js/jquery-ui.js' %}"></script>
+    <script src="{% static 'dpv_viviendas/js/viviendas.js' %}"></script>
+{% endblock extra_scripts %}

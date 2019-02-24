@@ -30,31 +30,33 @@
             </div>
             <div class="card-body">
                 {% if generos %}
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Siglas</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for genero in generos %}
-                        <tr>
-                            <td>{{genero.nombre}}</td>
-                            <td>{{genero.sigla}}</td>
-                            <td>
-                                {% if perms.dpv_nomencladores.change_genero %}
-                                <a onclick="return abrir_modal('{% url 'genero_edit' genero.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
-                                {% endif %}
-                                {% if perms.dpv_nomencladores.delete_genero %}
-                                <a onclick="return abrir_modal('{% url 'genero_delete' genero.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Siglas</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for genero in generos %}
+                            <tr>
+                                <td>{{genero.nombre}}</td>
+                                <td>{{genero.sigla}}</td>
+                                <td>
+                                    {% if perms.dpv_nomencladores.change_genero %}
+                                    <a onclick="return abrir_modal('{% url 'genero_edit' genero.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_nomencladores.delete_genero %}
+                                    <a onclick="return abrir_modal('{% url 'genero_delete' genero.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                 <div class="alert alert-info">
                     <h2 class="text-center">No hay Géneros registrados que mostrar</h2>

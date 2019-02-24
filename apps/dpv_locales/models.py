@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext as _
 from django.core.exceptions import ValidationError
-from apps.dpv_nomencladores.models import Municipio, Organismo, Calle, Piso
+from apps.dpv_nomencladores.models import Municipio, Organismo, Calle, Piso, ConsejoPopular
 from .validators import validate_acta_acuerdo, start_with_number
 
 
@@ -26,6 +26,7 @@ class Local(models.Model):
     observaciones = models.TextField(max_length=600, verbose_name="Otras observaciones")
     estatal = models.BooleanField(default=True, verbose_name="Es estatal")
     acuerdo_DPV = models.CharField(max_length=9, verbose_name="Acuerdo DPV",  validators=[validate_acta_acuerdo], default='', blank=True)
+    consejo_popular = models.ForeignKey(ConsejoPopular, default=None, on_delete=models.CASCADE, verbose_name="Consejo Popular", help_text="Consejo popular donde se encuetra ubicado el Local", blank=True, null=True)
     data_ok = models.PositiveSmallIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2)])
     system_info = models.TextField(max_length=300, default='', blank=True)
 
@@ -36,7 +37,7 @@ class Local(models.Model):
         unique_together = (('municipio', 'direccion_calle', 'direccion_numero', 'piso', ),)
 
     def __str__(self):
-        return self.municipio.nombre + '-' + self.direccion_calle.nombre + '-' + self.direccion_numero
+        return self.municipio.nombre + '-' + self.direccion_calle.nombre + ' # ' + self.direccion_numero
 
     def get_ok_data(self):
         validation_text = ''
@@ -47,3 +48,9 @@ class Local(models.Model):
             validation_text += "No coincide el número de viviendas que es %d declarado en el local con el número de viviendas asociadas a el que es %d. \n" % (self.no_viviendas, Vivienda.objects.filter(local_dado=self).count())
         for viv in Vivienda.objects.filter(local_dado=self):
             pass
+
+    def count_statal(self):
+        if self.estatal:
+            return 1
+        else:
+            return 0

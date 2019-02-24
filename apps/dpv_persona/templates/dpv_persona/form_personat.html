@@ -10,10 +10,8 @@
     {% if '/persona/natural/form/' == request.path %}
     <li class="active">Crear</li>
     {% else %}
-    <li>
-        <a href="{% url 'persona_natural' %}">
-            Crear
-        </a>
+    <li class="active">
+            Actualizar
     </li>
     {% endif %}
 {% endblock breadcrumbs %}
@@ -21,10 +19,10 @@
         <div class="col-md-12">
         <form novalidate method="POST">
             {% csrf_token %}
-            {% if form.non_field_errors %}
+            {% if form.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {% if form.errors|length == 1 %}"Por favor, corrija el error señalado a continuación."{% else %}"Por favor, corrija los errores señalados a continuación."{% endif %}
+                Por favor, corrija {% if form.errors|length == 1 %}"el error señalado"{% else %}"los errores señalados"{% endif %} a continuación.
             </div>
             {% endif %}
             <div class="card">
@@ -42,7 +40,7 @@
                     {% endfor %}
                 </div>
                 <div class="card-footer">
-                    <a type="button" class="btn btn-default" href="{% url 'locales_list' %}">
+                    <a type="button" class="btn btn-default" href="{% url 'persona_natural' %}">
                         <i class="fa fa-reply"></i>
                         Volver
                     </a>

@@ -30,29 +30,31 @@
             </div>
             <div class="card-body">
                 {% if destinos %}
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for destino in destinos %}
-                        <tr>
-                            <td>{{destino.nombre}}</td>
-                            <td>
-                                {% if perms.dpv_nomencladores.change_destino %}
-                                <a onclick="return abrir_modal('{% url 'destino_edit' destino.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
-                                {% endif %}
-                                {% if perms.dpv_nomencladores.delete_destino %}
-                                <a onclick="return abrir_modal('{% url 'destino_delete' destino.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for destino in destinos %}
+                            <tr>
+                                <td>{{destino.nombre}}</td>
+                                <td>
+                                    {% if perms.dpv_nomencladores.change_destino %}
+                                    <a onclick="return abrir_modal('{% url 'destino_edit' destino.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_nomencladores.delete_destino %}
+                                    <a onclick="return abrir_modal('{% url 'destino_delete' destino.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                 <div class="alert alert-info">
                     <h2 class="text-center">No hay Destinos registradas que mostrar</h2>

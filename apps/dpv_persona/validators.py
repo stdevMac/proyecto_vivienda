@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.core.validators import BaseValidator
+from django.core.validators import BaseValidator, RegexValidator
 from django.utils.translation import ugettext_lazy as _, ngettext_lazy
 import datetime
 
@@ -9,7 +9,8 @@ message_no_alpha = _('Asegurece que no tenga caracteres alfabéticos')
 message_no_valid_date = _('Asegurece que los 6 primeros dígitos conformen una fecha válida')
 message_future_date = _('Asegurece que la fecha del carnet de identidad no esté en el futuro')
 message_not_blank = _('El Carnet de Identidad no puede estar en blanco')
-
+message_bad_nit = _('No es un código NiT válido el mismo tiene la nomenclatura <XXXXXXXXXXX> donde cada X es un número.')
+message_bad_reeup = _('No es un código Reeup válido el mismo tiene la nomenclatura <XXX.X.XXXXX> donde cada X es un número.')
 
 def year_to_full(cadena):
     if len(cadena) != 2:
@@ -52,3 +53,6 @@ def ci_validate(value):
         raise ValidationError(message=message_no_valid_date, code="not_valid_date")
     return True
 
+
+validate_nit_cuba = RegexValidator('[0-9]{11}', message=message_bad_nit)
+validate_reuup = RegexValidator('[0-9]{3}[.]\d[.]\d{5}', message=message_bad_reeup)

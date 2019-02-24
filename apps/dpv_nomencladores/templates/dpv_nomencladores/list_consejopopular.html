@@ -30,33 +30,35 @@
             </div>
             <div class="card-body">
                 {% if consejopopulars %}
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Número</th>
-                            <th>Nombre</th>
-                            <th>Municipio</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for consejopopular in consejopopulars %}
-                        <tr>
-                            <td>{{consejopopular.numero}}</td>
-                            <td>{{consejopopular.nombre}}</td>
-                            <td>{{consejopopular.municipio}}</td>
-                            <td>
-                                {% if perms.dpv_nomencladores.change_consejopopular %}
-                                <a onclick="return abrir_modal('{% url 'consejopopular_edit' consejopopular.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
-                                {% endif %}
-                                {% if perms.dpv_nomencladores.delete_consejopopular %}
-                                <a onclick="return abrir_modal('{% url 'consejopopular_delete' consejopopular.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Nombre</th>
+                                <th>Municipio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for consejopopular in consejopopulars %}
+                            <tr>
+                                <td>{{consejopopular.numero}}</td>
+                                <td>{{consejopopular.nombre}}</td>
+                                <td>{{consejopopular.municipio}}</td>
+                                <td>
+                                    {% if perms.dpv_nomencladores.change_consejopopular %}
+                                    <a onclick="return abrir_modal('{% url 'consejopopular_edit' consejopopular.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_nomencladores.delete_consejopopular %}
+                                    <a onclick="return abrir_modal('{% url 'consejopopular_delete' consejopopular.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                 <div class="alert alert-info">
                     <h2 class="text-center">No hay Consejos Populares registrados que mostrar</h2>

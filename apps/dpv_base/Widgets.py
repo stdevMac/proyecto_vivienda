@@ -1,4 +1,4 @@
-from django.forms.widgets import ChoiceWidget
+from django.forms.widgets import ChoiceWidget, SelectDateWidget
 
 
 class DivCheckboxSelectMultiple(ChoiceWidget):
@@ -25,3 +25,8 @@ class DivCheckboxSelectMultiple(ChoiceWidget):
         if index is None:
             return ''
         return super().id_for_label(id_, index)
+
+
+class SelectDateWidgetBase(SelectDateWidget):
+
+    template_name = 'layouts/widgets/select_date_widget.html'

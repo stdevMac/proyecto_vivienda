@@ -34,7 +34,7 @@ class Municipio(models.Model):
 class ConsejoPopular(models.Model):
     nombre = models.CharField(max_length=30, help_text="Nombre del consejo popular", verbose_name="Consejo Popular", blank=False, null=False, unique=True, validators=[not_special_char])
     numero = models.CharField(max_length=2, verbose_name="Número", unique=True, validators=[only_numbers])
-    municipio = models.ForeignKey(Municipio, related_name="municipios", on_delete=models.CASCADE)
+    municipio = models.ForeignKey(Municipio, related_name="consejos", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Consejo Popular"
