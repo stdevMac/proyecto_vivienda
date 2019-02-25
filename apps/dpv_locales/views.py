@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import Http404
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Case, When
 from django.contrib.auth.decorators import permission_required
 from .models import Local
 from .forms import LocalForm
@@ -54,21 +54,21 @@ def stats(request, id_municipio=None):
     if not id_municipio and request.user.perfil_usuario.centro_trabajo.oc:
         if Local.objects.all().count() > 0:
             for m in Municipio.objects.all():
-                q = Local.objects.filter(municipio=m).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('fecha'), statales=Sum('estatal'))
+                q = Local.objects.filter(municipio=m).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('id'), statales=Count(Case(When(estatal=True, then=1))), propios=Count(Case(When(estatal=False, then=1))))
                 qm = {"nombre": m.nombre, "id": m.id, "tipo": 'municpio'}
                 qr = dict(qm, **q)
                 result.append(qr)
     elif not id_municipio and not request.user.perfil_usuario.centro_trabajo.oc:
-        if Local.objects.all().count() > 0:
+        if Local.objects.filter(municipio=request.user.perfil_usuario.centro_trabajo.municipio).count() > 0:
             for cp in request.user.perfil_usuario.centro_trabajo.municipio.consejos.all():
-                q = Local.objects.filter(consejo_popular=cp).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('fecha'), statales=Sum('estatal'))
+                q = Local.objects.filter(consejo_popular=cp).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('id'), statales=Count(Case(When(estatal=True, then=1))), propios=Count(Case(When(estatal=False, then=1))))
                 qm = {"nombre": cp.nombre, "id": cp.id, "tipo": 'consejo'}
                 qr = dict(q, **qm)
                 result.append(qr)
     else:
         if Local.objects.filter(id=id_municipio).count() > 0:
             for cp in Municipio.objects.filter(id=id_municipio).first().consejos.all():
-                q = Local.objects.filter(consejo_popular=cp).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('fecha'), statales=Sum('estatal'))
+                q = Local.objects.filter(consejo_popular=cp).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('id'), statales=Count(Case(When(estatal=True, then=1))), propios=Count(Case(When(estatal=False, then=1))))
                 qm = {"nombre": cp.nombre, "id": cp.id, "tipo": 'consejo'}
                 qr = dict(q, **qm)
                 result.append(qr)
