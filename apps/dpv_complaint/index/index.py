@@ -32,7 +32,7 @@ def index_assigned_to_technician(request, technical_id):
 def index_finished_complaint(request):
     index_name = 'Indice de Quejas Finalizadas'
     elms = FinishedComplaint.objects.all()
-    return render(request, "dpv_complaint/index_finished.html", { 'index': elms, 'index_name': index_name})
+    return render(request, "dpv_complaint/index_finished.html", {'index': elms, 'index_name': index_name})
 
 
 def index_accepted(request):
