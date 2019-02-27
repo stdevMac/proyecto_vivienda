@@ -22,13 +22,13 @@
             Argumentos de la queja: =>
             <a href={% url 'watch_complaint' complaint_id=complaint_accepted.complaint.id %}> Ver datos de la queja </a>
             Argumentos finales del Tecnico: =>
-            {{ complaint_accepted.argumentsOfTecnic}}
+            {{ complaint_accepted.technical_args}}
             Por el Tecnico:
-            Tratada por => {{ complaint_accepted.tecnic.perfil.datos_personales.name }}, del departamento {{ complaint_finished.tecnic.perfil.depto_trabajo.nombre }}
+            Tratada por => {{ complaint_accepted.technical_work_in_complaint.profile.datos_personales.name }}, del departamento {{ complaint_finished.technical_work_in_complaint.profile.depto_trabajo.nombre }}
             Argumentos finales del Jefe que la acepto: =>
-            {{ complaint_accepted.finalArgumnets}}
+            {{ complaint_accepted.final_args}}
             Por el Jefe:
-            {{ complaint_accepted.bossAccepted.datos_personales.nombre }}
+            {{ complaint_accepted.boss_accepted.datos_personales.nombre }}
         </p>
         <li><a href={% url 'accepted_complaint' accepted_id=complaint_accepted.id %}> Ver Todos los Datos </a></li>
     {% endfor %}
