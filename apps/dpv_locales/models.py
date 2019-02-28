@@ -49,32 +49,32 @@ class Local(models.Model):
 
         if self.no_viviendas != self.vivienda_local.count():
             validation_point += 1
-            validation_text += "No coincide el número de viviendas que es %d declarado en el local con el número de viviendas asociadas a el que es %d. \n" % (self.no_viviendas, self.vivienda_local.count())
+            validation_text += "No coincide el número de viviendas declarado en el local que es %d con el número de viviendas asociadas al mismo que es %d. \n" % (self.no_viviendas, self.vivienda_local.count())
         for viv in self.vivienda_local.all():
             tmp_point = validation_point
             if not viv.numero:
                 validation_text += "La " + str(self.vivienda_local.index(viv)) + " no tiene número. \n"
                 validation_point += 1
             if not viv.destino:
-                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado el destino. \n"
+                validation_text += "La vivienda " + str(viv.numero) + " le no tiene configurado el destino. \n"
                 validation_point += 1
             if not viv.cantidad_persona:
-                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado la cantidad de personas que la habitan. \n"
+                validation_text += "La vivienda " + str(viv.numero) + " le no tiene configurado la cantidad de personas que la habitan. \n"
                 validation_point += 1
             if not viv.propietario:
-                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado el propietario. \n"
+                validation_text += "La vivienda " + str(viv.numero) + " le no tiene configurado el propietario. \n"
                 validation_point += 1
             if not viv.fecha_propietario:
-                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado la fecha a partir de donde se conmenzo a habitar. \n"
+                validation_text += "La vivienda " + str(viv.numero) + " le no tiene configurado la fecha a partir de donde se conmenzo a habitar. \n"
                 validation_point += 1
             if not viv.concepto:
-                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado el concepto. \n"
+                validation_text += "La vivienda " + str(viv.numero) + " le no tiene configurado el concepto. \n"
                 validation_point += 1
             if not viv.aprobada:
-                validation_text += "La vivienda " + str(viv.numero) + "no está aprobada."
+                validation_text += "La vivienda " + str(viv.numero) + " no está aprobada."
                 validation_point += 1
             if not viv.add_concepto:
-                validation_text += "La vivienda " + str(viv.numero) + "le no tiene configurado el destino"
+                validation_text += "La vivienda " + str(viv.numero) + " le no tiene configurado el destino"
             if tmp_point > validation_point:
                 validation_house_point += 1
 

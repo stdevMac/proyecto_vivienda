@@ -53,7 +53,7 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Viviendas del local</strong>
-                <button onclick="return abrir_modal('{% url 'vivienda_add_mod' %}')" type="submit" class="pull-right btn btn-success" {% if '/local/form/' == request.path %}disabled="true" title="Para poder agregar viviendas al local debe guardarlo primero"  data-toggle="tooltip" data-placement="top"{% endif %}>
+                <button onclick="return abrir_modal('/vivienda/formodal/{{local.id}}')" type="submit" class="pull-right btn btn-success" {% if '/local/form/' == request.path %}disabled="true" title="Para poder agregar viviendas al local debe guardarlo primero"  data-toggle="tooltip" data-placement="top"{% endif %}>
                     <i class="fa fa-plus"></i>
                     Agregar Vivienda
                 </button>

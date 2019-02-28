@@ -5,7 +5,7 @@
             <h4 class="modal-title" id="myModalLabel">Agregar Vivienda</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
-        <form novalidate method="POST"action="{% url 'vivienda_add_mod' %}">
+        <form novalidate method="POST"action="/vivienda/formodal/{{local}}">
             <div class="modal-body">
             {% csrf_token %}
             {% if form.errors %}

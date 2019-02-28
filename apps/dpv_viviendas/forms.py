@@ -25,7 +25,7 @@ class ViviendaForm(forms.ModelForm):
             'propietario': forms.Select(attrs={"placeholder": "Seleccione un Propietario.", "class": "form-control"}),
             'concepto': forms.Select(attrs={"placeholder": "Seleccione un Concepto.", "class": "form-control"}),
             'destino': forms.Select(attrs={"placeholder": "Seleccione un Destino.", "class": "form-control"}),
-            'local_dado': forms.Select(attrs={"placeholder": "Seleccione un Local.", "class": "form-control"}),
+            'local_dado': forms.Select(attrs={"placeholder": "Seleccione un Local.", "class": "form-control "}),
             'aprobada': forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
 

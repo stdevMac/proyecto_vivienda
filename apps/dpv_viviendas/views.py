@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from .models import Vivienda
 from .forms import ViviendaForm
 from django.contrib.auth.decorators import permission_required, login_required
+from apps.dpv_locales.models import Local
 
 
 # Create your views here.
@@ -87,14 +88,17 @@ def vivienda_delete(request, id_vivienda):
 
 
 @permission_required('dpv_viviendas.add_vivienda', raise_exception=True)
-def vivienda_add_modal(request):
+def vivienda_add_modal(request, id_local):
+    viv = Vivienda()
+    viv.local_dado = Local.objects.filter(id=id_local).first()
+    form = ViviendaForm(instance=viv)
     if request.method == 'POST':
-        form = ViviendaForm(request.POST)
+        form = ViviendaForm(request.POST, instance=viv)
         if form.is_valid():
             viv = form.save()
             return redirect(reverse_lazy('locales_edit', kwargs={'id_local': viv.local_dado.id}))
         else:
             return redirect(reverse_lazy('locales_list'))
     else:
-        form = ViviendaForm()
-        return render(request, 'dpv_viviendas/formodal.html', {'form': form})
+
+        return render(request, 'dpv_viviendas/formodal.html', {'form': form, 'local': id_local})
