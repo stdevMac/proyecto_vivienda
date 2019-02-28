@@ -25,11 +25,11 @@ class ViviendaForm(forms.ModelForm):
             'propietario': forms.Select(attrs={"placeholder": "Seleccione un Propietario.", "class": "form-control"}),
             'concepto': forms.Select(attrs={"placeholder": "Seleccione un Concepto.", "class": "form-control"}),
             'destino': forms.Select(attrs={"placeholder": "Seleccione un Destino.", "class": "form-control"}),
-            'local_dado': forms.Select(attrs={"placeholder": "Seleccione un Local.", "class": "form-control"}),
+            'local_dado': forms.Select(attrs={"placeholder": "Seleccione un Local.", "class": "form-control "}),
             'aprobada': forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
 
     def clean_fecha_propietario(self):
-        if self.cleaned_data.get('fecha_propietario') >= timezone.datetime.today():
-            raise ValidationError('la fecha de habilitado de la vivienda no debe ser de hoy o del futuro')
+        if self.cleaned_data.get('fecha_propietario') >= timezone.datetime.today().date():
+            raise ValidationError('La fecha de habitado de la vivienda no debe ser de hoy ni del futuro')
         return self.cleaned_data.get('fecha_propietario')

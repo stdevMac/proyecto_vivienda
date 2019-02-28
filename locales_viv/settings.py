@@ -143,9 +143,16 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 SESSION_COOKIE_AGE = 84600
 
 BULK_URLS = []
+
+
+UPDATING_LOCALS = 0
 
 # Email configuration to do
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -1,11 +1,14 @@
 from django.urls import path
-from .views import index, login_page, recover_pass_page, logout_page, users_view, groups_view, logs_view, user_add, group_add, configure_email, \
+from django.views.generic import RedirectView
+from django.urls import reverse_lazy
+from .views import index, login_page, logout_page, users_view, groups_view, logs_view, user_add, group_add, configure_email, \
                    user_edit, group_edit, user_deactivate, user_detail, user_setpass, group_delete, group_detail, RecoverPassBaseView, \
                    RecoverPassDoneView, RecoverPassCompleteView, RecoverPassConfirmView
 
 urlpatterns = [
     path('dashboard/', index, name='base_dashboard'),
     path('login/', login_page, name='base_login'),
+    path('', RedirectView.as_view(url=reverse_lazy('base_login'))),
     path('recoverpass/', RecoverPassBaseView.as_view(), name='password_reset'),
     path('recoverpass/done', RecoverPassDoneView.as_view(), name='password_reset_done'),
     path('recoverpass/<uidb64>/<token>/', RecoverPassConfirmView.as_view(), name='password_reset_confirm'),

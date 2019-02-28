@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Destinos</strong>
-                {% if perms.destino.add_destino %}
+                {% if perms.dpv_nomencladores.add_destino %}
                 <button onclick="return abrir_modal('{% url 'destino_new' %}')" class="pull-right btn btn-success btn-sm">
                 <i class="fa fa-plus"></i>Agregar Destino</button>
                 {% endif %}

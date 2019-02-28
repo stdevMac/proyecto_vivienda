@@ -75,9 +75,21 @@
                 <div class="col-md-6"><span class="text-muted">Movil:</span> {{usuario.perfil_usuario.datos_personales.movil}}</div>
                 <div class="col-md-6"><span class="text-muted">Teléfono:</span>{{usuario.perfil_usuario.datos_personales.telefono}}</div>
                 <div class="col-md-12"><span class="text-muted">Grupos:</span></div>
-                <div>{{usuario.groups}}</div>
+                <div>
+                    {% for grp in usuario.groups.all %}
+                    <span>{{grp}}</span>
+                    {% empty %}
+                    <span>Ninguno</span>
+                    {% endfor %}
+                </div>
                 <div class="col-md-12"><span class="text-muted">Permisos:</span></div>
-                <div>{{usuario.user_permissions}}</div>
+                <div>
+                    {% for permi in usuario.user_permissions.all %}
+                    <span>{{permi}}</span>
+                    {% empty %}
+                    <span>Ninguno</span>
+                    {% endfor %}
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="return cerrar_modal()">Cerrar</button>

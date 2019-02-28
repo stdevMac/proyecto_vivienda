@@ -1,7 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
 from .models import Perfil
-from apps.dpv_persona.models import Persona
 
 
 # Put your Forms Here
@@ -24,4 +22,18 @@ class PerfilMForm(forms.ModelForm):
             'centro_trabajo': forms.Select(attrs={"placeholder": "Seleccione una Unidad.", "class": "form-control"}),
             'depto_trabajo': forms.Select(attrs={"placeholder": "Seleccione un Departamento.", "class": "form-control"}),
         }
+
+
+class PerfilPForm(forms.ModelForm):
+
+    class Meta:
+        model = Perfil
+        fields = ('notificacion_email', 'documentacion_email', 'avatar', )
+
+        widgets = {
+            'notificacion_email': forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            'documentacion_email': forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            'avatar': forms.FileInput(attrs={"class": "form-control"})
+        }
+
 
