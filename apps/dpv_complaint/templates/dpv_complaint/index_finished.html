@@ -35,19 +35,20 @@
                         {% for finished in index %}
                             <tr>
                                 <td>
-                                    href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> {{ finished.complaint.number }}</td>
+                                    <a href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> {{ finished.complaint.number }}</a>
+                                </td>
                                 <td>
                                     {% if finished.complaint.is_natural %}
-                                        Realizada por: {{ finished.complaint.person_natural.nombre }}
+                                        {{ finished.complaint.person_natural.nombre }}
                                     {% else %}
-                                        Realizada por: {{ finished.complaint.person_juridic.nombre }}
+                                        {{ finished.complaint.person_juridic.nombre }}
                                     {% endif %}
                                 </td>
                                 <td>{{ finished.complaint.topic }}</td>
                                 <td>{{ finished.complaint.body }}</td>
-                                <td>{{ finished.tecnic.perfil.datos_personales.nombre }} {{ finished.tecnic.perfil.datos_personales.apellidos }}</td>
-                                <td>{{ finished.arguments }}</td>
-                                <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los
+                                <td>{{ finished.technical.profile.datos_personales.nombre }} {{ finished.technical.profile.datos_personales.apellidos }}</td>
+                                <td>{{ finished.technical_args }}</td>
+                                <td><a href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> Ver Todos los
                                     Datos </a></td>
                                 <td>
                                     {% if finished.technical.id and finished.technical.id != '' %}
@@ -71,6 +72,7 @@
         </div>
     </div>
 {% endblock %}
+
 {% block extra_scripts %}
     <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
     <script src="{% static 'dpv_base/js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>

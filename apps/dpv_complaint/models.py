@@ -56,10 +56,6 @@ class Technical(models.Model):
     profile = models.ForeignKey(Perfil, on_delete=False, related_name='profile')
 
 
-class Documents(models.Model):
-    text = models.TextField()
-
-
 class WaitingForDistribution(models.Model):
     complaint = models.ForeignKey(Complaint, unique=True, on_delete=False)
     enter_date = models.DateTimeField(default=timezone.now, )

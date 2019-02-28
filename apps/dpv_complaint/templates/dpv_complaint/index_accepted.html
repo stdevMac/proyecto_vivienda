@@ -29,8 +29,8 @@
 
             </div>
             <div class="card-body">
-    {% if index %}
-        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                {% if index %}
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th>Numero</th>
@@ -43,24 +43,23 @@
                         </tr>
                         </thead>
                         <tbody>
-            {% for complaint_accepted in index %}
-                <td>{{ complaint_accepted.complaint.number }}  <a href={% url 'watch_complaint' complaint_id=complaint_accepted.complaint.id %}> Ver datos de la
-                        queja </a></td>
-                <td>  {{ complaint_accepted.technical_args }} </td>
-                <td>  {{ complaint_accepted.technical_work_in_complaint.profile.datos_personales.name }} </td>,
-                    <td> {{ complaint_finished.technical_work_in_complaint.profile.depto_trabajo.nombre }} </td>
-                    <td> {{ complaint_accepted.final_args }} </td>
-                    <td> {{ complaint_accepted.boss_accepted.datos_personales.nombre }} </td>
-                <td><a href={% url 'accepted_complaint' accepted_id=complaint_accepted.id %}> Ver Todos los Datos </a></td>
-            {% endfor %}
-         </tbody>
+                        {% for complaint_accepted in index %}
+                            <td> {{ complaint_accepted.complaint.number }} <a href={% url 'watch_complaint' complaint_id=complaint_accepted.complaint.id %}> Ver datos de la queja </a></td>
+                            <td> {{ complaint_accepted.technical_args }} </td>
+                            <td> {{ complaint_accepted.technical_work_in_complaint.profile.datos_personales.nombre }} </td>
+                            <td> {{ complaint_finished.technical_work_in_complaint.profile.centro_trabajo.nombre }} </td>
+                            <td> {{ complaint_accepted.final_args }} </td>
+                            <td> {{ complaint_accepted.boss_accepted.datos_personales.nombre }} </td>
+                            <td><a href={% url 'accepted_complaint' accepted_id=complaint_accepted.id %}> Ver Todos los Datos </a></td>
+                        {% endfor %}
+                        </tbody>
                     </table>
-    {% else %}
-        <div class="alert alert-info">
-            <h2 class="text-center">No existen quejas aceptadas.</h2>
-        </div>
-    {% endif %}
-    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <h2 class="text-center">No existen quejas aceptadas.</h2>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
