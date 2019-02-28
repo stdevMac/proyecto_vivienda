@@ -1,55 +1,93 @@
 {% extends 'layouts/base.html' %}
+
+{% load static %}
+
 {% block content_page %}
-    {#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
-    {% block breadcrumbs %}
-        {{ block.super }}
 
-    {% endblock breadcrumbs %}
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Quejas</strong>
+                <a href="#form_natural" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i
+                        class="fa fa-plus"></i>
+                    Agregar Queja Natural</a>
+                <a href="#form_juridic" role="button" data-toggle="modal"
+                   class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>
+                    Agregar Queja Juridica</a>
 
-    <style type="text/css">
-        td {
-            padding: 0px 8px 0px 8px;
-        }
-    </style>
-
-    <h1>{{ index_name }}</h1>
-
-    {% if index %}
-        <ul>
-            {% for finished in index %}
-                <tr>
-                    <li>Queja Numero: <a
-                            href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> {{ finished.complaint.number }} </a>
-                    </li>
-                    {% if finished.complaint.is_natural %}
-                        <li>Realizada por: {{ finished.complaint.person_natural.nombre }}</li>
-                    {% else %}
-                        <li>Realizada por: {{ finished.complaint.person_juridic.nombre }}</li>
-                    {% endif %}
-                    <li>Titulo: {{ finished.complaint.topic }}</li>
-                    <li>Cuerpo: {{ finished.complaint.body }}</li>
-                    <li>Resuelto
-                        Por: {{ finished.tecnic.perfil.datos_personales.nombre }} {{ finished.tecnic.perfil.datos_personales.apellidos }}</li>
-                    <li>
-                        Argumentos:
-                        <p>
-                            {{ finished.arguments }}
-                        </p>
-                    </li>
-                    {% if finished.technical.id and finished.technical.id != '' %}
-                        <li>
-                            <a href={% url 'trans_Finished_to_Accepted' complaint_id=finished.complaint.id technical_id=finished.technical.id %}>
-                                Acceptar </a></li>
-                    {% else %}
-                        <li>Some Error occurs</li>
-                    {% endif %}
-                    <li><a href="reAsign/{{ finished.id }}"> Reasignar (Todavia)</a></li>
-                </tr>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p> No existen quejas registradas.</p>
-    {% endif %}
+            </div>
+            <div class="card-body">
+                {% if index %}
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Numero de la Queja</th>
+                            <th>Realizada por:</th>
+                            <th>Titulo</th>
+                            <th>Cuerpo</th>
+                            <th>Resuelto Por:</th>
+                            <th>Argumentos:</th>
+                            <th>Todos los Datos</th>
+                            <th>Acciones:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for finished in index %}
+                            <tr>
+                                <td>
+                                    href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> {{ finished.complaint.number }}</td>
+                                <td>
+                                    {% if finished.complaint.is_natural %}
+                                        Realizada por: {{ finished.complaint.person_natural.nombre }}
+                                    {% else %}
+                                        Realizada por: {{ finished.complaint.person_juridic.nombre }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ finished.complaint.topic }}</td>
+                                <td>{{ finished.complaint.body }}</td>
+                                <td>{{ finished.tecnic.perfil.datos_personales.nombre }} {{ finished.tecnic.perfil.datos_personales.apellidos }}</td>
+                                <td>{{ finished.arguments }}</td>
+                                <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los
+                                    Datos </a></td>
+                                <td>
+                                    {% if finished.technical.id and finished.technical.id != '' %}
+                                        <a href={% url 'trans_Finished_to_Accepted' complaint_id=finished.complaint.id technical_id=finished.technical.id %}>
+                                            Acceptar </a>
+                                    {% else %}
+                                        <li>Some Error occurs</li>
+                                    {% endif %}
+                                </td>
+                                <td><a href="reAsign/{{ finished.id }}"> Reasignar (Todavia)</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-info">
+                        <h2 class="text-center">No existen quejas Finalizadas.</h2>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
-
+{% block extra_scripts %}
+    <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/jszip.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/pdfmake.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/vfs_fonts.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.print.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.colVis.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/datatables-init.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#bootstrap-data-table-export').DataTable();
+        });
+    </script>
+{% endblock extra_scripts %}
+{% block init_jquery %} {% endblock init_jquery %}
 {# TODO maceo Make reasign technical in case of problems #}

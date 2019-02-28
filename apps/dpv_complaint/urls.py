@@ -5,7 +5,7 @@ from .index import index as complaint_index
 from .render_form import render_forms as rendered_form
 
 urlpatterns = [
-    url(r'^$',complaint_view.main_view, name='main_complaint'),
+    url(r'^$', complaint_view.main_view, name='main_complaint'),
     url(r'^natural/$', complaint_index.index_natural_complaint, name="index_natural_complaint"),
     url(r'^juridic/$', complaint_index.index_juridic_complaint, name="index_juridic_complaint"),
     url(r'^natural/new$', rendered_form.form_natural_complaint, name="add_natural_complaint"),

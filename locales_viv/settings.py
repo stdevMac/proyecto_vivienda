@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.dpv_perfil',
     'apps.dpv_events',
     'apps.email_sender',
+    'django_seed'
 ]
 
 MIDDLEWARE = [

@@ -4,7 +4,7 @@ from apps.dpv_complaint.models import *
 
 def index_natural_complaint(request):
     index_name = 'Indice de las Quejas'
-    elms = Complaint.objects.filter(is_natural = True)
+    elms = Complaint.objects.filter(is_natural=True)
     return render(request, "dpv_complaint/index_complaint_new.html", {'index': elms, 'index_name': index_name})
 
 
