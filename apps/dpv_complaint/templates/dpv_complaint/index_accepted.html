@@ -1,10 +1,13 @@
 {% extends 'layouts/base.html' %}
-{% block content_page %}
-{#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
-{% block breadcrumbs %}
-    {{block.super }}
 
-{% endblock breadcrumbs %}
+{% load static %}
+
+{% block content_page %}
+
+    {% block breadcrumbs %}
+        {{ block.super }}
+
+    {% endblock breadcrumbs %}
 
     <style type="text/css">
         td {
@@ -12,28 +15,72 @@
         }
     </style>
 
-<h1>{{index_name}}</h1>
 
-{% if index %}
-    <ul>
-    {% for complaint_accepted in index %}
-        <li>{{ complaint_accepted.complaint.number }} </li>
-        <p>
-            Argumentos de la queja: =>
-            <a href={% url 'watch_complaint' complaint_id=complaint_accepted.complaint.id %}> Ver datos de la queja </a>
-            Argumentos finales del Tecnico: =>
-            {{ complaint_accepted.technical_args}}
-            Por el Tecnico:
-            Tratada por => {{ complaint_accepted.technical_work_in_complaint.profile.datos_personales.name }}, del departamento {{ complaint_finished.technical_work_in_complaint.profile.depto_trabajo.nombre }}
-            Argumentos finales del Jefe que la acepto: =>
-            {{ complaint_accepted.final_args}}
-            Por el Jefe:
-            {{ complaint_accepted.boss_accepted.datos_personales.nombre }}
-        </p>
-        <li><a href={% url 'accepted_complaint' accepted_id=complaint_accepted.id %}> Ver Todos los Datos </a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p> No existen quejas aceptadas.</p>
-{% endif %}
-{% endblock  %}
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Quejas</strong>
+                <a href="#form_natural" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i
+                        class="fa fa-plus"></i>
+                    Agregar Queja Natural</a>
+                <a href="#form_juridic" role="button" data-toggle="modal"
+                   class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>
+                    Agregar Queja Juridica</a>
+
+            </div>
+            <div class="card-body">
+    {% if index %}
+        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Argumentos del Tecnico</th>
+                            <th>Tecnico</th>
+                            <th>Departamento del Tecnico</th>
+                            <th>Argumentos del Jefe que la acepto</th>
+                            <th>Jefe</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+            {% for complaint_accepted in index %}
+                <td>{{ complaint_accepted.complaint.number }}  <a href={% url 'watch_complaint' complaint_id=complaint_accepted.complaint.id %}> Ver datos de la
+                        queja </a></td>
+                <td>  {{ complaint_accepted.technical_args }} </td>
+                <td>  {{ complaint_accepted.technical_work_in_complaint.profile.datos_personales.name }} </td>,
+                    <td> {{ complaint_finished.technical_work_in_complaint.profile.depto_trabajo.nombre }} </td>
+                    <td> {{ complaint_accepted.final_args }} </td>
+                    <td> {{ complaint_accepted.boss_accepted.datos_personales.nombre }} </td>
+                <td><a href={% url 'accepted_complaint' accepted_id=complaint_accepted.id %}> Ver Todos los Datos </a></td>
+            {% endfor %}
+         </tbody>
+                    </table>
+    {% else %}
+        <div class="alert alert-info">
+            <h2 class="text-center">No existen quejas aceptadas.</h2>
+        </div>
+    {% endif %}
+    </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/jszip.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/pdfmake.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/vfs_fonts.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.print.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/buttons.colVis.min.js' %}"></script>
+    <script src="{% static 'dpv_base/js/lib/data-table/datatables-init.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#bootstrap-data-table-export').DataTable();
+        });
+    </script>
+{% endblock extra_scripts %}
+{% block init_jquery %} {% endblock init_jquery %}
