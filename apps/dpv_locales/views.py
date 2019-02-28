@@ -66,7 +66,7 @@ def stats(request, id_municipio=None):
                 qr = dict(q, **qm)
                 result.append(qr)
     else:
-        if Local.objects.filter(id=id_municipio).count() > 0:
+        if Local.objects.filter(municipio=id_municipio).count() > 0:
             for cp in Municipio.objects.filter(id=id_municipio).first().consejos.all():
                 q = Local.objects.filter(consejo_popular=cp).aggregate(cant_viv=Sum('no_viviendas'), cant_pend_viv=Sum('pendiente'), cant_loc=Count('id'), statales=Count(Case(When(estatal=True, then=1))), propios=Count(Case(When(estatal=False, then=1))))
                 qm = {"nombre": cp.nombre, "id": cp.id, "tipo": 'consejo'}
