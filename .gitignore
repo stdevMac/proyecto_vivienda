@@ -2,8 +2,6 @@ db.sqlite3
 .idea
 .idea/*
 */__pycache__/*
-<<<<<<< HEAD
 apps/dpv_complaint/__pycache__/
 =======
 *.pyc
->>>>>>> fb7020ce7e8e622219c3d306a153f78b77be7e6d
