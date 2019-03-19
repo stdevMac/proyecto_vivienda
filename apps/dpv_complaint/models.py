@@ -21,7 +21,7 @@ ans = {
 
 class Complaint(models.Model):
     origin = models.CharField(max_length=50, verbose_name='Origen')
-    body = models.CharField(max_length=1000, verbose_name='Cuerpo de la queja')
+    body = models.TextField(max_length=1000, verbose_name='Cuerpo de la queja')
     topic = models.CharField(max_length=200, verbose_name='Asunto')
     number = models.CharField(max_length=15, verbose_name='Número')
     status = models.CharField(choices=stat, default='Pendiente', max_length=20)

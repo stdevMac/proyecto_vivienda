@@ -31,7 +31,7 @@ def form_natural_complaint(request, person_id):
             return redirect(reverse_lazy('complaints_by_person', args=[person_id]))
     else:
         form_complaint = ComplaintForm()
-    return render(request, "dpv_complaint/single_form.html",
+    return render(request, "dpv_complaint/form_natural_complaint.html",
                   {'form': form_complaint, 'form_name': form_name})
 
 
@@ -64,5 +64,5 @@ def form_person_for_complaint(request):
 
     else:
         form_natural = PersonaNaturalForm()
-    return render(request, "dpv_complaint/single_form.html",
+    return render(request, "dpv_complaint/form_natural_person.html",
                   {'form': form_natural, 'form_name': form_name})
