@@ -8,7 +8,7 @@ from apps.dpv_nomencladores.models import Genero, AreaTrabajo, CentroTrabajo
 # Create your models here.
 class Persona(models.Model):
     nombre = models.CharField(max_length=30, validators=[MaxLengthValidator(30), only_letters])
-    municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE, verbose_name="Municipio", help_text="Municipio donde recide la persona")
+    municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE, verbose_name="Municipio")
     direccion_calle = models.ForeignKey(Calle, on_delete=models.CASCADE, verbose_name="Calle", blank=True)
     direccion_numero = models.PositiveSmallIntegerField(blank=True, verbose_name="Número")
     telefono = models.CharField(max_length=8, verbose_name="Teléfono Fijo", blank=True, validators=[MinLengthValidator(8),

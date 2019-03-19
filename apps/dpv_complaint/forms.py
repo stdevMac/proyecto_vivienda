@@ -10,11 +10,11 @@ class ComplaintForm(forms.ModelForm):
     class Meta:
         model = Complaint
         exclude = ('enter_date', 'is_natural', 'person_juridic', 'person_natural', 'status',
-                   'anonymous', 'expiration_time',)
+                   'anonymous', 'expiration_time', "department")
 
 
 class AssignDepartmentForm(forms.Form):
-    department = forms.ModelChoiceField(queryset=AreaTrabajo.objects.all(), label='Seleccione Area de Trabajo')
+    department = forms.ModelChoiceField(queryset=AreaTrabajo.objects.all(), label='Seleccione área de trabajo')
 
 
 class TechnicianForm(forms.ModelForm):

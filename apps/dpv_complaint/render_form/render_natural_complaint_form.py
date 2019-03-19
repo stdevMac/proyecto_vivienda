@@ -8,6 +8,7 @@ from apps.dpv_persona.forms import PersonaNaturalForm
 def check_natural_person(ci, email_address):
     # Check if exist a person for the CI
     by_ci = PersonaNatural.objects.filter(ci=ci)
+    # Check if exist a person for the email
     by_email = PersonaNatural.objects.filter(email_address=email_address)
     return by_ci.exists() or by_email.exists()
 
@@ -27,7 +28,7 @@ def form_natural_complaint(request, person_id):
             p.complaint = complaint
             p.enterDate = timezone.now()
             p.save()
-            return redirect(reverse_lazy('get_complaints_for_person', args=[person_id]))
+            return redirect(reverse_lazy('complaints_by_person', args=[person_id]))
     else:
         form_complaint = ComplaintForm()
     return render(request, "dpv_complaint/single_form.html",
@@ -49,13 +50,13 @@ def form_person_for_complaint(request):
     if request.method == "POST":
         form_natural = PersonaNaturalForm(request.POST)
         email = form_natural.data.get('email_address')
-        ci = form_natural, form_natural.data.get('ci')
+        ci = form_natural.data.get('ci')
         if check_natural_person(ci, email):
             if email:
                 person = PersonaNatural.objects.get(email_address=email)
             else:
                 person = PersonaNatural.objects.get(email_address=email)
-            return redirect(reverse_lazy('get_complaints_for_person', args=[person.id]))
+            return redirect(reverse_lazy('complaints_by_person', args=[person.id]))
 
         elif form_natural.is_valid():
             person = form_natural.save()

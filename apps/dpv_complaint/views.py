@@ -11,7 +11,7 @@ def main_view(request):
 
 
 def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_id):
-    form_name = "Seleccionar Tecnico"
+    form_name = "Seleccionar técnico"
     if request.method == "POST":
         form = AssignedToTechnicalForm(request.POST)
         if form.is_valid():
@@ -19,8 +19,8 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
             post = form.save(commit=False)
             post.enter_date = timezone.now()
             post.complaint = Complaint.objects.get(id=complaint_id)
-            Complaint.objects.filter(id=complaint_id).update(status='Esperando Respuesta de Tecnico')
-            post.complaint.status = 'Esperando Respuesta de Tecnico'
+            Complaint.objects.filter(id=complaint_id).update(status='Esperando respuesta de técnico')
+            post.complaint.status = 'Esperando respuesta de técnico'
             post.complaint.save()
             post.id = post.pk
             post.save()
@@ -36,7 +36,7 @@ def watch_complaint(request, complaint_id):
 
 
 def from_assigned_to_technician_to_finished_complaint(request, complaint_id, technical_id):
-    form_name = "Dar Respuesta a la Queja"
+    form_name = "Dar respuesta a la queja"
     if request.method == "POST":
         form = FinishedComplaintForm(request.POST)
         if form.is_valid() and complaint_id is not None and technical_id is not None:
@@ -44,14 +44,14 @@ def from_assigned_to_technician_to_finished_complaint(request, complaint_id, tec
                 post.enterDate = timezone.now()
                 post.complaint = Complaint.objects.get(id=complaint_id)
                 post.technical = Technical.objects.get(id=technical_id)
-                Complaint.objects.filter(id=complaint_id).update(status='Esperando aceptacion del jefe')
+                Complaint.objects.filter(id=complaint_id).update(status='Esperando aceptación del jefe')
                 post.id = post.pk
                 AssignedToTechnician.objects.filter(technical=post.technical).filter(complaint=post.complaint).delete()
                 post.save()
                 return redirect(reverse_lazy('index_assigned_to_technical', args=technical_id))
     else:
         form = FinishedComplaintForm()
-    return render(request, "dpv_complaint/asigned_to_finished.html", {'form': form, 'form_name': form_name})
+    return render(request, "dpv_complaint/assigned_to_finished.html", {'form': form, 'form_name': form_name})
 
 
 def index_accepted_all(request, accepted_id):
@@ -60,7 +60,7 @@ def index_accepted_all(request, accepted_id):
 
 
 def from_finished_complaint_to_accepted_complaint(request, complaint_id, technical_id):
-    form_name = "Quejas Aceptadas"
+    form_name = "Quejas aceptadas"
     if request.method == "POST":
         form = AcceptedForm(request.POST)
         if form.is_valid():

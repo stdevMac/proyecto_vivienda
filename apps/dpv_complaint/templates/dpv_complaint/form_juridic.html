@@ -1,7 +1,7 @@
 {% if object %}
     <form role="form" action="{% url 'add_juridic_complaint' object.id %}" method="post">
 {% else %}
-    <form role="form" action="{% url 'add_juridic_complaint' %}" method="post">
+    <form role="form" action="{% url 'add_juridic_complaint' object.id %}" method="post">
 {% endif %}
 
 {% csrf_token %}

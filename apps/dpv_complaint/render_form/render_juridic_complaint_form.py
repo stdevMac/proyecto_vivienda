@@ -5,15 +5,23 @@ from apps.dpv_complaint.models import *
 from apps.dpv_persona.forms import PersonaJuridicaForm
 
 
-def form_juridic_complaint(request):
-    form_name = "Queja de persona Juridica"
+def check_juridic_person(codigo_nit, email_address):
+    # Check if exist a person for the CI
+    by_ci = PersonaJuridica.objects.filter(codigo_nit=codigo_nit)
+    # Check if exist a person for the email
+    by_email = PersonaJuridica.objects.filter(email_address=email_address)
+    return by_ci.exists() or by_email.exists()
+
+
+def form_juridic_complaint(request, juridic_id):
+    form_name = "Queja de persona jurídica"
     if request.method == "POST":
         form_complaint = ComplaintForm(request.POST)
-        form_juridic = PersonaJuridicaForm(request.POST)
-        if form_complaint.is_valid() and form_juridic.is_valid():
+        person_juridic = PersonaJuridica.objects.filter(id=juridic_id)
+        if form_complaint.is_valid():
             complaint = form_complaint.save(commit=False)
             complaint.is_natural = False
-            complaint.person_natural = form_juridic.save()
+            complaint.person_juridic = person_juridic
             complaint.enter_date = timezone.now()
             complaint.department = None
             complaint.save()
@@ -24,7 +32,38 @@ def form_juridic_complaint(request):
             return redirect(reverse_lazy('index_juridic_complaint'))
     else:
         form_complaint = ComplaintForm()
+    return render(request, "dpv_complaint/single_form.html",
+                  {'form': form_complaint, 'form_name': form_name})
+
+
+def middle_form_juridic_complaint(request, juridic_id):
+    complaints = Complaint.objects.all().filter(person_juridic=juridic_id)
+    if complaints.exists():
+        return render(request, "dpv_complaint/index_by_juridic.html", {'index': complaints,
+                                                                       'index_name': 'Obtener persona por id'})
+    else:
+        return redirect(reverse_lazy('add_juridic_complaint', args=[juridic_id]))
+    pass
+
+
+def form_juridic_for_complaint(request):
+    form_name = "Datos de persona Natural"
+    if request.method == "POST":
+        form_juridic = PersonaJuridicaForm(request.POST)
+        email = form_juridic.data.get('email_address')
+        codigo_nit = form_juridic.data.get('codigo_nit')
+        if check_juridic_person(codigo_nit, email):
+            if email:
+                person = PersonaNatural.objects.get(email_address=email)
+            else:
+                person = PersonaNatural.objects.get(email_address=email)
+            return redirect(reverse_lazy('complaints_by_juridic', args=[person.id]))
+
+        elif form_juridic.is_valid():
+            person = form_juridic.save()
+            return redirect(reverse_lazy('add_juridic_complaint', args=[person.id]))
+
+    else:
         form_juridic = PersonaJuridicaForm()
-    return render(request, "dpv_complaint/multiform_complaint.html",
-                  {'form_one': form_complaint, 'form_two':
-                      form_juridic, 'form_name': form_name})
+    return render(request, "dpv_complaint/single_form.html",
+                  {'form': form_juridic, 'form_name': form_name})
