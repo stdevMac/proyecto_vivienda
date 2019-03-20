@@ -7,10 +7,10 @@ from apps.dpv_persona.forms import PersonaJuridicaForm
 
 def check_juridic_person(codigo_nit, email_address):
     # Check if exist a person for the CI
-    by_ci = PersonaJuridica.objects.filter(codigo_nit=codigo_nit)
+    by_nit = PersonaJuridica.objects.filter(codigo_nit=codigo_nit)
     # Check if exist a person for the email
     by_email = PersonaJuridica.objects.filter(email_address=email_address)
-    return by_ci.exists() or by_email.exists()
+    return by_nit.exists() or by_email.exists()
 
 
 def form_juridic_complaint(request, juridic_id):
@@ -32,7 +32,7 @@ def form_juridic_complaint(request, juridic_id):
             return redirect(reverse_lazy('index_juridic_complaint'))
     else:
         form_complaint = ComplaintForm()
-    return render(request, "dpv_complaint/single_form.html",
+    return render(request, "dpv_complaint/form_complaint.html",
                   {'form': form_complaint, 'form_name': form_name})
 
 
@@ -43,11 +43,10 @@ def middle_form_juridic_complaint(request, juridic_id):
                                                                        'index_name': 'Obtener persona por id'})
     else:
         return redirect(reverse_lazy('add_juridic_complaint', args=[juridic_id]))
-    pass
 
 
 def form_juridic_for_complaint(request):
-    form_name = "Datos de persona Natural"
+    form_name = "Datos de persona juridica"
     if request.method == "POST":
         form_juridic = PersonaJuridicaForm(request.POST)
         email = form_juridic.data.get('email_address')
@@ -56,7 +55,7 @@ def form_juridic_for_complaint(request):
             if email:
                 person = PersonaNatural.objects.get(email_address=email)
             else:
-                person = PersonaNatural.objects.get(email_address=email)
+                person = PersonaNatural.objects.get(codigo_nit=codigo_nit)
             return redirect(reverse_lazy('complaints_by_juridic', args=[person.id]))
 
         elif form_juridic.is_valid():
@@ -65,5 +64,5 @@ def form_juridic_for_complaint(request):
 
     else:
         form_juridic = PersonaJuridicaForm()
-    return render(request, "dpv_complaint/single_form.html",
+    return render(request, "dpv_complaint/form_juridic_person.html",
                   {'form': form_juridic, 'form_name': form_name})

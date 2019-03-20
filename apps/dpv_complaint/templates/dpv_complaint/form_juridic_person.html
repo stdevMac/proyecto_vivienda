@@ -1,10 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layouts/base.html' %}
+{% block content_page %}
+    {#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
+    {% block breadcrumbs %}
+        {{ block.super }}
 
-</body>
-</html>
+
+    {% endblock breadcrumbs %}
+    <form method="POST" class="post-form">
+
+        {% csrf_token %}
+        <div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Persona Natural</h4>
+                    <div class="actions">
+                        <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="row" role="form" method="post">
+                        <div class="col-md-12">
+                            <div class="form-control-sm">
+                                <label for="">Nombre*</label>
+                                {{ form.non_field_errors }}
+                                {{ form.nombre }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Sigla</label>
+                                {{ form.non_field_errors }}
+                                {{ form.codigo_nit }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Nombre de contacto</label>
+                                {{ form.non_field_errors }}
+                                {{ form.codigo_nit }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Correo electrónico</label>
+                                {{ form.non_field_errors }}
+                                {{ form.email_address }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Municipio*</label>
+                                {{ form.non_field_errors }}
+                                {{ form.municipio }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Dirección de la Calle*</label>
+                                {{ form.non_field_errors }}
+                                {{ form.direccion_calle }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Dirección de entre calle 1</label>
+                                {{ form.non_field_errors }}
+                                {{ form.direccion_entrecalle1 }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Dirección de entre calle 2</label>
+                                {{ form.non_field_errors }}
+                                {{ form.direccion_entrecalle2 }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Número de vivienda</label>
+                                {{ form.non_field_errors }}
+                                {{ form.direccion_numero }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Teléfono fijo</label>
+                                {{ form.non_field_errors }}
+                                {{ form.telefono }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Teléfono móvil</label>
+                                {{ form.non_field_errors }}
+                                {{ form.movil }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Código NIT*</label>
+                                {{ form.non_field_errors }}
+                                {{ form.codigo_nit }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Código REUUP*</label>
+                                {{ form.non_field_errors }}
+                                {{ form.codigo_reuup }}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock content_page %}

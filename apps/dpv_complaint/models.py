@@ -66,6 +66,7 @@ class AssignedToTechnician(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=False)
     technical = models.ForeignKey(Technical, on_delete=models.CASCADE)
     enter_date = models.DateTimeField(default=timezone.now)
+    assigned_by = models.ForeignKey(Perfil, on_delete=False, default=1)
 
 
 class FinishedComplaint(models.Model):

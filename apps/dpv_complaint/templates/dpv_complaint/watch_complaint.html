@@ -6,37 +6,38 @@
 
 {% endblock breadcrumbs %}
     {% if complaint %}
-        <h1>Queja {{ complaint.id }}</h1>
-        <ul>
         {% for complaint_for_dist in complaint %}
-            <li>Numero de la Queja:{{ complaint_for_dist.number }}</li>
-            <li>Procedencia:{{ complaint_for_dist.procedency }}</li>
-            <li>Titulo:{{ complaint_for_dist.topic }}</li>
-            <li>Cuerpo:{{ complaint_for_dist.body }}</li>
-            <li>Estado:{{ complaint_for_dist.status }}</li>
-            <li>Fecha de Entrada:{{ complaint_for_dist.enterDate }}</li>
+            <p><strong>Numero de la Queja:</strong> {{ complaint_for_dist.number }}</p>
+            <p><strong>Procedencia:</strong> {{ complaint_for_dist.procedency }}</p>
+            <p><strong>Titulo:</strong> {{ complaint_for_dist.topic }}</p>
+            <p><strong>Cuerpo:</strong> {{ complaint_for_dist.body }}</p>
+            <p><strong>Estado:</strong> {{ complaint_for_dist.status }}</p>
+            <p><strong>Fecha de Entrada:</strong> {{ complaint_for_dist.enterDate }}</p>
             {% if complaint_for_dist.is_natural %}
-                <li>La queja fue realizada por una persona Natural</li>
+                poner link a los datos de la persona
+                <p>La queja fue realizada por una persona Natural</p>
             {% else %}
-                <li>La queja fue realizada por una persona Juridica</li>
+                poner link a los datos de la institucion
+                <p>La queja fue realizada por una persona Juridica</p>
             {% endif %}
             {% if complaint_for_dist.department %}
-                <li>Area de Trabajo Asignada:{{ complaint_for_dist.department.nombre }}</li>
+                <p><strong>Area de Trabajo Asignada:</strong> {{ complaint_for_dist.department.nombre }}</p>
                 {% if complaint_for_dist.status == 'P' or complaint_for_dist.status == 'Pendiente' %}
                     <a href={% url 'trans_Wait_To_Asigned' complaint_id=complaint_for_dist.id %}> Asignar a un Tecnico</a>
+                {% else %}
+                    link a mostrar los datos del tecnico que la acepto
                 {% endif %}
             {% else %}
-                <a href={% url 'form_asign_department' complaint_id=complaint_for_dist.idm %}> Asignar Departamento</a>
+                <a href={% url 'form_assign_department' complaint_id=complaint_for_dist.id %}> Asignar Departamento</a>
             {% endif %}
 
         {% endfor %}
-        </ul>
         {% if complaint.first.is_natural %}
-            <a href={% url 'index_natural_complaint' %}>Ver Todas las Quejas</a>
+            <a href={% url 'index_natural_complaint' %}>Ver todas las quejas naturales</a>
         {% else %}
-            <a href={% url 'index_juridic_complaint' %}>Ver Todas las Quejas</a>
+            <a href={% url 'index_juridic_complaint' %}>Ver todas las quejas juridicas</a>
         {% endif %}
     {% else %}
-        <p>Problemas Rendereando la queja</p>
+        <p>Problemas mostrando la queja</p>
     {% endif %}
 {% endblock  %}

@@ -23,22 +23,23 @@ def form_natural_complaint(request, person_id):
             complaint.is_natural = True
             complaint.person_natural = PersonaNatural.objects.get(id=person_id)
             complaint.enter_date = timezone.now()
+            complaint.department = None
             complaint.save()
             p = WaitingForDistribution()
             p.complaint = complaint
             p.enterDate = timezone.now()
             p.save()
-            return redirect(reverse_lazy('complaints_by_person', args=[person_id]))
+            return redirect(reverse_lazy('index_natural_complaint'))
     else:
         form_complaint = ComplaintForm()
-    return render(request, "dpv_complaint/form_natural_complaint.html",
+    return render(request, "dpv_complaint/single_form.html",
                   {'form': form_complaint, 'form_name': form_name})
 
 
 def middle_form_natural_complaint(request, person_id):
     complaints = Complaint.objects.all().filter(person_natural=person_id)
     if complaints.exists():
-        return render(request, "dpv_complaint/index_by_person.html", {'index': complaints,
+        return render(request, "dpv_complaint/index_by_natural.html", {'index': complaints,
                                                                       'index_name': 'Obtener Persona por ID'})
     else:
         return redirect(reverse_lazy('add_natural_complaint', args=[person_id]))
@@ -55,7 +56,7 @@ def form_person_for_complaint(request):
             if email:
                 person = PersonaNatural.objects.get(email_address=email)
             else:
-                person = PersonaNatural.objects.get(email_address=email)
+                person = PersonaNatural.objects.get(ci=ci)
             return redirect(reverse_lazy('complaints_by_person', args=[person.id]))
 
         elif form_natural.is_valid():

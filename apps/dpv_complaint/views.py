@@ -15,9 +15,9 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
     if request.method == "POST":
         form = AssignedToTechnicalForm(request.POST)
         if form.is_valid():
-            # history = HistoryComplaint()
             post = form.save(commit=False)
             post.enter_date = timezone.now()
+            post.assigned_by = Perfil.objects.get(id=request.user.id)
             post.complaint = Complaint.objects.get(id=complaint_id)
             Complaint.objects.filter(id=complaint_id).update(status='Esperando respuesta de técnico')
             post.complaint.status = 'Esperando respuesta de técnico'
@@ -55,7 +55,7 @@ def from_assigned_to_technician_to_finished_complaint(request, complaint_id, tec
 
 
 def index_accepted_all(request, accepted_id):
-    elms = Accepted.objects.get(id=accepted_id)
+    elms = Accepted.objects.filter(id=accepted_id)
     return render(request, 'dpv_complaint/watch_accepted.html', {'index': elms})
 
 
@@ -68,12 +68,13 @@ def from_finished_complaint_to_accepted_complaint(request, complaint_id, technic
             post.finishedDate = timezone.now()
             if (complaint_id is not None) and (technical_id is not None):
 
+                Complaint.objects.filter(id=complaint_id).update(status='Finalizada')
                 post.complaint = Complaint.objects.get(id=complaint_id)
                 post.technical_work_in_complaint = Technical.objects.get(id=technical_id)
                 post.boss_accepted = Perfil.objects.get(id=request.user.id)
                 post.id = post.pk
                 post.technical_args = FinishedComplaint.objects.filter(complaint=complaint_id).\
-                    filter(technical=technical_id).technical_args
+                    filter(technical=technical_id).first().technical_args
                 # Set in history
                 # history = HistoryComplaint()
                 # history.

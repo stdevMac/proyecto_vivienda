@@ -1,36 +1,35 @@
 {% extends 'layouts/base.html' %}
 {% block content_page %}
-{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}
-{% block breadcrumbs %}
-    {{block.super }}
-
-{% endblock breadcrumbs %}
-    {% if index %}
-        <ul>
-        {% for complaint_finished in index %}
-            <li>Numero de la Queja:{{ complaint_finished.complaint.number }}</li>
-            <li>Procedencia:{{ complaint_finished.complaint.procedency }}</li>
-            <li>Titulo:{{ complaint_finished.complaint.topic }}</li>
-            <li>Cuerpo:{{ complaint_finished.complaint.body }}</li>
-            <li>Estado:{{ complaint_finished.complaint.status }}</li>
-            <li>Fecha de Entrada:{{ complaint_finished.complaint.enterDate }}</li>
-            <li>Fecha de Respuesta: {{ complaint_finished.complaint.enterDate }}</li>
-            {% if complaint_finished.complaint.is_natural %}
-                <li>DATOS PERSONALES DE LA PERSONA NATURAL</li>
-                <li>La queja fue realizada por una persona Natural</li>
-            {% else %}
-                <li>DATOS PERSONALES DE LA PERSONA JURIDICA</li>
-                <li>La queja fue realizada por una persona Juridica</li>
-            {% endif %}
-            <li>Area de Trabajo Asignada: {{ complaint_finished.complaint.department.nombre }}</li>
-            <li>Tecnico Que la respondio: {{ complaint_finished.tecnic.perfil.datos_personales.nombre }} {{ complaint_finished.tecnic.perfil.datos_personales.nombre }}</li>
-            <li>Respuesta del Tecnico: <p>{{ complaint_finished.argumentsOfTecnic }}</P></li>
-            <li>Jefe Que la Accepto: {{ complaint_finished.bossAccepted.datos_personales.nombre }} {{ complaint_finished.perfil.datos_personales.nombre }}</li>
-            <li>Respuesta del Jefe: <p>{{ complaint_finished.finalArgumnets }}</P></li>
-            <li>Respuesta Final: {{ complaint_finished.answer }}</li>
-        {% endfor %}
-        </ul>
+    {% block breadcrumbs_title %} {{ index_name }} {% endblock breadcrumbs_title %}
+    {% block breadcrumbs %}
+        {{ block.super }}
+    {% endblock breadcrumbs %}
+    {% if not index.exists %}
+        <p>Problemas mostrando los datos de la queja finalizada</p>
     {% else %}
-        <p>Problemas Mostrando los datos de la queja Finalizada</p>
+        {% for complaint_finished in index %}
+            <p><strong>Número de la Queja: </strong>{{ complaint_finished.complaint.number }}</p>
+            <p><strong>Procedencia: </strong>{{ complaint_finished.complaint.origin }}</p>
+            <p><strong>Título: </strong>{{ complaint_finished.complaint.topic }}</p>
+            <p><strong>Cuerpo: </strong>{{ complaint_finished.complaint.body }}</p>
+            <p><strong>Estado: </strong>{{ complaint_finished.complaint.status }}</p>
+            <p><strong>Fecha de Entrada: </strong>{{ complaint_finished.complaint.enter_date }}</p>
+            <p><strong>Fecha de Respuesta: </strong>{{ complaint_finished.finished_date }}</p>
+            {% if complaint_finished.complaint.is_natural %}
+                <p><strong>Datos de la persona natural: </strong></p>
+                Poner pnk a los datos de las personas
+                <p>La queja fue reapzada por una persona Natural</p>
+            {% else %}
+                <p><strong>Datos de la persona jurídica</strong></p>
+                Poner pnk a los datos de las instituciones juridicas
+                <p>La queja fue reapzada por una persona Juridica</p>
+            {% endif %}
+            <p><strong>Área de trabajo asignada: </strong>{{ complaint_finished.complaint.department.nombre }}</p>
+            <p><strong>Técnico que respondió: </strong>{{ complaint_finished.technical_work_in_complaint.profile.datos_personales.nombre }} {{ complaint_finished.technical_work_in_complaint.profile.datos_personales.nombre }}</p>
+            <p><strong>Respuesta del técnico: </strong> {{ complaint_finished.technical_args }}</p>
+            <p><strong>Jefe que accepto: </strong>{{ complaint_finished.boss_accepted.datos_personales.nombre }} {{ complaint_finished.boss_accepted.datos_personales.nombre }}</p>
+            <p><strong>Respuesta del jefe: </strong>{{ complaint_finished.final_args }}</p>
+            <p><strong>Respuesta final: </strong>{{ complaint_finished.answer }}</p>
+        {% endfor %}
     {% endif %}
-{% endblock  %}
+{% endblock %}

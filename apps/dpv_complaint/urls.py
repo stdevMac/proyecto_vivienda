@@ -23,7 +23,7 @@ urlpatterns = [
     re_path(r'^complaints_by_person/(?P<person_id>[1-9]\d*)/$', render_natural_complaint.middle_form_natural_complaint,
             name='complaints_by_person'),
     re_path(r'^complaints_by_juridic/(?P<juridic_id>[1-9]\d*)/$',
-            render_juridic_complaint.middle_form_juridic_complaint,name='complaints_by_juridic'),
+            render_juridic_complaint.middle_form_juridic_complaint, name='complaints_by_juridic'),
     re_path(r'^get_accepted/(?P<accepted_id>[1-9]\d*)/$', complaint_view.index_accepted_all, name='accepted_complaint'),
     re_path(r'^assign_department/(?P<complaint_id>[1-9]\d*)/$', rendered_form.form_assign_department,
             name='form_assign_department'),

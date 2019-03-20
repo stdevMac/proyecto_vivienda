@@ -20,23 +20,23 @@ def form_finished_complaint(request):
 
 
 def form_accepted(request, finished_id):
-    _form_name = "Quejas Aceptadas"
+    form_name = "Quejas Aceptadas"
     if request.method == "POST":
-        _form = AcceptedForm(request.POST)
-        if _form.is_valid():
+        form = AcceptedForm(request.POST)
+        if form.is_valid():
             finished = FinishedComplaint.objects.get(id=finished_id)
-            _post = _form.save(commit=False)
-            _post.finished_date = timezone.now()
-            _post.complaint = finished.complaint
-            _post.technical_work_in_complaint = finished.technical
-            _post.technical_args = finished.technical_args
-            _post.bossAccepted = request.user.id
-            _post.id = _post.pk
-            _post.save()
+            post = form.save(commit=False)
+            post.finished_date = timezone.now()
+            post.complaint = finished.complaint
+            post.technical_work_in_complaint = finished.technical
+            post.technical_args = finished.technical_args
+            post.bossAccepted = Perfil.objects.get(id=request.user.id)
+            post.id = post.pk
+            post.save()
             return redirect(reverse_lazy('index_accepted'))
     else:
-        _form = FinishedComplaintForm()
-    return render(request, "", {'form': _form, 'form_name': _form_name})
+        form = FinishedComplaintForm()
+    return render(request, "", {'form': form, 'form_name': form_name})
 
 
 def form_assign_department(request, complaint_id):
