@@ -45,7 +45,14 @@ def form_assign_department(request, complaint_id):
         form = AssignDepartmentForm(request.POST)
         if form.is_valid():
             args = form.fields['department'].queryset.first()
-            Complaint.objects.filter(id=complaint_id).update(department=args)
+            complaint = Complaint.objects.filter(id=complaint_id).update(department=args,
+                                                                         assigned_to_department_date=timezone.now())
+            history = HistoryComplaint()
+            history.complaint = complaint
+            history.
+            history.current_status = 'Esperando Asignación'
+
+            history.save()
             return redirect(reverse_lazy('index_natural_complaint'))
     else:
         form = AssignDepartmentForm()

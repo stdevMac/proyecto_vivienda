@@ -26,6 +26,7 @@ class Complaint(models.Model):
     number = models.CharField(max_length=15, verbose_name='Número')
     status = models.CharField(choices=stat, default='Pendiente', max_length=20)
     enter_date = models.DateTimeField(default=timezone.now)
+    assigned_to_department_date = models.DateTimeField(blank=True, default=timezone.now)
     is_natural = models.BooleanField(default=True)
     person_natural = models.ForeignKey(PersonaNatural, related_name='person_natural', on_delete=False,
                                        blank=True, null=True)
@@ -88,12 +89,15 @@ class Accepted(models.Model):
 
 
 class HistoryComplaint(models.Model):
-    complaint = models.ForeignKey(Complaint,  on_delete=False)
+    complaint = models.ForeignKey(Complaint, on_delete=False, blank=True, null=True)
     technical = models.ForeignKey(Technical, on_delete=False, related_name='technical_history', blank=True)
-    boss = models.ForeignKey(Perfil, on_delete=False, blank=True)
-    state = models.CharField(choices=stat, default='Pendiente', max_length=200)
+    boss = models.ForeignKey(Perfil, on_delete=False, blank=True, related_name='boss')
+    assigned_by = models.ForeignKey(Perfil, on_delete=False, blank=True, related_name='assigned_by', default=1)
     technical_args = models.TextField()
     boss_args = models.TextField()
-    boss_answer = models.CharField(choices=ans, default='S', max_length=20, blank=False)
+    final_args = models.TextField(default='')
+    boss_answer = models.CharField(choices=ans, default='S', max_length=20, blank=True)
     date_of_status = models.DateTimeField(auto_now_add=True)
-    current_status = models.CharField(default='Pendiente', choices=stat, max_length=20)
+    current_status = models.CharField(default='Pendiente', choices=stat, max_length=200)
+    approach = models.ForeignKey(Approach, on_delete=False, blank=True, null=True)
+    is_complaint = models.BooleanField(default=True)
