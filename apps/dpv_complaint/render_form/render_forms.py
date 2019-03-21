@@ -4,20 +4,23 @@ from apps.dpv_complaint.forms import *
 from apps.dpv_complaint.models import *
 
 
-def form_finished_complaint(request):
-    _form_name = "Queja por Responder"
-    if request.method == "POST":
-        _form = FinishedComplaintForm(request.POST)
-        if _form.is_valid():
-            _post = _form.save(commit = False)
-            _post._enterDate = timezone.now()
-            _post.id = _post.pk
-            _post.save()
-            return redirect(reverse_lazy(''))
-    else:
-        _form = FinishedComplaintForm()
-    return render(request, "dpv_complaint/single_form.html", {'form': _form, 'form_name': _form_name})
-
+# def form_finished_complaint(request):
+#     form_name = "Queja por Responder"
+#     if request.method == "POST":
+#         form = FinishedComplaintForm(request.POST)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.enter_date = timezone.now()
+#             post.id = form.pk
+#             post.save()
+#
+#             history =
+#
+#             return redirect(reverse_lazy(''))
+#     else:
+#         form = FinishedComplaintForm()
+#     return render(request, "dpv_complaint/single_form.html", {'form': form, 'form_name': form_name})
+#
 
 def form_accepted(request, finished_id):
     form_name = "Quejas Aceptadas"
@@ -30,8 +33,14 @@ def form_accepted(request, finished_id):
             post.complaint = finished.complaint
             post.technical_work_in_complaint = finished.technical
             post.technical_args = finished.technical_args
-            post.bossAccepted = Perfil.objects.get(id=request.user.id)
+            post.boss_accepted = Perfil.objects.get(id=request.user.id)
             post.id = post.pk
+
+            history = HistoryComplaint()
+            history.complaint = Complaint.objects.get(id=finished.complaint.id)
+
+            history.current_status = 'Finalizada'
+
             post.save()
             return redirect(reverse_lazy('index_accepted'))
     else:
@@ -49,10 +58,9 @@ def form_assign_department(request, complaint_id):
                                                                          assigned_to_department_date=timezone.now())
             history = HistoryComplaint()
             history.complaint = complaint
-            history.
             history.current_status = 'Esperando Asignación'
-
             history.save()
+
             return redirect(reverse_lazy('index_natural_complaint'))
     else:
         form = AssignDepartmentForm()
