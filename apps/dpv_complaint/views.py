@@ -17,10 +17,11 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
         if form.is_valid():
             args = form.fields['technical'].queryset.first()
             post = AssignedToTechnician()
-            post.technical = Technical.objects.get(id=args)
+            post.technical = Technical.objects.get(id=args.id)
             post.enter_date = timezone.now()
             post.assigned_by = Perfil.objects.get(id=request.user.id)
-            post.complaint = Complaint.objects.get(id=complaint_id)
+            complaint = Complaint.objects.get(id=complaint_id)
+            post.complaint = complaint
             Complaint.objects.filter(id=complaint_id).update(status='Esperando respuesta de técnico')
             post.complaint.status = 'Esperando respuesta de técnico'
             post.complaint.save()

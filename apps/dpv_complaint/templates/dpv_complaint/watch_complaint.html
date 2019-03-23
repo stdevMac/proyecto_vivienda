@@ -23,13 +23,13 @@
             {% if complaint_for_dist.department %}
                 <p><strong>Area de Trabajo Asignada:</strong> {{ complaint_for_dist.department.nombre }}</p>
                 {% if complaint_for_dist.status == 'P' or complaint_for_dist.status == 'Pendiente' %}
-                    <a href={% url 'trans_Wait_To_Asigned' complaint_id=complaint_for_dist.id %}> Asignar a un
+                    <a href={% url 'trans_wait_to_assigned' complaint_id=complaint_for_dist.id %}> Asignar a un
                         Tecnico</a>
                 {% else %}
                     link a mostrar los datos del tecnico que la acepto
                 {% endif %}
             {% else %}
-                <a href={% url 'form_assign_department' complaint_id=complaint_for_dist.id %}> Asignar Departamento</a>
+                <a href={% url 'assign_department' complaint_id=complaint_for_dist.id %}> Asignar Departamento</a>
             {% endif %}
 
         {% endfor %}

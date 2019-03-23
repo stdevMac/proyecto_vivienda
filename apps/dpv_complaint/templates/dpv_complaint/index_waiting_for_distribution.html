@@ -1,4 +1,4 @@
-{% extends 'dpv_nomencladores/list.html' %}
+{% extends 'layouts/base.html' %}
 {% block page_title %} | Quejas {% endblock page_title %}
 {% load static %}
 {% block extra_style %}
@@ -11,7 +11,7 @@
     <li class="active">Quejas en Espera</li>
     {% else %}
     <li>
-        <a href="{% url 'aqui va algo' %}">
+        <a href="{% url 'waiting_for_distribution' %}">
             Quejas en Espera
         </a>
     </li>
@@ -60,7 +60,7 @@
                 </table>
                 {% else %}
                 <div class="alert alert-info">
-                    <h2 class="text-center">No hay Quejas registradas que mostrar</h2>
+                    <h2 class="text-center">No hay quejas registradas en espera de distribución</h2>
                 </div>
                 {% endif %}
             </div>

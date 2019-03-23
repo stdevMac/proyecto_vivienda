@@ -46,7 +46,7 @@ def form_accepted(request, finished_id):
     return render(request, "", {'form': form, 'form_name': form_name})
 
 
-def form_assign_department(request, complaint_id):
+def assign_department(request, complaint_id):
     form_name = "Asignar Departamento"
     if request.method == 'POST':
         form = AssignDepartmentForm(request.POST)

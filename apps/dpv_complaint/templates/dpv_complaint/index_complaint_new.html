@@ -8,7 +8,7 @@
 {% block breadcrumbs %}
     {{ block.super }}
     {% if '/quejas/natural/' == request.path or '/quejas/juridic/' == request.path %}
-        / <a class="active" href={% url 'main_complaint' %}>Quejas HH</a>
+        / <a class="active" href={% url 'main_complaint' %}>Quejas</a>
     {% else %}
         <li>Quejas</li>
     {% endif %}

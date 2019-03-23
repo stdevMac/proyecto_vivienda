@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^wait_distribution/$', complaint_index.index_waiting_for_distribution, name="waiting_for_distribution"),
     url(r'^finished/$', complaint_index.index_finished_complaint, name="index_finished_complaint"),
     url(r'^accepted_all/$', complaint_index.index_accepted, name="index_accepted_all"),
+    url(r'^technicals/$', complaint_index.index_technical, name="list_technical"),
 
     re_path(r'^complaint_nat/(?P<person_id>[1-9]\d*)/$', render_natural_complaint.form_natural_complaint,
             name='add_natural_complaint'),
@@ -25,8 +26,8 @@ urlpatterns = [
     re_path(r'^complaints_by_juridic/(?P<juridic_id>[1-9]\d*)/$',
             render_juridic_complaint.middle_form_juridic_complaint, name='complaints_by_juridic'),
     re_path(r'^get_accepted/(?P<accepted_id>[1-9]\d*)/$', complaint_index.index_accepted_all, name='accepted_complaint'),
-    re_path(r'^assign_department/(?P<complaint_id>[1-9]\d*)/$', rendered_form.form_assign_department,
-            name='form_assign_department'),
+    re_path(r'^assign_department/(?P<complaint_id>[1-9]\d*)/$', rendered_form.assign_department,
+            name='assign_department'),
     re_path(r'^assigned_to_technical/(?P<technical_id>[1-9]\d*)/$',
             complaint_index.index_assigned_to_technician, name="index_assigned_to_technical"),
     re_path(r'^add_finished/(?P<complaint_id>[1-9]\d*)/(?P<technical_id>[0-9]*)/$',
@@ -35,7 +36,7 @@ urlpatterns = [
     re_path(r'^complaint/(?P<complaint_id>[1-9]\d*)/$', complaint_index.watch_complaint, name="watch_complaint"),
     re_path(r'^watch_finished/(?P<finished_id>[1-9]\d*)/$', complaint_index.watch_finished, name="watch_finished"),
     re_path(r'^trans_wait_to_assigned/(?P<complaint_id>[1-9]\d*)/$',
-            complaint_view.from_waiting_for_distribution_to_assigned_to_technician, name='trans_Wait_To_Asigned'),
+            complaint_view.from_waiting_for_distribution_to_assigned_to_technician, name='trans_wait_to_assigned'),
     re_path(r'^trans_finished_to_accepted/(?P<complaint_id>[1-9]\d*)/(?P<technical_id>[1-9]\d*)/$',
             complaint_view.from_finished_complaint_to_accepted_complaint, name='trans_Finished_to_Accepted'),
 ]

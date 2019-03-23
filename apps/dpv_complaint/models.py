@@ -45,9 +45,15 @@ class Complaint(models.Model):
     anonymous = models.BooleanField(default=False)
     expiration_time = models.IntegerField(default=60)
 
+    def __str__(self):
+        return '{}'.format(self.topic)
+
 
 class PopularCouncil(models.Model):
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return '{}'.format(self.name)
 
 
 class Approach(models.Model):
@@ -64,6 +70,9 @@ class Approach(models.Model):
 
 class Technical(models.Model):
     profile = models.ForeignKey(Perfil, on_delete=False, related_name='profile')
+
+    def __str__(self):
+        return '{}'.format(self.profile.datos_personales.nombre + ' ' + self.profile.datos_personales.apellidos)
 
 
 class WaitingForDistribution(models.Model):
