@@ -1,4 +1,4 @@
-{% extends 'dpv_nomencladores/list.html' %}
+{% extends 'layouts/base.html' %}
 {% block page_title %} | Quejas {% endblock page_title %}
 {% load static %}
 {% block extra_style %}
@@ -7,14 +7,10 @@
 {% block breadcrumb_title %} Gestión de Quejas {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% if '/quejas/natural/' == request.path or '/quejas/juridic/' == request.path %}
+    {% if '/quejas/natural' == request.path or '/quejas/juridic' == request.path %}
         <li class="active">Quejas</li>
     {% else %}
-        <li>
-            <a href="{% url 'aqui va algo' %}">
-                Quejas
-            </a>
-        </li>
+        <li>Quejas</li>
     {% endif %}
 {% endblock breadcrumbs %}
 {% block content_page %}
@@ -22,12 +18,12 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Quejas</strong>
-                <a href="form_juridic_person.html" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i
-                        class="fa fa-plus"></i>
-                    Agregar Queja Natural</a>
-                <a href="form_juridic_person.html" role="button" data-toggle="modal"
-                   class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>
-                    Agregar Queja Juridica</a>
+                <a role="button" class="pull-right btn btn-success btn-sm"
+                href={% url 'add_natural_person' %}><i class="fa fa-plus" >
+                    Agregar Queja Natural</i></a>
+                <a role="button" class="pull-right
+                   btn btn-success btn-sm" href={% url 'add_juridic_person' %} ><i class="fa fa-plus" >
+                    Agregar Queja Juridica</i></a>
 
             </div>
             <div class="card-body">
@@ -37,10 +33,12 @@
                         <tr>
                             <th>Número</th>
                             <th>Nombre</th>
-                            <th>Titulo</th>
-                            <th>Cuerpo</th>
-                            <th>Departamento</th>
-                            <th>Operaciones</th>
+                            <th>Dirección</th>
+                            <th>Municipio</th>
+                            <th>Asunto</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Opciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -49,12 +47,16 @@
                                 <td>{{ complaint.number }}</td>
                                 {% if complaint.is_natural %}
                                     <td>{{ complaint.person_natural.nombre }} {{ complaint.person_natural.apellidos }}</td>
+                                    <td>{{ complaint.person_natural.direccion_numero}}, Número {{ complaint.person_natural.direccion_numero }}</td>
+                                    <td>{{ complaint.person_natural.municipio}}</td>
                                 {% else %}
                                     <td>{{ complaint.person_juridic.nombre }}</td>
+                                    <td>{{ complaint.person_juridic.direccion_numero }} , Número {{ complaint.person_juridic.direccion_numero }}</td>
+                                    <td>{{ complaint.person_juridic.municipio }}</td>
                                 {% endif %}
                                 <td>{{ complaint.topic }}</td>
-                                <td>{{ complaint.body }}</td>
-                                <td>{{ complaint.department }}</td>
+                                <td>{{ complaint.status }}</td>
+                                <td>{{ complaint.enter_date }}</td>
                                 <td>
                                     <a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los
                                         Datos </a>

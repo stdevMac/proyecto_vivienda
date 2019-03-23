@@ -17,7 +17,7 @@ def form_juridic_complaint(request, juridic_id):
     form_name = "Queja de persona jurídica"
     if request.method == "POST":
         form_complaint = ComplaintForm(request.POST)
-        person_juridic = PersonaJuridica.objects.filter(id=juridic_id)
+        person_juridic = PersonaJuridica.objects.get(id=juridic_id)
         if form_complaint.is_valid():
             complaint = form_complaint.save(commit=False)
             complaint.is_natural = False

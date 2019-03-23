@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'apps.dpv_events',
     'apps.email_sender',
     'django_filters',
-    'chartjs'
+    'chartjs',
+    'django_seed'
 ]
 
 MIDDLEWARE = [

@@ -10,6 +10,14 @@ stat = {
     ('Esperando aceptación del jefe', 'EAJ'),
     ('Finalizada', 'F'),
 }
+stat_history = {
+    ('Pendiente', 'Pendiente'),
+    ('Esperando Asignación', 'Esperando Asignación'),
+    ('Esperando Respuesta de Técnico', 'Esperando Respuesta de Técnico'),
+    ('Esperando aceptación del jefe', 'Esperando aceptación del jefe'),
+    ('Finalizada', 'Finalizada'),
+}
+
 ans = {
     ('S', "Solución o Resuelto"),
     ('PS', 'Pendiente de Solución'),
@@ -91,13 +99,13 @@ class Accepted(models.Model):
 class HistoryComplaint(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=False, blank=True, null=True)
     technical = models.ForeignKey(Technical, on_delete=False, related_name='technical_history', null=True, blank=True)
-    boss = models.ForeignKey(Perfil, on_delete=False, blank=True, null=True,related_name='boss')
+    boss = models.ForeignKey(Perfil, on_delete=False, blank=True, null=True, related_name='boss')
     assigned_by = models.ForeignKey(Perfil, on_delete=False, blank=True, related_name='assigned_by', default=1)
     technical_args = models.TextField()
     boss_args = models.TextField()
     final_args = models.TextField(default='')
     boss_answer = models.CharField(choices=ans, default='S', max_length=20, blank=True)
     date_of_status = models.DateTimeField(auto_now_add=True)
-    current_status = models.CharField(default='Pendiente', choices=stat, max_length=200)
+    current_status = models.CharField(default='Pendiente', choices=stat_history, max_length=200)
     approach = models.ForeignKey(Approach, on_delete=False, blank=True, null=True)
     is_complaint = models.BooleanField(default=True)

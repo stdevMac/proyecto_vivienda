@@ -36,11 +36,9 @@ def form_accepted(request, finished_id):
             post.boss_accepted = Perfil.objects.get(id=request.user.id)
             post.id = post.pk
 
-            history = HistoryComplaint()
-            history.complaint = Complaint.objects.get(id=finished.complaint.id)
-
-            history.current_status = 'Finalizada'
-
+            history = HistoryComplaint(complaint=Complaint.objects.get(id=finished.complaint.id),
+                                       current_status='Finalizada')
+            history.save()
             post.save()
             return redirect(reverse_lazy('index_accepted'))
     else:
@@ -56,9 +54,8 @@ def form_assign_department(request, complaint_id):
             args = form.fields['department'].queryset.first()
             complaint = Complaint.objects.filter(id=complaint_id).update(department=args,
                                                                          assigned_to_department_date=timezone.now())
-            history = HistoryComplaint()
-            history.complaint = Complaint.objects.get(id=complaint)
-            history.current_status = 'Esperando Asignación'
+            history = HistoryComplaint(assigned_by=Perfil.objects.get(id=request.user.id), complaint=Complaint.objects.get(id=complaint),
+                                       current_status='Esperando Asignación')
             history.save()
 
             return redirect(reverse_lazy('index_natural_complaint'))
