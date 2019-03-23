@@ -2,12 +2,13 @@
 
 {% load static %}
 
+{% block breadcrumb_title %} Quejas Finalizadas {% endblock breadcrumb_title %}
+
 {% block content_page %}
 
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">Quejas</strong>
                 <a role="button" class="pull-right btn btn-success btn-sm"href={% url 'add_natural_person' %} >
                     <i class="fa fa-plus">Agregar queja natural</i></a>
                 <a role="button" class="pull-right btn btn-success btn-sm" href={% url 'add_juridic_person' %} >
@@ -35,10 +36,11 @@
                                 <td>
                                     <a href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> {{ finished.complaint.number }}</a>
                                 </td>
-                                <td>
-
-
-                                </td>
+                                {% if finished.complaint.is_natural %}
+                                    <td>{{ finished.complaint.person_natural.nombre }} {{ finished.complaint.person_natural.apellidos }}</td>
+                                {% else %}
+                                    <td>{{ finished.complaint.person_juridic.nombre }}</td>
+                                {% endif %}
                                 <td>{{ finished.complaint.topic }}</td>
                                 <td>{{ finished.complaint.body }}</td>
                                 <td>{{ finished.technical.profile.datos_personales.nombre }} {{ finished.technical.profile.datos_personales.apellidos }}</td>
