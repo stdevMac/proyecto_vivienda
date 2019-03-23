@@ -16,16 +16,14 @@ class AssignDepartmentForm(forms.Form):
     department = forms.ModelChoiceField(queryset=AreaTrabajo.objects.all(), label='Seleccione área de trabajo')
 
 
-class TechnicianForm(forms.ModelForm):
-    class Meta:
-        model = Technical
-        fields = '__all__'
+class TechnicianForm(forms.Form):
+    technical = forms.ModelChoiceField(queryset=Technical.objects.all(), label='Disponibles')
 
 
 class AssignedToTechnicalForm(forms.ModelForm):
     class Meta:
         model = AssignedToTechnician
-        exclude = ('enter_date', 'complaint',)
+        exclude = ('enter_date', 'complaint', 'assigned_by')
 
 
 class FinishedComplaintForm(forms.ModelForm):

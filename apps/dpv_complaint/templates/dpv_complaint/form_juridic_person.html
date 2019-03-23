@@ -2,10 +2,13 @@
 {% block content_page %}
     {#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
     {% block breadcrumbs %}
-        {{ block.super }}
+        {{ form_name }}
 
 
     {% endblock breadcrumbs %}
+    {% block page_title %}
+        Quejas
+    {% endblock page_title %}
     <form method="POST" class="post-form">
 
         {% csrf_token %}

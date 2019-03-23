@@ -7,8 +7,8 @@
 {% block breadcrumb_title %} Gestión de Quejas {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% if '/quejas/natural' == request.path or '/quejas/juridic' == request.path %}
-        <li class="active">Quejas</li>
+    {% if '/quejas/natural/' == request.path or '/quejas/juridic/' == request.path %}
+        / <a class="active" href={% url 'main_complaint' %}>Quejas HH</a>
     {% else %}
         <li>Quejas</li>
     {% endif %}

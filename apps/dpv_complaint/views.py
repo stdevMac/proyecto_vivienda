@@ -13,9 +13,11 @@ def main_view(request):
 def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_id):
     form_name = "Seleccione técnico"
     if request.method == "POST":
-        form = AssignedToTechnicalForm(request.POST)
+        form = TechnicianForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
+            args = form.fields['technical'].queryset.first()
+            post = AssignedToTechnician()
+            post.technical = Technical.objects.get(id=args)
             post.enter_date = timezone.now()
             post.assigned_by = Perfil.objects.get(id=request.user.id)
             post.complaint = Complaint.objects.get(id=complaint_id)
@@ -37,7 +39,7 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
 
             return redirect(reverse_lazy('index_assigned_to_technical', args=[post.technical.id]))
     else:
-        form = AssignedToTechnicalForm()
+        form = TechnicianForm()
     return render(request, "dpv_complaint/single_form.html", {'form': form, 'form_name': form_name})
 
 

@@ -47,7 +47,7 @@ def middle_form_natural_complaint(request, person_id):
 
 
 def form_person_for_complaint(request):
-    form_name = "Datos de persona Natural"
+    form_name = "Insertar persona natural"
     if request.method == "POST":
         form_natural = PersonaNaturalForm(request.POST)
         email = form_natural.data.get('email_address')

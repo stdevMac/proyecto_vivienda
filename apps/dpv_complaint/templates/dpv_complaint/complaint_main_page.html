@@ -1,17 +1,16 @@
 {% extends 'layouts/base.html' %}
 {% block content_page %}
-{% block breadcrumbs %}
-    {{block.super }}
+    {% block breadcrumbs %}
+        {{ block.super }}
+    {% endblock breadcrumbs %}
 
-
-{% endblock breadcrumbs %}
     <style type="text/css">
         td {
             padding: 0px 8px 0px 8px;
         }
     </style>
     <h2><a href={% url 'add_natural_person' %}>Insertar queja natural</a></h2>
-    <h2><a href={% url 'add_juridic_person'  %}>Insertar queja jurídica</a></h2>
+    <h2><a href={% url 'add_juridic_person' %}>Insertar queja jurídica</a></h2>
     <h2><a href={% url 'index_natural_complaint' %}>Ver quejas naturales</a></h2>
     <h2><a href={% url 'index_juridic_complaint' %}>Ver quejas jurídicas</a></h2>
     <h2><a href={% url 'waiting_for_distribution' %}>Ver quejas en espera de distribución</a></h2>
@@ -19,7 +18,7 @@
     <h2><a href={% url 'index_accepted_all' %}>Ver quejas aceptadas</a></h2>
 
 
-{% endblock  %}
+{% endblock %}
 
 {# TODO liset Make look this better #}
 {# I don't care what you use, just make look good and according to all project #}
