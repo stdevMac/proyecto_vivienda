@@ -57,7 +57,7 @@ def form_assign_department(request, complaint_id):
             complaint = Complaint.objects.filter(id=complaint_id).update(department=args,
                                                                          assigned_to_department_date=timezone.now())
             history = HistoryComplaint()
-            history.complaint = complaint
+            history.complaint = Complaint.objects.get(id=complaint)
             history.current_status = 'Esperando Asignación'
             history.save()
 

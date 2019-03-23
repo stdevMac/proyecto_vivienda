@@ -44,6 +44,12 @@ def watch_complaint(request, complaint_id):
     return render(request, "dpv_complaint/watch_complaint.html", {'complaint': complaint})
 
 
+def watch_finished(request, finished_id):
+    complaint = FinishedComplaint.objects.filter(id=finished_id)
+    return render(request, "dpv_complaint/watch_finished.html", {'index': complaint,
+                                                                 'index_name': 'Datos queja finalizada'})
+
+
 def index_accepted_all(request, accepted_id):
     elms = Accepted.objects.filter(id=accepted_id)
     return render(request, 'dpv_complaint/watch_accepted.html', {'index': elms})

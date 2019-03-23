@@ -28,7 +28,7 @@
                             <th>Resuelto Por:</th>
                             <th>Argumentos:</th>
                             <th>Todos los Datos</th>
-                            <th>Acciones:</th>
+                            <th>Operaciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -48,7 +48,7 @@
                                 <td>{{ finished.complaint.body }}</td>
                                 <td>{{ finished.technical.profile.datos_personales.nombre }} {{ finished.technical.profile.datos_personales.apellidos }}</td>
                                 <td>{{ finished.technical_args }}</td>
-                                <td><a href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> Ver Todos los
+                                <td><a href={% url '' complaint_id=finished.complaint.id %}> Ver Todos los
                                     Datos </a></td>
                                 <td>
                                     {% if finished.technical.id and finished.technical.id != '' %}

@@ -27,7 +27,7 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
 
             # Set in history
             history = HistoryComplaint()
-            history.complaint = post.complaint
+            history.complaint = Complaint.objects.get(id=post.complaint.id)
             history.date_of_status = WaitingForDistribution.objects.filter(id=post.complaint.id).\
                 first().enter_date
             history.current_status = 'Esperando Asignación'
@@ -59,7 +59,7 @@ def from_assigned_to_technician_to_finished_complaint(request, complaint_id, tec
 
                 # Set in history
                 history = HistoryComplaint()
-                history.complaint = post.complaint
+                history.complaint = Complaint.objects.get(id=post.complaint.id)
                 history.technical = post.technical
                 history.technical_args = post.technical_args
                 history.date_of_status = enter_date
@@ -93,7 +93,7 @@ def from_finished_complaint_to_accepted_complaint(request, complaint_id, technic
 
                 # Set in history
                 history = HistoryComplaint()
-                history.complaint = post.complaint
+                history.complaint = Complaint.objects.get(id=post.complaint.id)
                 history.technical = post.technical_work_in_complaint
                 history.technical_args = post.technical_args
                 history.date_of_status = enter_date

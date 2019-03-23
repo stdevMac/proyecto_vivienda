@@ -1,10 +1,10 @@
 {% extends 'layouts/base.html' %}
 {% block content_page %}
-{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}
-{% block breadcrumbs %}
-    {{block.super }}
+    {% block breadcrumbs_title %} {{ index_name }} {% endblock breadcrumbs_title %}
+    {% block breadcrumbs %}
+        {{ block.super }}
 
-{% endblock breadcrumbs %}
+    {% endblock breadcrumbs %}
     {% if complaint %}
         {% for complaint_for_dist in complaint %}
             <p><strong>Numero de la Queja:</strong> {{ complaint_for_dist.number }}</p>
@@ -12,7 +12,7 @@
             <p><strong>Titulo:</strong> {{ complaint_for_dist.topic }}</p>
             <p><strong>Cuerpo:</strong> {{ complaint_for_dist.body }}</p>
             <p><strong>Estado:</strong> {{ complaint_for_dist.status }}</p>
-            <p><strong>Fecha de Entrada:</strong> {{ complaint_for_dist.enterDate }}</p>
+            <p><strong>Fecha de Entrada:</strong> {{ complaint_for_dist.enter_date }}</p>
             {% if complaint_for_dist.is_natural %}
                 poner link a los datos de la persona
                 <p>La queja fue realizada por una persona Natural</p>
@@ -23,7 +23,8 @@
             {% if complaint_for_dist.department %}
                 <p><strong>Area de Trabajo Asignada:</strong> {{ complaint_for_dist.department.nombre }}</p>
                 {% if complaint_for_dist.status == 'P' or complaint_for_dist.status == 'Pendiente' %}
-                    <a href={% url 'trans_Wait_To_Asigned' complaint_id=complaint_for_dist.id %}> Asignar a un Tecnico</a>
+                    <a href={% url 'trans_Wait_To_Asigned' complaint_id=complaint_for_dist.id %}> Asignar a un
+                        Tecnico</a>
                 {% else %}
                     link a mostrar los datos del tecnico que la acepto
                 {% endif %}
@@ -40,4 +41,4 @@
     {% else %}
         <p>Problemas mostrando la queja</p>
     {% endif %}
-{% endblock  %}
+{% endblock %}

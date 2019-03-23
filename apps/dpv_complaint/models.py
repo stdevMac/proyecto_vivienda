@@ -90,8 +90,8 @@ class Accepted(models.Model):
 
 class HistoryComplaint(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=False, blank=True, null=True)
-    technical = models.ForeignKey(Technical, on_delete=False, related_name='technical_history', blank=True)
-    boss = models.ForeignKey(Perfil, on_delete=False, blank=True, related_name='boss')
+    technical = models.ForeignKey(Technical, on_delete=False, related_name='technical_history', null=True, blank=True)
+    boss = models.ForeignKey(Perfil, on_delete=False, blank=True, null=True,related_name='boss')
     assigned_by = models.ForeignKey(Perfil, on_delete=False, blank=True, related_name='assigned_by', default=1)
     technical_args = models.TextField()
     boss_args = models.TextField()
