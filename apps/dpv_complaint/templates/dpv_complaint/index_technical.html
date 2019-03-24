@@ -65,23 +65,6 @@
         </div>
     </div>
 
-    <div id="form_natural" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static"
-         data-keyboard="false">
-        {% include 'dpv_complaint/form_natural_person.html' %}
-
-    </div>
-    <div id="form_juridic" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static"
-         data-keyboard="false">
-        {% include 'dpv_complaint/form_juridic.html' %}
-
-    </div>
-    {% if perms.provincia.delete_provincia %}
-        <div id="delete_provincia" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static"
-             data-keyboard="false">
-            {% include 'dpv_nomencladores/delete_provincia.html' %}
-        </div>
-    {% endif %}
-
 {% endblock content_page %}
 {% block extra_scripts %}
     <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>

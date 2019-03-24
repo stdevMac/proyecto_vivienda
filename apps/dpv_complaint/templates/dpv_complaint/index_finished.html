@@ -9,9 +9,9 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <a role="button" class="pull-right btn btn-success btn-sm"href={% url 'add_natural_person' %} >
+                <a role="button" class="pull-right btn btn-success btn-sm" href={% url 'add_natural_person' %}>
                     <i class="fa fa-plus">Agregar queja natural</i></a>
-                <a role="button" class="pull-right btn btn-success btn-sm" href={% url 'add_juridic_person' %} >
+                <a role="button" class="pull-right btn btn-success btn-sm" href={% url 'add_juridic_person' %}>
                     <i class="fa fa-plus">Agregar queja jurídica</i></a>
 
             </div>
@@ -48,17 +48,22 @@
                                 <td><a href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> Ver
                                     datos </a></td>
                                 <td>
-                                    {% if finished.technical.id %}
-                                        <a href={% url 'trans_Finished_to_Accepted' complaint_id=finished.complaint.id technical_id=finished.technical.id %}>
-                                            Aceptar </a>
-                                    {% else %}
-                                        <li>Ocurrió un error</li>
-                                    {% endif %}
+                                    <p>
+                                        {% if finished.technical.id %}
+                                            <a href={% url 'trans_Finished_to_Accepted' complaint_id=finished.complaint.id technical_id=finished.technical.id %}>
+                                                Aceptar </a>
+                                        {% else %}
+                                            Ocurrió un error
+                                        {% endif %}
+
+                                    </p>
+                                    <p>
+                                        <a href={% url 'trans_wait_to_assigned' complaint_id=finished.complaint.id %}>Reasignar
+                                            técnico</a></p>
+                                    <p><a href={% url 'assign_department' complaint_id=finished.complaint.id %}>Reasignar
+                                        departamento</a></p>
+
                                 </td>
-                                <td><a href={% url 'trans_wait_to_assigned' complaint_id=finished.complaint.id %}>Reasignar
-                                    técnico</a></td>
-                                <td><a href={% url 'assign_department' complaint_id=finished.complaint.id %}>Reasignar
-                                    departamento</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

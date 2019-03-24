@@ -32,7 +32,7 @@ def form_natural_complaint(request, person_id):
             return redirect(reverse_lazy('index_natural_complaint'))
     else:
         form_complaint = ComplaintForm()
-    return render(request, "dpv_complaint/single_form.html",
+    return render(request, "dpv_complaint/form_complaint.html",
                   {'form': form_complaint, 'form_name': form_name})
 
 

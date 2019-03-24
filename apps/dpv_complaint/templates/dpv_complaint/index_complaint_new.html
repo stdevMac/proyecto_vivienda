@@ -44,14 +44,14 @@
                         <tbody>
                         {% for complaint in index %}
                             <tr>
-                                <td>{{ complaint.number }}</td>
+                                <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}>{{ complaint.number }}</a></td>
                                 {% if complaint.is_natural %}
                                     <td>{{ complaint.person_natural.nombre }} {{ complaint.person_natural.apellidos }}</td>
-                                    <td>{{ complaint.person_natural.direccion_numero}}, Número {{ complaint.person_natural.direccion_numero }}</td>
+                                    <td>{{ complaint.person_natural.direccion_calle}}, Número {{ complaint.person_natural.direccion_numero }}</td>
                                     <td>{{ complaint.person_natural.municipio}}</td>
                                 {% else %}
                                     <td>{{ complaint.person_juridic.nombre }}</td>
-                                    <td>{{ complaint.person_juridic.direccion_numero }} , Número {{ complaint.person_juridic.direccion_numero }}</td>
+                                    <td>{{ complaint.person_juridic.direccion_calle }} , Número {{ complaint.person_juridic.direccion_numero }}</td>
                                     <td>{{ complaint.person_juridic.municipio }}</td>
                                 {% endif %}
                                 <td>{{ complaint.topic }}</td>
@@ -73,23 +73,6 @@
             </div>
         </div>
     </div>
-
-    <div id="form_natural" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static"
-         data-keyboard="false">
-        {% include 'dpv_complaint/form_natural_person.html' %}
-
-    </div>
-    <div id="form_juridic" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static"
-         data-keyboard="false">
-        {% include 'dpv_complaint/form_juridic.html' %}
-
-    </div>
-    {% if perms.provincia.delete_provincia %}
-        <div id="delete_provincia" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static"
-             data-keyboard="false">
-            {% include 'dpv_nomencladores/delete_provincia.html' %}
-        </div>
-    {% endif %}
 
 {% endblock content_page %}
 {% block extra_scripts %}

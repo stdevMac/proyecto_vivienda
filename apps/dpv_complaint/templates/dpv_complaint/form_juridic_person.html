@@ -1,21 +1,22 @@
 {% extends 'layouts/base.html' %}
 {% block content_page %}
-    {#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
-    {% block breadcrumbs %}
-        {{ form_name }}
-
-
-    {% endblock breadcrumbs %}
-    {% block page_title %}
-        Quejas
-    {% endblock page_title %}
     <form method="POST" class="post-form">
 
         {% csrf_token %}
         <div>
+            <div class="card-header">
+                <strong class="card-title">{{ form_name }}</strong>
+                <a role="button" class="pull-right btn btn-success btn-sm"
+                href={% url 'add_natural_person' %}><i class="fa fa-plus" >
+                    Agregar Queja Natural</i></a>
+                <a role="button" class="pull-right
+                   btn btn-success btn-sm" href={% url 'add_juridic_person' %} ><i class="fa fa-plus" >
+                    Agregar Queja Juridica</i></a>
+
+            </div>
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Persona Natural</h4>
+                    <h4 class="modal-title">Persona Jurídica</h4>
                     <div class="actions">
                         <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     </div>

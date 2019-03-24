@@ -48,12 +48,7 @@
                                 {% if assigned.complaint.department %}
                                     <td>{{ assigned.complaint.department.nombre }}</td>
                                 {% else %}
-                                    <td>Queja
-                                    sin
-                                    asignar
-                                    área
-                                    de
-                                    Trabajo</td>
+                                    <td><p> Queja sin asignar área de Trabajo</p></td>
                                 {% endif %}
 
                                 <td><a href={% url 'watch_complaint' complaint_id=assigned.complaint.id %}> Ver datos de

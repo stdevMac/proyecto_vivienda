@@ -31,12 +31,16 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
             # Set in history
             history = HistoryComplaint()
             history.complaint = Complaint.objects.get(id=post.complaint.id)
-            history.date_of_status = WaitingForDistribution.objects.filter(id=post.complaint.id).\
-                first().enter_date
-            history.current_status = 'Esperando Asignación'
-            history.save()
+            if WaitingForDistribution.objects.filter(id=post.complaint.id).exists():
+                history.date_of_status = WaitingForDistribution.objects.filter(id=post.complaint.id).\
+                    first().enter_date
+                history.current_status = 'Esperando Asignación'
+                WaitingForDistribution.objects.filter(id=post.complaint.id).delete()
+            else:
+                history.date_of_status = timezone.now()
+                history.current_status = 'Esperando aceptación del jefe'
 
-            WaitingForDistribution.objects.filter(id=post.complaint.id).delete()
+            history.save()
 
             return redirect(reverse_lazy('index_assigned_to_technical', args=[post.technical.id]))
     else:

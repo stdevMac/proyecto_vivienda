@@ -46,7 +46,7 @@ def middle_form_juridic_complaint(request, juridic_id):
 
 
 def form_juridic_for_complaint(request):
-    form_name = "Insertar persona natural"
+    form_name = "Insertar persona jurídica"
     if request.method == "POST":
         form_juridic = PersonaJuridicaForm(request.POST)
         email = form_juridic.data.get('email_address')

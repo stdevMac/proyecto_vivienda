@@ -36,4 +36,4 @@ class AcceptedForm(forms.ModelForm):
     class Meta:
         model = Accepted
         exclude = ('finished_date', 'complaint', 'boss_accepted', 'technical_work_in_complaint', 'technical_args')
-
+        labels = {'final_args': 'Argumentos Finales', 'answer': 'Respuesta'}
