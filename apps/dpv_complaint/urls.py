@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^wait_distribution/$', complaint_index.index_waiting_for_distribution, name="waiting_for_distribution"),
     url(r'^finished/$', complaint_index.index_finished_complaint, name="index_finished_complaint"),
     url(r'^accepted_all/$', complaint_index.index_accepted, name="index_accepted_all"),
-    url(r'^technicals/$', complaint_index.index_technical, name="list_technical"),
+    url(r'^technicals/$', complaint_index.index_technical, name="index_technicals"),
 
     re_path(r'^complaint_nat/(?P<person_id>[1-9]\d*)/$', render_natural_complaint.form_natural_complaint,
             name='add_natural_complaint'),
