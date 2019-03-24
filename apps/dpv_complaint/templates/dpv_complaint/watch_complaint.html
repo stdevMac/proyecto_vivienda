@@ -23,8 +23,16 @@
             {% if complaint_for_dist.department %}
                 <p><strong>Area de Trabajo Asignada:</strong> {{ complaint_for_dist.department.nombre }}</p>
                 {% if complaint_for_dist.status == 'P' or complaint_for_dist.status == 'Pendiente' %}
-                    <a href={% url 'trans_wait_to_assigned' complaint_id=complaint_for_dist.id %}> Asignar a un
-                        Tecnico</a>
+                    {% if complaint_for_dist.is_natural %}
+                        <a href={% url 'trans_wait_to_assigned' complaint_id=complaint_for_dist.id department_id=complaint_for_dist.department.id municipality_id=complaint_for_dist.person_natural.municipio.id %}>Asignar
+                            a un
+                            técnico</a>
+
+                    {% else %}
+                        <a href={% url 'trans_wait_to_assigned' complaint_id=complaint_for_dist.id department_id=complaint_for_dist.department.id municipality_id=complaint_for_dist.person_juridic.municipio.id %}>Asignar
+                            a un técnico</a>
+
+                    {% endif %}
                 {% else %}
                     link a mostrar los datos del tecnico que la acepto
                 {% endif %}

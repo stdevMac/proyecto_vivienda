@@ -10,10 +10,10 @@ def main_view(request):
     return render(request, "dpv_complaint/complaint_main_page.html")
 
 
-def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_id):
+def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_id, department_id, municipality_id):
     form_name = "Seleccione técnico"
     if request.method == "POST":
-        form = TechnicianForm(request.POST)
+        form = TechnicianForm(request.POST, data={'department_id': department_id, 'municipality_id': municipality_id})
         if form.is_valid():
             args = form.fields['technical'].queryset.first()
             post = AssignedToTechnician()
@@ -44,7 +44,7 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
 
             return redirect(reverse_lazy('index_assigned_to_technical', args=[post.technical.id]))
     else:
-        form = TechnicianForm()
+        form = TechnicianForm(data={'department_id': department_id, 'municipality_id': municipality_id})
     return render(request, "dpv_complaint/single_form.html", {'form': form, 'form_name': form_name})
 
 

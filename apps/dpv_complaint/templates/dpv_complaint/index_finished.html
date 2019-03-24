@@ -58,8 +58,16 @@
 
                                     </p>
                                     <p>
-                                        <a href={% url 'trans_wait_to_assigned' complaint_id=finished.complaint.id %}>Reasignar
-                                            técnico</a></p>
+                                        {% if finished.complaint.is_natural %}
+                                            <a href={% url 'trans_wait_to_assigned' complaint_id=finished.complaint.id department_id=finished.complaint.department.id municipality_id=finished.complaint.person_natural.municipio.id %}>Reasignar
+                                                técnico</a>
+
+                                        {% else %}
+                                            <a href={% url 'trans_wait_to_assigned' complaint_id=finished.complaint.id department_id=finished.complaint.department.id municipality_id=finished.complaint.person_juridic.municipio.id %}>Reasignar
+                                                técnico</a>
+
+                                        {% endif %}
+                                    </p>
                                     <p><a href={% url 'assign_department' complaint_id=finished.complaint.id %}>Reasignar
                                         departamento</a></p>
 

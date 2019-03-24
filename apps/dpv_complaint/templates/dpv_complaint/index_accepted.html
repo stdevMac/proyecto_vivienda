@@ -44,10 +44,10 @@
                         </thead>
                         <tbody>
                         {% for complaint_accepted in index %}
-                            <td> {{ complaint_accepted.complaint.number }} <a href={% url 'watch_complaint' complaint_id=complaint_accepted.complaint.id %}> Ver datos de la queja </a></td>
+                            <td><a href={% url 'watch_complaint' complaint_id=complaint_accepted.complaint.id %}>{{ complaint_accepted.complaint.number }}</a></td>
                             <td> {{ complaint_accepted.technical_args }} </td>
                             <td> {{ complaint_accepted.technical_work_in_complaint.profile.datos_personales.nombre }} </td>
-                            <td> {{ complaint_finished.technical_work_in_complaint.profile.centro_trabajo.nombre }} </td>
+                            <td> {{ complaint_accepted.technical_work_in_complaint.profile.centro_trabajo.nombre }} </td>
                             <td> {{ complaint_accepted.final_args }} </td>
                             <td> {{ complaint_accepted.boss_accepted.datos_personales.nombre }} </td>
                             <td><a href={% url 'accepted_complaint' accepted_id=complaint_accepted.id %}> Ver Todos los Datos </a></td>
