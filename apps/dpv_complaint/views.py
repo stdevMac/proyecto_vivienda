@@ -1,15 +1,16 @@
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
-
-
+from django.contrib.auth.decorators import permission_required, login_required
 from .forms import *
 from .models import *
 
 
+@login_required()
 def main_view(request):
     return render(request, "dpv_complaint/complaint_main_page.html")
 
 
+@permission_required('dpv_complaint.add_assignedtotechnician')
 def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_id, department_id, municipality_id):
     form_name = "Seleccione técnico"
     if request.method == "POST":
@@ -48,6 +49,7 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
     return render(request, "dpv_complaint/single_form.html", {'form': form, 'form_name': form_name})
 
 
+@permission_required('dpv_complaint.add_finishedcomplaint')
 def from_assigned_to_technician_to_finished_complaint(request, complaint_id, technical_id):
     form_name = "Dar respuesta a la queja"
     if request.method == "POST":
@@ -79,6 +81,7 @@ def from_assigned_to_technician_to_finished_complaint(request, complaint_id, tec
     return render(request, "dpv_complaint/assigned_to_finished.html", {'form': form, 'form_name': form_name})
 
 
+@permission_required('dpv_complaint.add_accepted')
 def from_finished_complaint_to_accepted_complaint(request, complaint_id, technical_id):
     form_name = "Quejas aceptadas"
     if request.method == "POST":

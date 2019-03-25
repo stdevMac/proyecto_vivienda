@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from apps.dpv_complaint.forms import *
@@ -13,6 +14,7 @@ def check_natural_person(ci, email_address):
     return by_ci.exists() or by_email.exists()
 
 
+@permission_required('dpv_complaint.add_complaint')
 def form_natural_complaint(request, person_id):
     form_name = "Datos de Queja Natural"
     if request.method == "POST":
@@ -36,6 +38,7 @@ def form_natural_complaint(request, person_id):
                   {'form': form_complaint, 'form_name': form_name})
 
 
+@permission_required('dpv_complaint.add_complaint')
 def middle_form_natural_complaint(request, person_id):
     complaints = Complaint.objects.all().filter(person_natural=person_id)
     if complaints.exists():
@@ -46,6 +49,7 @@ def middle_form_natural_complaint(request, person_id):
     pass
 
 
+@permission_required('dpv_complaint.add_complaint')
 def form_person_for_complaint(request):
     form_name = "Insertar persona natural"
     if request.method == "POST":

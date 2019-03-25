@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from apps.dpv_complaint.forms import *
@@ -13,6 +14,7 @@ def check_juridic_person(codigo_nit, email_address):
     return by_nit.exists() or by_email.exists()
 
 
+@permission_required('dpv_complaint.add_complaint')
 def form_juridic_complaint(request, juridic_id):
     form_name = "Queja de persona jurídica"
     if request.method == "POST":
@@ -36,6 +38,7 @@ def form_juridic_complaint(request, juridic_id):
                   {'form': form_complaint, 'form_name': form_name})
 
 
+@permission_required('dpv_complaint.add_complaint')
 def middle_form_juridic_complaint(request, juridic_id):
     complaints = Complaint.objects.all().filter(person_juridic=juridic_id)
     if complaints.exists():
@@ -45,6 +48,7 @@ def middle_form_juridic_complaint(request, juridic_id):
         return redirect(reverse_lazy('add_juridic_complaint', args=[juridic_id]))
 
 
+@permission_required('dpv_complaint.add_complaint')
 def form_juridic_for_complaint(request):
     form_name = "Insertar persona jurídica"
     if request.method == "POST":

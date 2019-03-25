@@ -1,27 +1,11 @@
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from apps.dpv_complaint.forms import *
 from apps.dpv_complaint.models import *
 
 
-# def form_finished_complaint(request):
-#     form_name = "Queja por Responder"
-#     if request.method == "POST":
-#         form = FinishedComplaintForm(request.POST)
-#         if form.is_valid():
-#             post = form.save(commit=False)
-#             post.enter_date = timezone.now()
-#             post.id = form.pk
-#             post.save()
-#
-#             history =
-#
-#             return redirect(reverse_lazy(''))
-#     else:
-#         form = FinishedComplaintForm()
-#     return render(request, "dpv_complaint/single_form.html", {'form': form, 'form_name': form_name})
-#
-
+@permission_required('dpv_complaint.add_accepted')
 def form_accepted(request, finished_id):
     form_name = "Quejas Aceptadas"
     if request.method == "POST":
@@ -42,10 +26,11 @@ def form_accepted(request, finished_id):
             post.save()
             return redirect(reverse_lazy('index_accepted'))
     else:
-        form = FinishedComplaintForm()
+        form = AcceptedForm()
     return render(request, "", {'form': form, 'form_name': form_name})
 
 
+@permission_required('dpv_complaint.change_complaint')
 def assign_department(request, complaint_id):
     form_name = "Asignar Departamento"
     if request.method == 'POST':
