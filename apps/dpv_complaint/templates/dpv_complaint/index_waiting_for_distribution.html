@@ -8,77 +8,58 @@
 {% block breadcrumbs %}
     {{ block.super }}
     {% if '/quejas/wait_distribution/' == request.path %}
-    <li class="active">Quejas en Espera</li>
+        <li class="active">Quejas en Espera</li>
     {% else %}
-    <li>
-        <a href="{% url 'waiting_for_distribution' %}">
-            Quejas en Espera
-        </a>
-    </li>
+        <li>
+            <a href="{% url 'waiting_for_distribution' %}">
+                Quejas en Espera
+            </a>
+        </li>
     {% endif %}
 {% endblock breadcrumbs %}
 {% block content_page %}
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-{#                <strong class="card-title">Quejas en Espera</strong>#}
-{#                    <a href="{% url 'add_natural_person' %}" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>#}
-{#                        Agregar Queja Natural</a>#}
-{#                    <a href="{% url 'add_juridic_complaint' %}" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>#}
-{#                        Agregar Queja Juridica</a>#}
-
-        </div>
+            </div>
             <div class="card-body">
                 {% if index %}
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
                         <tr>
                             <th>Número</th>
                             <th>Nombre</th>
-                            <th>Titulo</th>
+                            <th>Asunto</th>
                             <th>Cuerpo</th>
                             <th>Operaciones</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    {% for complaint_for_dist in index %}
-                        <tr>
-                            <td>{{complaint_for_dist.complaint.number}}</td>
-                            {% if complaint_for_dist.complaint.is_natural %}
-                                <td>{{ complaint_for_dist.complaint.person_natural.nombre }} {{ complaint_for_dist.complaint.person_natural.apellidos }}</td>
-                            {% else %}
-                                <td>{{ complaint_for_dist.complaint.person_juridic.nombre }}</td>
-                            {% endif %}
-                            <td>{{complaint_for_dist.complaint.topic}}</td>
-                            <td>{{complaint_for_dist.complaint.body}}</td>
-                            <td>
-                                <p>Asignar Departamento!!</p>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for complaint_for_dist in index %}
+                            <tr>
+                                <td>{{ complaint_for_dist.complaint.number }}</td>
+                                {% if complaint_for_dist.complaint.is_natural %}
+                                    <td>{{ complaint_for_dist.complaint.person_natural.nombre }} {{ complaint_for_dist.complaint.person_natural.apellidos }}</td>
+                                {% else %}
+                                    <td>{{ complaint_for_dist.complaint.person_juridic.nombre }}</td>
+                                {% endif %}
+                                <td>{{ complaint_for_dist.complaint.topic }}</td>
+                                <td>{{ complaint_for_dist.complaint.body }}</td>
+                                <td>
+                                    <p>Asignar Departamento!!</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 {% else %}
-                <div class="alert alert-info">
-                    <h2 class="text-center">No hay quejas registradas en espera de distribución</h2>
-                </div>
+                    <div class="alert alert-info">
+                        <h2 class="text-center">No hay quejas registradas en espera de distribución</h2>
+                    </div>
                 {% endif %}
             </div>
         </div>
     </div>
-
-{% if perms.dpv_events.add_provincia %}
-    <div id="form_provincia" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            {% include 'dpv_nomencladores/form_provincia.html' %}
-
-    </div>
-{% endif %}
-{% if perms.provincia.delete_provincia %}
-    <div id="delete_provincia" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            {% include 'dpv_nomencladores/delete_provincia.html' %}
-    </div>
-{% endif %}
-
 {% endblock content_page %}
 {% block extra_scripts %}
     <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
@@ -93,9 +74,9 @@
     <script src="{% static 'dpv_base/js/lib/data-table/buttons.colVis.min.js' %}"></script>
     <script src="{% static 'dpv_base/js/lib/data-table/datatables-init.js' %}"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-          $('#bootstrap-data-table-export').DataTable();
-        } );
+        $(document).ready(function () {
+            $('#bootstrap-data-table-export').DataTable();
+        });
     </script>
 {% endblock extra_scripts %}
 {% block init_jquery %} {% endblock init_jquery %}

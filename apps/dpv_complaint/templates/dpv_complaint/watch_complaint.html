@@ -7,9 +7,9 @@
     {% endblock breadcrumbs %}
     {% if complaint %}
         {% for complaint_for_dist in complaint %}
-            <p><strong>Numero de la Queja:</strong> {{ complaint_for_dist.number }}</p>
+            <p><strong>Número de la Queja:</strong> {{ complaint_for_dist.number }}</p>
             <p><strong>Procedencia:</strong> {{ complaint_for_dist.procedency }}</p>
-            <p><strong>Titulo:</strong> {{ complaint_for_dist.topic }}</p>
+            <p><strong>Asunto:</strong> {{ complaint_for_dist.topic }}</p>
             <p><strong>Cuerpo:</strong> {{ complaint_for_dist.body }}</p>
             <p><strong>Estado:</strong> {{ complaint_for_dist.status }}</p>
             <p><strong>Fecha de Entrada:</strong> {{ complaint_for_dist.enter_date }}</p>

@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fecha', models.DateTimeField(auto_created=True, auto_now_add=True, help_text='Fecha en que se introdujo el local al sistema.')),
-                ('direccion_numero', models.CharField(help_text='Numero de la dirección', max_length=10, verbose_name='Número')),
+                ('direccion_numero', models.CharField(help_text='Número de la dirección', max_length=10, verbose_name='Número')),
                 ('no_viviendas', models.PositiveSmallIntegerField(help_text='Total de viviendas en el local', verbose_name='Total de viviendas')),
                 ('aprobado', models.BooleanField(default=False, help_text='Marque si está aprobado el local')),
                 ('pendiente', models.PositiveSmallIntegerField(help_text='Viviendas pendientes de aprobación', verbose_name='Pendientes de aprobación')),

@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 # Create your models here.
 class Local(models.Model):
     direccion_calle = models.ForeignKey(Calle, related_name="calle_principal", help_text="Calle de la direccion", on_delete=models.CASCADE, verbose_name="Calle")
-    direccion_numero = models.CharField(max_length=10, help_text="Numero de la dirección", verbose_name="Número")
+    direccion_numero = models.CharField(max_length=10, help_text="Número de la dirección", verbose_name="Número")
     piso = models.ForeignKey(Piso, help_text="Piso de la direccion del local", on_delete=models.CASCADE)
     direccion_entre1 = models.ForeignKey(Calle, related_name="entrecalle1", verbose_name="Primera Entrecalle", max_length=50, help_text="Primera entre calle de la dirección", on_delete=models.CASCADE)
     direccion_entre2 = models.ForeignKey(Calle, related_name="entrecalle2", verbose_name="Segunda Entrecalle", max_length=50, help_text="Segunda entre calle de la dirección", on_delete=models.CASCADE)

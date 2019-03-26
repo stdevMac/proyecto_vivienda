@@ -1,55 +1,62 @@
 {% extends 'layouts/base.html' %}
 {% block content_page %}
-{#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
-{% block breadcrumbs %}
-    {{block.super }}
+    {% block breadcrumbs %}
+        {{ block.super }}
 
-{% endblock breadcrumbs %}
+    {% endblock breadcrumbs %}
 
-        <style type="text/css">
+    <style type="text/css">
         td {
             padding: 0px 8px 0px 8px;
         }
     </style>
 
-    <h1>{{index_name}}</h1>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
 
-    {% if index %}
-        <table>
-        <thead>
-            <tr>
-                <th>Numero</th>
-                <th>Nombre </th>
-                <th>Titulo</th>
-                <th>Cuerpo</th>
-                <th>Departamento</th>
-                <th>Todos los Datos</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for complaint in index %}
-            <tr>
-                <td >{{ complaint.number }}</td>
-                {% if complaint.is_natural %}
-                    <td>{{ complaint.person_natural.nombre  }}</td>
-                {% else %}
-                    <td>{{ complaint.person_juridic.nombre  }}</td>
-                {% endif %}
-                <td>{{ complaint.topic }}</td>
-                <td>{{ complaint.body }}</td>
-                {% if complaint.department %}
-                    <td>{{ complaint.department.nombre }}</td>
-                {% else %}
-                    <td>Queja sin asignar area de Trabajo</td>
-                {% endif %}
+                {% if index %}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Nombre</th>
+                            <th>Asunto</th>
+                            <th>Cuerpo</th>
+                            <th>Departamento</th>
+                            <th>Todos los Datos</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for complaint in index %}
+                            <tr>
+                                <td>{{ complaint.number }}</td>
+                                {% if complaint.is_natural %}
+                                    <td>{{ complaint.person_natural.nombre }}</td>
+                                {% else %}
+                                    <td>{{ complaint.person_juridic.nombre }}</td>
+                                {% endif %}
+                                <td>{{ complaint.topic }}</td>
+                                <td>{{ complaint.body }}</td>
+                                {% if complaint.department %}
+                                    <td>{{ complaint.department.nombre }}</td>
+                                {% else %}
+                                    <td><p>Queja sin asignar area de Trabajo</p></td>
+                                {% endif %}
 
-                <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los Datos </a></td>
-                <td><a href={% url 'form_finished_complaint' complaint_id=complaint.id tecnic_id=tecnic_id %}> Responder Queja </a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        </table>
-    {% else %}
-        <p> No existen quejas registradas.</p>
-    {% endif %}
-{% endblock  %}
+                                <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver datos de la queja</a></td>
+                                <td>
+                                    <a href={% url 'form_finished_complaint' complaint_id=complaint.id technical_id=tecnic_id %}>
+                                        Responder</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                {% else %}
+                    <p> No existen quejas asignadas a un técnico</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

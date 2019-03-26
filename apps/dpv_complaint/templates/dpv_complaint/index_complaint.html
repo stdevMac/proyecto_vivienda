@@ -1,8 +1,7 @@
 {% extends 'layouts/base.html' %}
 {% block content_page %}
-    {#{% block breadcrumbs_title %} {{index_name}} {% endblock breadcrumbs_title %}#}
     {% block breadcrumbs %}
-        Cojonneeee
+
 
     {% endblock breadcrumbs %}
     <style type="text/css">
@@ -11,51 +10,53 @@
         }
     </style>
 
-    <h1>{{ index_name }}</h1>
-    <a href={% url 'add_natural_person' %}> + Insertar Queja Natural</a>
-    <a href={% url 'add_juridic_person' %}> + Insertar Queja Juridica</a>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
 
-    {% if index %}
-        <table>
-            <thead>
-            <tr>
-                <th>Numero</th>
-                <th>Nombre</th>
-                <th>Titulo</th>
-                <th>Cuerpo</th>
-                <th>Departamento</th>
-                <th>Todos los Datos</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for complaint in index %}
-                <tr>
-                    <td>{{ complaint.number }}</td>
-                    {% if complaint.is_natural %}
-                        <td>{{ complaint.person_natural.nombre }}</td>
-                    {% else %}
-                        <td>{{ complaint.person_juridic.nombre }}</td>
-                    {% endif %}
-                    <td>{{ complaint.topic }}</td>
-                    <td>{{ complaint.body }}</td>
-                    {% if complaint.department %}
-                        <td>{{ complaint.department.nombre }}</td>
-                    {% else %}
-                        <td>Queja
-                        sin
-                        asignar
-                        area
-                        de
-                        Trabajo</td>
-                    {% endif %}
+                <h1>{{ index_name }}</h1>
+                <a href={% url 'add_natural_person' %}> + Insertar Queja Natural</a>
+                <a href={% url 'add_juridic_person' %}> + Insertar Queja Juridica</a>
 
-                    <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los Datos </a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p> No existen quejas registradas.</p>
-    {% endif %}
+                {% if index %}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Nombre</th>
+                            <th>Asunto</th>
+                            <th>Cuerpo</th>
+                            <th>Departamento</th>
+                            <th>Operaciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for complaint in index %}
+                            <tr>
+                                <td>{{ complaint.number }}</td>
+                                {% if complaint.is_natural %}
+                                    <td>{{ complaint.person_natural.nombre }}</td>
+                                {% else %}
+                                    <td>{{ complaint.person_juridic.nombre }}</td>
+                                {% endif %}
+                                <td>{{ complaint.topic }}</td>
+                                <td>{{ complaint.body }}</td>
+                                {% if complaint.department %}
+                                    <td>{{ complaint.department.nombre }}</td>
+                                {% else %}
+                                    <td><p>Queja sin asignar área de Trabajo</p></td>
+                                {% endif %}
 
+                                <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver datos de la
+                                    queja</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p> No existen quejas registradas.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
