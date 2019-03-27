@@ -1,8 +1,8 @@
-{% extends 'layouts/base.html' %}
+{% extends 'dpv_complaint/complaint_main_page.html' %}
 
+{% block breadcrumbs_title %}
+{% endblock breadcrumbs_title %}
 {% block content_page %}
-    {% block breadcrumbs_title %}
-    {% endblock breadcrumbs_title %}
     <form method="POST" class="post-form">
         {% csrf_token %}
         <div>

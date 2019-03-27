@@ -1,8 +1,19 @@
-{% extends 'layouts/base.html' %}
+{% extends 'dpv_complaint/complaint_main_page.html' %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% if '/quejas/' == request.path %}
+        <li class="active">Quejas</li>
+    {% else %}
+        <li>
+            <a href="{% url 'main_complaint' %}">
+                Quejas
+            </a>
+        </li>
+    {% endif %}
+{% endblock breadcrumbs %}
+{% block breadcrumb_title %}
+{% endblock breadcrumb_title %}
 {% block content_page %}
-    {% block breadcrumbs %}
-    {% endblock breadcrumbs %}
-
     <style type="text/css">
         td {
             padding: 0px 8px 0px 8px;

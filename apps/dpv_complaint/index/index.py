@@ -51,8 +51,18 @@ def index_accepted(request):
 
 
 def watch_complaint(request, complaint_id):
-    complaint = Complaint.objects.filter(id=complaint_id)
-    return render(request, "dpv_complaint/watch_complaint.html", {'complaint': complaint})
+    complaint = Complaint.objects.get(id=complaint_id)
+    person = None
+    if not complaint.anonymous:
+        if complaint.is_natural:
+            person = PersonaNatural.objects.get(id=complaint.person_natural.id)
+            pass
+        else:
+            person = PersonaJuridica.objects.get(id=complaint.person_juridic.id)
+    else:
+        # TODO Anonymous
+        pass
+    return render(request, "dpv_complaint/watch_complaint.html", {'complaint_for_dist': complaint, 'person': person})
 
 
 def watch_finished(request, finished_id):
