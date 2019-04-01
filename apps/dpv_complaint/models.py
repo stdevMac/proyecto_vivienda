@@ -118,3 +118,8 @@ class HistoryComplaint(models.Model):
     current_status = models.CharField(default='Pendiente', choices=stat_history, max_length=200)
     approach = models.ForeignKey(Approach, on_delete=False, blank=True, null=True)
     is_complaint = models.BooleanField(default=True)
+
+
+class CurrentComplaint(models.Model):
+    complaint = models.ForeignKey(Complaint, on_delete=False)
+    current_status = models.CharField()

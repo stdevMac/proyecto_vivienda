@@ -32,7 +32,6 @@ urlpatterns = [
             complaint_index.index_assigned_to_technician, name="index_assigned_to_technical"),
     re_path(r'^add_finished/(?P<complaint_id>[1-9]\d*)/(?P<technical_id>[0-9]*)/$',
             complaint_view.from_assigned_to_technician_to_finished_complaint, name="form_finished_complaint"),
-    re_path(r'^add_accepted/(?P<finished_id>[1-9]\d*)/$', rendered_form.form_accepted, name="form_accepted_complaint"),
     re_path(r'^complaint/(?P<complaint_id>[1-9]\d*)/$', complaint_index.watch_complaint, name="watch_complaint"),
     re_path(r'^watch_finished/(?P<finished_id>[1-9]\d*)/$', complaint_index.watch_finished, name="watch_finished"),
     re_path(r'^trans_wait_to_assigned/(?P<complaint_id>[1-9]\d*)/(?P<department_id>[1-9]\d*)/'

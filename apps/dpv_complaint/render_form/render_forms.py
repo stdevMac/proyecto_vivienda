@@ -5,31 +5,6 @@ from apps.dpv_complaint.forms import *
 from apps.dpv_complaint.models import *
 
 
-@permission_required('dpv_complaint.add_accepted')
-def form_accepted(request, finished_id):
-    form_name = "Quejas Aceptadas"
-    if request.method == "POST":
-        form = AcceptedForm(request.POST)
-        if form.is_valid():
-            finished = FinishedComplaint.objects.get(id=finished_id)
-            post = form.save(commit=False)
-            post.finished_date = timezone.now()
-            post.complaint = finished.complaint
-            post.technical_work_in_complaint = finished.technical
-            post.technical_args = finished.technical_args
-            post.boss_accepted = Perfil.objects.get(id=request.user.id)
-            post.id = post.pk
-
-            history = HistoryComplaint(complaint=Complaint.objects.get(id=finished.complaint.id),
-                                       current_status='Finalizada')
-            history.save()
-            post.save()
-            return redirect(reverse_lazy('index_accepted'))
-    else:
-        form = AcceptedForm()
-    return render(request, "", {'form': form, 'form_name': form_name})
-
-
 @permission_required('dpv_complaint.change_complaint')
 def assign_department(request, complaint_id):
     form_name = "Asignar Departamento"
@@ -39,9 +14,13 @@ def assign_department(request, complaint_id):
             args = form.fields['department'].queryset.first()
             complaint = Complaint.objects.filter(id=complaint_id).update(department=args,
                                                                          assigned_to_department_date=timezone.now())
-            history = HistoryComplaint(assigned_by=Perfil.objects.get(id=request.user.id), complaint=Complaint.objects.get(id=complaint),
-                                       current_status='Esperando Asignación')
+            history = HistoryComplaint(assigned_by=Perfil.objects.get(id=request.user.id), complaint=complaint,
+                                       current_status='Esperando Asignación', date_of_status=timezone.now())
+
             history.save()
+
+            CurrentComplaint.objects.filter(complaint=complaint_id).update(
+                current_status=history.current_status)
 
             return redirect(reverse_lazy('index_natural_complaint'))
     else:

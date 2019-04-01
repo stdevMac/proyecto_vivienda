@@ -31,6 +31,16 @@ def form_natural_complaint(request, person_id):
             p.complaint = complaint
             p.enterDate = timezone.now()
             p.save()
+
+            history = HistoryComplaint(complaint=complaint, date_of_status=p.enter_date,
+                                       current_status='Pendiente')
+            history.save()
+
+            current_complaint = CurrentComplaint()
+            current_complaint.complaint = complaint
+            current_complaint.current_status = history.current_status
+            current_complaint.save()
+
             return redirect(reverse_lazy('index_natural_complaint'))
     else:
         form_complaint = ComplaintForm()
