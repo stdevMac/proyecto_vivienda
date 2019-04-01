@@ -14,9 +14,16 @@
         <div class="card">
             <div class="card-body">
 
-                <h1>{{ index_name }}</h1>
-                <a href={% url 'add_natural_person' %}> + Insertar Queja Natural</a>
-                <a href={% url 'add_juridic_person' %}> + Insertar Queja Juridica</a>
+              <div class="card-header">
+                <strong class="card-title">{{ form_name }}</strong>
+                <a role="button" class="pull-right btn btn-success btn-sm"
+                   href={% url 'add_natural_person' %}><i class="fa fa-plus">
+                    Agregar Queja Natural</i></a>
+                <a role="button" class="pull-right
+                   btn btn-success btn-sm" href={% url 'add_juridic_person' %}><i class="fa fa-plus">
+                    Agregar Queja Juridica</i></a>
+
+            </div>
 
                 {% if index %}
                     <table>

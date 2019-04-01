@@ -2,12 +2,12 @@
 
 {% load static %}
 
+
+{% block breadcrumbs %}
+    {{ block.super }}
+
+{% endblock breadcrumbs %}
 {% block content_page %}
-
-    {% block breadcrumbs %}
-        {{ block.super }}
-
-    {% endblock breadcrumbs %}
 
     <style type="text/css">
         td {
@@ -19,13 +19,13 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">Quejas</strong>
-                <a href="#form_natural" role="button" data-toggle="modal" class="pull-right btn btn-success btn-sm"><i
-                        class="fa fa-plus"></i>
-                    Agregar Queja Natural</a>
-                <a href="#form_juridic" role="button" data-toggle="modal"
-                   class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i>
-                    Agregar Queja Juridica</a>
+                <strong class="card-title">{{ form_name }}</strong>
+                <a role="button" class="pull-right btn btn-success btn-sm"
+                   href={% url 'add_natural_person' %}><i class="fa fa-plus">
+                    Agregar Queja Natural</i></a>
+                <a role="button" class="pull-right
+                   btn btn-success btn-sm" href={% url 'add_juridic_person' %}><i class="fa fa-plus">
+                    Agregar Queja Juridica</i></a>
 
             </div>
             <div class="card-body">
@@ -44,13 +44,16 @@
                         </thead>
                         <tbody>
                         {% for complaint_accepted in index %}
-                            <td><a href={% url 'watch_complaint' complaint_id=complaint_accepted.complaint.id %}>{{ complaint_accepted.complaint.number }}</a></td>
-                            <td> {{ complaint_accepted.technical_args }} </td>
-                            <td> {{ complaint_accepted.technical_work_in_complaint.profile.datos_personales.nombre }} </td>
-                            <td> {{ complaint_accepted.technical_work_in_complaint.profile.centro_trabajo.nombre }} </td>
-                            <td> {{ complaint_accepted.final_args }} </td>
-                            <td> {{ complaint_accepted.boss_accepted.datos_personales.nombre }} </td>
-                            <td><a href={% url 'accepted_complaint' accepted_id=complaint_accepted.id %}> Ver Todos los Datos </a></td>
+                            <td>
+                                <a href={% url 'watch_complaint' complaint_id=complaint_accepted.complaint.id %}>{{ complaint_accepted.complaint.number }}</a>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href={% url 'accepted_complaint' accepted_id=complaint_accepted.id %}> Ver Todos los
+                                Datos </a></td>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -63,23 +66,3 @@
         </div>
     </div>
 {% endblock %}
-
-{% block extra_scripts %}
-    <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.buttons.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/jszip.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/pdfmake.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/vfs_fonts.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/buttons.html5.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/buttons.print.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/buttons.colVis.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/datatables-init.js' %}"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#bootstrap-data-table-export').DataTable();
-        });
-    </script>
-{% endblock extra_scripts %}
-{% block init_jquery %} {% endblock init_jquery %}

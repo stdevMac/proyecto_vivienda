@@ -1,9 +1,5 @@
 {% extends 'dpv_complaint/complaint_main_page.html' %}
 
-{% load static %}
-
-{% block breadcrumb_title %} Quejas Finalizadas {% endblock breadcrumb_title %}
-
 {% block content_page %}
 
     <div class="col-md-12">
@@ -85,23 +81,3 @@
         </div>
     </div>
 {% endblock %}
-
-{% block extra_scripts %}
-    <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/dataTables.buttons.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/jszip.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/pdfmake.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/vfs_fonts.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/buttons.html5.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/buttons.print.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/buttons.colVis.min.js' %}"></script>
-    <script src="{% static 'dpv_base/js/lib/data-table/datatables-init.js' %}"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#bootstrap-data-table-export').DataTable();
-        });
-    </script>
-{% endblock extra_scripts %}
-{% block init_jquery %} {% endblock init_jquery %}

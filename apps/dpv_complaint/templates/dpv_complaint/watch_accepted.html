@@ -1,14 +1,14 @@
 {% extends 'dpv_complaint/complaint_main_page.html' %}
+{% block breadcrumbs_title %} {{ index_name }} {% endblock breadcrumbs_title %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+{% endblock breadcrumbs %}
 {% block content_page %}
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
 
-                {% block breadcrumbs_title %} {{ index_name }} {% endblock breadcrumbs_title %}
-
-                {% block breadcrumbs %}
-                    {{ block.super }}
-                {% endblock breadcrumbs %}
                 {% if not index.exists %}
                     <p>Problemas mostrando los datos de la queja finalizada</p>
                 {% else %}

@@ -1,9 +1,9 @@
 {% extends 'dpv_complaint/complaint_main_page.html' %}
-{% block content_page %}
-    {% block breadcrumbs %}
-        {{ block.super }}
+{% block breadcrumbs %}
+    {{ block.super }}
 
-    {% endblock breadcrumbs %}
+{% endblock breadcrumbs %}
+{% block content_page %}
 
     <style type="text/css">
         td {
@@ -24,7 +24,7 @@
                             <th>Asunto</th>
                             <th>Cuerpo</th>
                             <th>Departamento</th>
-                            <th>Todos los Datos</th>
+                            <th>Operaciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -41,7 +41,7 @@
                                 {% if complaint.department %}
                                     <td>{{ complaint.department.nombre }}</td>
                                 {% else %}
-                                    <td><p>Queja sin asignar area de Trabajo</p></td>
+                                    <td><p>Queja sin asignar área de Trabajo</p></td>
                                 {% endif %}
 
                                 <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver datos de la queja</a></td>

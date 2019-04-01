@@ -7,10 +7,10 @@
 {% block breadcrumb_title %} Gestión de Quejas {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% if '/quejas/natural/' == request.path or '/quejas/juridic/' == request.path %}
-        / <a class="active" href={% url 'main_complaint' %}>Quejas</a>
-    {% else %}
-        <li>Quejas</li>
+    {% if '/quejas/natural/' == request.path%}
+         <a class="active" href={% url 'main_complaint' %}>Persona natural</a>
+    {% elif '/quejas/juridic/' == request.path  %}
+         <a class="active" href={% url 'main_complaint' %}>Persona jurídica</a>
     {% endif %}
 {% endblock breadcrumbs %}
 {% block content_page %}

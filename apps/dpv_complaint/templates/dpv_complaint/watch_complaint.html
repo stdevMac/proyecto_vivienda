@@ -1,10 +1,11 @@
 {% extends 'dpv_complaint/complaint_main_page.html' %}
-{% block content_page %}
-    {% block breadcrumbs_title %} {{ index_name }} {% endblock breadcrumbs_title %}
-    {% block breadcrumbs %}
-        {{ block.super }}
 
-    {% endblock breadcrumbs %}
+{% block breadcrumbs %}
+    {{ block.super }}
+
+{% endblock breadcrumbs %}
+
+{% block content_page %}
     {% if complaint_for_dist %}
         <p><strong>Número de la Queja:</strong> {{ complaint_for_dist.number }}</p>
         <p><strong>Procedencia:</strong> {{ complaint_for_dist.procedency }}</p>

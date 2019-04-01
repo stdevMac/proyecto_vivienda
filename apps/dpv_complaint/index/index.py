@@ -47,7 +47,7 @@ def index_finished_complaint(request):
 def index_accepted(request):
     index_name = 'Índice de Quejas Aceptadas'
     elms = Accepted.objects.all()
-    return render(request, "dpv_complaint/index_accepted.html", {'index': elms, 'index_name': index_name})
+    return render(request, "dpv_complaint/index_accepted_new.html", {'index': elms, 'index_name': index_name})
 
 
 def watch_complaint(request, complaint_id):
