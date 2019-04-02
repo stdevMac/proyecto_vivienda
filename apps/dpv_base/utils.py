@@ -32,13 +32,14 @@ def get_db_email_conf():
 
 
 def comapare_db_settings_conf(confdb, confset):
+    if not confdb or not confset or confdb.puerto is None or confset.puerto is None:
+        return False
     return confdb.usuario == confset.usuario and confdb.servidor == confset.servidor and int(confdb.puerto) == int(confset.puerto) and confdb.password == confset.password and confdb.use_tls == confset.use_tls and confdb.use_ssl == confset.use_ssl
 
 
 def set_settings_email_conf(configuration):
     if not configuration:
         return
-    print(dir(configuration))
     if configuration.use_ssl and configuration.use_tls:
         configuration.use_ssl = False
         configuration.use_tls = False
@@ -48,48 +49,11 @@ def set_settings_email_conf(configuration):
         settingdfile.close()
     except:
         print("no se pudo abrir el archivo para leerlo")
-    # for line in lines:
-    #     if 'EMAIL_HOST ' in line:
-    #         lines.remove(line)
-    #         new_line = 'EMAIL_HOST = "' + str(configuration.servidor) + '"\n'
-    #         lines.append(new_line)
-    #         print("entre host")
-    #     if 'EMAIL_HOST_PASSWORD ' in line:
-    #         # lines.remove(line)
-    #         new_line = 'EMAIL_HOST_PASSWORD = "' + str(configuration.password) + '"\n'
-    #         # new_line = 'EMAIL_HOST_PASSWORD = "password"\n'
-    #         lines.append(new_line)
-    #         print("entre pass")
-    #     if 'EMAIL_HOST_USER ' in line:
-    #         # lines.remove(line)
-    #         new_line = 'EMAIL_HOST_USER = "' + str(configuration.usuario) + '"\n'
-    #         # new_line = 'EMAIL_HOST_USER = "usermanual"\n'
-    #         lines.append(new_line)
-    #         print("entre user")
-    #     if 'EMAIL_PORT ' in line:
-    #         # lines.remove(line)
-    #         new_line = 'EMAIL_PORT = "' + str(configuration.puerto) + '"\n'
-    #         # new_line = 'EMAIL_PORT = "8000"\n'
-    #         lines.append(new_line)
-    #         print("entre port")
-    #     if 'EMAIL_USE_TLS ' in line:
-    #         # lines.remove(line)
-    #         new_line = 'EMAIL_USE_TLS = ' + str(configuration.use_tls) + '\n'
-    #         # new_line = 'EMAIL_USE_TLS = True\n'
-    #         lines.append(new_line)
-    #         print("entre tls")
-    #     if 'EMAIL_USE_SSL ' in line:
-    #         # lines.remove(line)
-    #         new_line = 'EMAIL_USE_SSL = ' + str(configuration.use_ssl) + '\n'
-    #         # new_line = 'EMAIL_USE_SSL = True\n'
-    #         lines.append(new_line)
-    #         print("entre ssl")
     try:
         settingdfile = open(os.path.join(settings.BASE_DIR, 'locales_viv/settings.py'), "w", encoding="utf-8")
     except:
         print("no se pudo escribir en el archivo")
     else:
-        #settingdfile.writelines(lines)
         for line in lines:
             if 'EMAIL_HOST ' in line:
                 new_line = 'EMAIL_HOST = "' + str(configuration.servidor) + '"\n'

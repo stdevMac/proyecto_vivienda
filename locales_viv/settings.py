@@ -158,8 +158,8 @@ UPDATING_LOCALS = 0
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 EMAIL_HOST = "mail.dpvhab.gob.cu"
-EMAIL_HOST_PASSWORD = ""
-EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = "1234qwer."
+EMAIL_HOST_USER = "pedro"
 EMAIL_PORT = "25"
-EMAIL_USE_TLS = False
+EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
