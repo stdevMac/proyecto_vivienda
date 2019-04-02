@@ -1,6 +1,10 @@
 from django.urls import path
-from .views import index
+from .views import index, stats, local_add, local_edit
 
 urlpatterns = [
     path('', index, name='locales_list'),
+    path('estadistico/', stats, name='locales_stats'),
+    path('estadistico/<int:id_municipio>', stats, name='locales_stats_mun'),
+    path('form/', local_add, name='locales_add'),
+    path('form/<int:id_local>', local_edit, name='locales_edit'),
 ]

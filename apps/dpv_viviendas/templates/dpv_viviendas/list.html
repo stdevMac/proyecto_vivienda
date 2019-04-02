@@ -22,46 +22,48 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Viviendas</strong>
-                {% if perms.vivienda.add_vivienda %}
-                <button type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Vivienda</button>
+                {% if perms.dpv_viviendas.add_vivienda %}
+                <a href="{% url 'vivienda_add' %}" type="button" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Vivienda</a>
                 {% endif %}
             </div>
             <div class="card-body">
                 {% if viviendas %}
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Ubicación Local</th>
-                            <th>No. de la Vivienda</th>
-                            <th>Propietario</th>
-                            <th>Cantidad Personas</th>
-                            <th>Concepto</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for vivienda in viviendas %}
-                        <tr>
-                            <td>{{vivienda.local_dado}}</td>
-                            <td>{{vivienda.numero}}</td>
-                            <td>{{vivienda.propietario}}</td>
-                            <td>{{vivienda.cantidad_persona}}</td>
-                            <td>{{vivienda.concepto}}</td>
-                            <td>
-                                {% if perms.vivienda.view_vivienda %}
-                                    <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
-                                {% endif %}
-                                {% if perms.vivienda.change_vivienda %}
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-                                {% endif %}
-                                {% if perms.vivienda.delete_vivienda %}
-                                    <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Ubicación Local</th>
+                                <th>No. de la Vivienda</th>
+                                <th>Propietario</th>
+                                <th>Cantidad Personas</th>
+                                <th>Concepto</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for vivienda in viviendas %}
+                            <tr>
+                                <td>{{vivienda.local_dado}}</td>
+                                <td>{{vivienda.numero}}</td>
+                                <td>{{vivienda.propietario}}</td>
+                                <td>{{vivienda.cantidad_persona}}</td>
+                                <td>{{vivienda.concepto}}</td>
+                                <td>
+                                    {% if perms.dpv_viviendas.view_vivienda %}
+                                        <a onclick="return abrir_modal('{% url 'vivienda_view' vivienda.id %}')" type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_viviendas.change_vivienda %}
+                                        <a href="{% url 'vivienda_edit' vivienda.id %}" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+                                    {% endif %}
+                                    {% if perms.dpv_viviendas.delete_vivienda %}
+                                        <a onclick="return abrir_modal('{% url 'vivienda_remove' vivienda.id %}')" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                 <div class="alert alert-info">
                     <h2 class="text-center">No hay Viviendas registradas que mostrar</h2>

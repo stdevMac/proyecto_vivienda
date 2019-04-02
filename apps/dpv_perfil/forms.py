@@ -12,16 +12,16 @@ class PerfilForm(forms.ModelForm):
         fields = ('notificacion_email', 'documentacion_email', 'avatar', 'centro_trabajo', 'depto_trabajo', )
 
 
-class UserForm(forms.ModelForm):
+class PerfilMForm(forms.ModelForm):
 
     class Meta:
-        model = User
-        fields = ('username', 'password', 'first_name', 'last_name', 'email', 'date_joined', 'groups',)
+        model = Perfil
+        fields = ('notificacion_email', 'documentacion_email', 'centro_trabajo', 'depto_trabajo', )
 
+        widgets = {
+            'notificacion_email': forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            'documentacion_email': forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            'centro_trabajo': forms.Select(attrs={"placeholder": "Seleccione una Unidad.", "class": "form-control"}),
+            'depto_trabajo': forms.Select(attrs={"placeholder": "Seleccione un Departamento.", "class": "form-control"}),
+        }
 
-class PersonaForm(forms.ModelForm):
-
-    class Meta:
-        model = Persona
-        fields = ('ci', 'municipio', 'direccion_calle', 'direccion_numero', 'direccion_entrecalle1', 'direccion_entrecalle2',
-                  'telefono', 'movil', 'genero', )
