@@ -117,7 +117,7 @@ def from_finished_complaint_to_accepted_complaint(request, complaint_id, technic
                 history.final_args = post.final_args
                 history.boss_answer = post.answer
                 history.boss = post.boss_accepted
-                history.date_of_status = post.enter_date
+                history.date_of_status = post.finished_date
                 history.current_status = 'Finalizada'
                 history.save()
 

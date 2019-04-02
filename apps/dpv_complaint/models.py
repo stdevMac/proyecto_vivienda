@@ -122,4 +122,4 @@ class HistoryComplaint(models.Model):
 
 class CurrentComplaint(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=False)
-    current_status = models.CharField()
+    current_status = models.CharField(max_length=100, default='Pendiente', choices=stat_history)
