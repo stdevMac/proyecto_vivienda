@@ -29,11 +29,13 @@ def form_natural_complaint(request, person_id):
             complaint.save()
             p = WaitingForDistribution()
             p.complaint = complaint
-            p.enterDate = timezone.now()
+            p.enter_date = timezone.now()
             p.save()
 
-            history = HistoryComplaint(complaint=complaint, date_of_status=p.enter_date,
-                                       current_status='Pendiente')
+            history = HistoryComplaint()
+            history.complaint = complaint
+            history.date_of_status = p.enter_date
+            history.current_status = 'Pendiente'
             history.save()
 
             current_complaint = CurrentComplaint()
