@@ -29,31 +29,42 @@
                 <div class="modal-body">
                     <form class="row" role="form" method="post">
                         <div class="col-md-12">
-                            <div class="form-control-sm">
-                                <label for="">Procedencia</label>
-                                {{ form.non_field_errors }}
-                                {{ form.origin }}
-                            </div>
-                            <div class="form-control-sm">
+                           <div class="form-control-sm">
                                 <label for="">Asunto*</label>
+                                <p>
+                                </p>
                                 {{ form.non_field_errors }}
                                 {{ form.topic }}
                             </div>
-                            <div class="body">
-                                <label for="">Cuerpo de la queja</label>
+                            <div class="form-control-sm">
+                                <label for="">Cuerpo de la queja*</label>
+                                <p>
+                                </p>
                                 {{ form.non_field_errors }}
                                 {{ form.body }}
                             </div>
                             <div class="form-control-sm">
                                 <label for="">Número*</label>
+                                <p>
+                                </p>
                                 {{ form.non_field_errors }}
                                 {{ form.number }}
                             </div>
                             <div class="form-control-sm">
                                 <label for="">Referencia</label>
+                                <p>
+                                </p>
                                 {{ form.non_field_errors }}
                                 {{ form.reference }}
                             </div>
+                             <div class="form-control-sm">
+                                <label for="">Procedencia</label>
+                                <p>
+                                </p>
+                                {{ form.non_field_errors }}
+                                {{ form.origin }}
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" href={% url 'main_complaint' %}>Cancelar

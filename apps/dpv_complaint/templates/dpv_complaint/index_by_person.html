@@ -7,21 +7,25 @@
     {% endblock breadcrumbs %}
     <style type="text/css">
         td {
-            padding: 0 8px 0 8px;
+            padding: 0px 8px 0px 8px;
         }
     </style>
+
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
 
                 <div class="card-header">
                     <strong class="card-title">{{ form_name }}</strong>
-                    <a role="button" class="pull-right btn btn-success btn-sm"
-                       href={% url 'add_natural_person' %}><i class="fa fa-plus">
-                        Agregar Queja Natural</i></a>
-                    <a role="button" class="pull-right
-                   btn btn-success btn-sm" href={% url 'add_juridic_person' %}><i class="fa fa-plus">
-                        Agregar Queja Juridica</i></a>
+                    {% if is_natural %}
+                        <a role="button" class="pull-right btn btn-success btn-sm"
+                           href={% url 'add_natural_complaint' person_id=person %}><i class="fa fa-plus">
+                            Agregar Queja Natural</i></a>
+                    {% else %}
+                        <a role="button" class="pull-right btn btn-success btn-sm"
+                           href={% url 'add_juridic_complaint' juridic_id=person %}><i class="fa fa-plus">
+                            Agregar Queja Natural</i></a>
+                    {% endif %}
 
                 </div>
 
@@ -58,6 +62,7 @@
                                     queja</a></td>
                             </tr>
                         {% endfor %}
+
                         </tbody>
                     </table>
                 {% else %}

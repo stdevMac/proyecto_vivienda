@@ -6,12 +6,11 @@ from apps.dpv_complaint.models import *
 from apps.dpv_persona.forms import PersonaJuridicaForm
 
 
-def check_juridic_person(codigo_nit, email_address):
+def check_juridic_person(codigo_nit):
     # Check if exist a person for the CI
     by_nit = PersonaJuridica.objects.filter(codigo_nit=codigo_nit)
     # Check if exist a person for the email
-    by_email = PersonaJuridica.objects.filter(email_address=email_address)
-    return by_nit.exists() or by_email.exists()
+    return by_nit.exists()
 
 
 @permission_required('dpv_complaint.add_complaint')
@@ -51,8 +50,10 @@ def form_juridic_complaint(request, juridic_id):
 def middle_form_juridic_complaint(request, juridic_id):
     complaints = Complaint.objects.all().filter(person_juridic=juridic_id)
     if complaints.exists():
-        return render(request, "dpv_complaint/index_by_juridic.html", {'index': complaints,
-                                                                       'index_name': 'Obtener persona por id'})
+        return render(request, "dpv_complaint/index_by_person.html", {'index': complaints,
+                                                                       'index_name': 'Obtener persona por id',
+                                                                       'person': juridic_id,
+                                                                       'is_natural': False})
     else:
         return redirect(reverse_lazy('add_juridic_complaint', args=[juridic_id]))
 
@@ -62,13 +63,9 @@ def form_juridic_for_complaint(request):
     form_name = "Insertar persona jurídica"
     if request.method == "POST":
         form_juridic = PersonaJuridicaForm(request.POST)
-        email = form_juridic.data.get('email_address')
         codigo_nit = form_juridic.data.get('codigo_nit')
-        if check_juridic_person(codigo_nit, email):
-            if email:
-                person = PersonaNatural.objects.get(email_address=email)
-            else:
-                person = PersonaNatural.objects.get(codigo_nit=codigo_nit)
+        if check_juridic_person(codigo_nit):
+            person = PersonaNatural.objects.get(codigo_nit=codigo_nit)
             return redirect(reverse_lazy('complaints_by_juridic', args=[person.id]))
 
         elif form_juridic.is_valid():

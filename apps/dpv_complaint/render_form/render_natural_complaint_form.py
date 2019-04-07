@@ -6,12 +6,11 @@ from apps.dpv_complaint.models import *
 from apps.dpv_persona.forms import PersonaNaturalForm
 
 
-def check_natural_person(ci, email_address):
+def check_natural_person(ci):
     # Check if exist a person for the CI
     by_ci = PersonaNatural.objects.filter(ci=ci)
     # Check if exist a person for the email
-    by_email = PersonaNatural.objects.filter(email_address=email_address)
-    return by_ci.exists() or by_email.exists()
+    return by_ci.exists()
 
 
 @permission_required('dpv_complaint.add_complaint')
@@ -20,7 +19,6 @@ def form_natural_complaint(request, person_id):
     if request.method == "POST":
         form_complaint = ComplaintForm(request.POST)
         if form_complaint.is_valid():
-
             complaint = form_complaint.save(commit=False)
             complaint.is_natural = True
             complaint.person_natural = PersonaNatural.objects.get(id=person_id)
@@ -54,8 +52,10 @@ def form_natural_complaint(request, person_id):
 def middle_form_natural_complaint(request, person_id):
     complaints = Complaint.objects.all().filter(person_natural=person_id)
     if complaints.exists():
-        return render(request, "dpv_complaint/index_by_natural.html", {'index': complaints,
-                                                                      'index_name': 'Obtener Persona por ID'})
+        return render(request, "dpv_complaint/index_by_person.html", {'index': complaints,
+                                                                      'index_name': 'Obtener Persona por ID',
+                                                                      'person': person_id,
+                                                                      'is_natural': True})
     else:
         return redirect(reverse_lazy('add_natural_complaint', args=[person_id]))
     pass
@@ -66,13 +66,9 @@ def form_person_for_complaint(request):
     form_name = "Insertar persona natural"
     if request.method == "POST":
         form_natural = PersonaNaturalForm(request.POST)
-        email = form_natural.data.get('email_address')
         ci = form_natural.data.get('ci')
-        if check_natural_person(ci, email):
-            if email:
-                person = PersonaNatural.objects.get(email_address=email)
-            else:
-                person = PersonaNatural.objects.get(ci=ci)
+        if check_natural_person(ci):
+            person = PersonaNatural.objects.get(ci=ci)
             return redirect(reverse_lazy('complaints_by_person', args=[person.id]))
 
         elif form_natural.is_valid():
