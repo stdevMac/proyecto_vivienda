@@ -17,15 +17,6 @@ class AssignDepartmentForm(forms.Form):
 
 
 class TechnicianForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        data = kwargs.pop('data')
-        self.dept_id = data.pop('department_id')
-        self.municipality_id = data.pop('municipality_id')
-        super(TechnicianForm, self).__init__(*args, **kwargs)
-        qs = Technical.objects.\
-            filter(profile__centro_trabajo__municipio_id__exact=self.municipality_id, profile__depto_trabajo__department__exact=self.municipality_id)
-        self.fields['technical'].queryset = qs
-
     technical = forms.ModelChoiceField(queryset=Technical.objects.all(), label='Disponibles')
 
 

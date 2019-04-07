@@ -33,6 +33,12 @@
                 {% endif %}
             {% else %}
                 <p>Asignada a un técnico</p>
+
+
+                {% if tech %}
+                    <a href={% url 'form_finished_complaint' complaint_id=complaint_for_dist.id technical_id=tech.technical.id %}>
+                                        Responder </a>
+                {% endif %}
             {% endif %}
         {% else %}
             <a href={% url 'assign_department' complaint_id=complaint_for_dist.id %}> Asignar Departamento</a>

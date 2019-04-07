@@ -28,7 +28,7 @@ ans = {
 
 
 class Complaint(models.Model):
-    origin = models.CharField(max_length=50, verbose_name='Origen')
+    origin = models.CharField(max_length=50, verbose_name='Procedencia')
     body = models.TextField(max_length=1000, verbose_name='Cuerpo de la queja')
     topic = models.CharField(max_length=200, verbose_name='Asunto')
     number = models.CharField(max_length=15, unique=True, verbose_name='Número')
@@ -44,6 +44,7 @@ class Complaint(models.Model):
                                    verbose_name='Departamento')
     anonymous = models.BooleanField(default=False)
     expiration_time = models.IntegerField(default=60)
+    reference = models.CharField(default='', max_length=50, verbose_name='Referencia')
 
     def __str__(self):
         return '{}'.format(self.topic)

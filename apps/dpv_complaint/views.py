@@ -14,7 +14,7 @@ def main_view(request):
 def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_id, department_id, municipality_id):
     form_name = "Seleccione técnico"
     if request.method == "POST":
-        form = TechnicianForm(request.POST, data={'department_id': department_id, 'municipality_id': municipality_id})
+        form = TechnicianForm(request.POST)
         if form.is_valid():
             args = form.fields['technical'].queryset.first()
             post = AssignedToTechnician()
@@ -97,35 +97,30 @@ def from_finished_complaint_to_accepted_complaint(request, complaint_id, technic
         if form.is_valid():
             post = form.save(commit=False)
             post.finishedDate = timezone.now()
-            if (complaint_id is not None) and (technical_id is not None):
-                Complaint.objects.filter(id=complaint_id).update(status='Finalizada')
-                post.complaint = Complaint.objects.get(id=complaint_id)
-                post.technical_work_in_complaint = Technical.objects.get(id=technical_id)
-                post.boss_accepted = Perfil.objects.get(id=request.user.id)
-                post.id = post.pk
-                post.technical_args = FinishedComplaint.objects.filter(complaint=complaint_id). \
-                    filter(technical=technical_id).first().technical_args
-                post.save()
-
-                FinishedComplaint.objects.filter(complaint=complaint_id).filter(technical=technical_id).delete()
-
-                # Set in history
-                history = HistoryComplaint()
-                history.complaint = post.complaint
-                history.technical = post.technical_work_in_complaint
-                history.technical_args = post.technical_args
-                history.final_args = post.final_args
-                history.boss_answer = post.answer
-                history.boss = post.boss_accepted
-                history.date_of_status = post.finished_date
-                history.current_status = 'Finalizada'
-                history.save()
-
-                CurrentComplaint.objects.filter(complaint=post.complaint.id).update(
-                    current_status=history.current_status)
-
-                # Delete finished complaint args
-                return redirect(reverse_lazy('index_accepted_all'))
+            Complaint.objects.filter(id=complaint_id).update(status='Finalizada')
+            post.complaint = Complaint.objects.get(id=complaint_id)
+            post.technical_work_in_complaint = Technical.objects.get(id=technical_id)
+            post.boss_accepted = Perfil.objects.get(id=request.user.id)
+            post.id = post.pk
+            post.technical_args = FinishedComplaint.objects.filter(complaint=complaint_id). \
+                filter(technical=technical_id).first().technical_args
+            post.save()
+            FinishedComplaint.objects.filter(complaint=complaint_id).filter(technical=technical_id).delete()
+            # Set in history
+            history = HistoryComplaint()
+            history.complaint = post.complaint
+            history.technical = post.technical_work_in_complaint
+            history.technical_args = post.technical_args
+            history.final_args = post.final_args
+            history.boss_answer = post.answer
+            history.boss = post.boss_accepted
+            history.date_of_status = post.finished_date
+            history.current_status = 'Finalizada'
+            history.save()
+            CurrentComplaint.objects.filter(complaint=post.complaint.id).update(
+                current_status=history.current_status)
+            # Delete finished complaint args
+            return redirect(reverse_lazy('index_accepted_all'))
     else:
         form = AcceptedForm()
     return render(request, "dpv_complaint/single_form.html", {'form': form, 'form_name': form_name})

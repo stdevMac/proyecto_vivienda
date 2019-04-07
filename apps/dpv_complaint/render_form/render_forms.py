@@ -12,10 +12,9 @@ def assign_department(request, complaint_id):
         form = AssignDepartmentForm(request.POST)
         if form.is_valid():
             args = form.fields['department'].queryset.first()
-            complaint = Complaint.objects.filter(id=complaint_id).update(department=args,
+            Complaint.objects.filter(id=complaint_id).update(department=args,
                                                                          assigned_to_department_date=timezone.now())
-            history = HistoryComplaint(assigned_by=Perfil.objects.get(id=request.user.id), complaint=Complaint.objects.get(id=complaint_id),
-                                       current_status='Esperando Asignación', date_of_status=timezone.now())
+            history = HistoryComplaint(complaint=Complaint.objects.get(id=complaint_id), current_status='Esperando Asignación')
 
             history.save()
 

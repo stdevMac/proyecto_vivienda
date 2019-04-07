@@ -62,7 +62,10 @@ def watch_complaint(request, complaint_id):
     else:
         # TODO Anonymous
         pass
-    return render(request, "dpv_complaint/watch_complaint.html", {'complaint_for_dist': complaint, 'person': person})
+    technical = AssignedToTechnician.objects.filter(complaint=complaint_id)
+    return render(request, "dpv_complaint/watch_complaint.html", {'complaint_for_dist': complaint,
+                                                                  'person': person,
+                                                                  'tech': technical.first()})
 
 
 def watch_finished(request, finished_id):

@@ -30,12 +30,12 @@
                     <form class="row" role="form" method="post">
                         <div class="col-md-12">
                             <div class="form-control-sm">
-                                <label for="">Origen</label>
+                                <label for="">Procedencia</label>
                                 {{ form.non_field_errors }}
                                 {{ form.origin }}
                             </div>
                             <div class="form-control-sm">
-                                <label for="">Asunto</label>
+                                <label for="">Asunto*</label>
                                 {{ form.non_field_errors }}
                                 {{ form.topic }}
                             </div>
@@ -45,9 +45,14 @@
                                 {{ form.body }}
                             </div>
                             <div class="form-control-sm">
-                                <label for="">Número</label>
+                                <label for="">Número*</label>
                                 {{ form.non_field_errors }}
                                 {{ form.number }}
+                            </div>
+                            <div class="form-control-sm">
+                                <label for="">Referencia</label>
+                                {{ form.non_field_errors }}
+                                {{ form.reference }}
                             </div>
                         </div>
                         <div class="modal-footer">
