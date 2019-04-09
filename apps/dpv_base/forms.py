@@ -46,9 +46,9 @@ class UserForm(forms.Form):
                                 widget=(forms.TextInput(attrs={"placeholder": "Apellidos", "class": "form-control"})),
                                 validators=[MaxLengthValidator(100), MinLengthValidator(10), only_letters])
     permissions = forms.ModelMultipleChoiceField(queryset=Permission.objects.all(), required=False, label="Permisos",  help_text="Permisos otorgados al usuario.",
-                                                 widget=(DivCheckboxSelectMultiple(attrs={"class": "form-control multi-select-box"})))
+                                                 widget=(DivCheckboxSelectMultiple(attrs={"class": "check_permission form-control multi-select-box"})))
     groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(), required=False, label="Grupos", help_text="Grupos a los que pertenecera el usuario.\nEl usuario heredara los permisos de los grupos a los que pertenesca.",
-                                            widget=(DivCheckboxSelectMultiple(attrs={"class": "form-control multi-select-box" })))
+                                            widget=(DivCheckboxSelectMultiple(attrs={"class": "form-control multi-select-box check_group"})))
     is_staff = forms.BooleanField(label="Administrador", required=False, help_text="Marquelo para que el usuario pueda entrar al sitio de administración.",
                                   widget=(forms.CheckboxInput(attrs={"class": "form-check-input"})))
 

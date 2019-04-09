@@ -94,3 +94,9 @@ class Local(models.Model):
                 self.system_info = validation_text
 
         self.save()
+
+    def count_statal(self):
+        if self.estatal:
+            return 1
+        else:
+            return 0

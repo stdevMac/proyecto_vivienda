@@ -33,6 +33,12 @@
                         <div class="card-body">
                                 {% for field in form %}
                                 <div class="form-group" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                                    {% if field.name == 'permissions' %}
+                                    <span>
+                                        <input id="filter_permissions" class="pull-right" type="text" placeholder="Filtrar por:">
+                                        <label><input id="check_all_permissions" type="checkbox"> Marcar todos los </label>
+                                    </span>
+                                    {% endif %}
                                     {{field.errors}}
                                     <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
                                     {{field}}
@@ -57,5 +63,8 @@
         </div>
     </div>
 {% endblock content_page %}
-
+{% block extra_scripts %}
+{{block.super}}
+<script src="{% static 'dpv_base/js/groups.js' %}"></script>
+{% endblock extra_scripts %}
 

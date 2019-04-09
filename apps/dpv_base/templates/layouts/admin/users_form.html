@@ -34,6 +34,12 @@
                             </div>
                             {% for field in form %}
                             <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
+                                {% if field.name == 'groups' or field.name == 'user_permissions' %}
+                                <span>
+                                    <input id="filter_{% if field.name == 'groups'%}groups{% else %}user_permissions{% endif %}" class="pull-right" type="text" placeholder="Filtrar por:">
+                                    <label><input id="check_all_{% if field.name == 'groups'%}groups{% else %}user_permissions{% endif %}" type="checkbox"> Marcar todos los </label>
+                                </span>
+                                {% endif %}
                                 {{field.errors}}
                                 <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
                                 {{field}}
@@ -81,3 +87,7 @@
         </div>
     </div>
 {% endblock content_page %}
+{% block extra_scripts %}
+{{block.super}}
+<script src="{% static 'dpv_base/js/users.js' %}"></script>
+{% endblock extra_scripts %}

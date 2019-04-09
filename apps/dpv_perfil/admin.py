@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Perfil
 # from apps.dpv_perfil.forms import FullUserForm
+from .models import Perfil
 
 # Register your models here.
 admin.site.register(Perfil)
