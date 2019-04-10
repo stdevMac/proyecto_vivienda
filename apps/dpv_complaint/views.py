@@ -1,3 +1,4 @@
+from django.db.models import Manager
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required, login_required

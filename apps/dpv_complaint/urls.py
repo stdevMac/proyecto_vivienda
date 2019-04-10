@@ -16,8 +16,10 @@ urlpatterns = [
     url(r'^finished/$', complaint_index.index_finished_complaint, name="index_finished_complaint"),
     url(r'^accepted_all/$', complaint_index.index_accepted, name="index_accepted_all"),
     url(r'^technicals/$', complaint_index.index_technical, name="index_technicals"),
-    re_path(r'^search/(?P<type_complaint>[0-1])/$', complaint_index.search, name='search'),
+    url(r'^statistics/$', complaint_index.statistics, name="index_technicals"),
 
+
+    re_path(r'^search/(?P<type_complaint>[0-1])/$', complaint_index.search, name='search'),
     re_path(r'^complaint_nat/(?P<person_id>[1-9]\d*)/$', render_natural_complaint.form_natural_complaint,
             name='add_natural_complaint'),
     re_path(r'^complaint_juridic/(?P<juridic_id>[1-9]\d*)/$', render_juridic_complaint.form_juridic_complaint,

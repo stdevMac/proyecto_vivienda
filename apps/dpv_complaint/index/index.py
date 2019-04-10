@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.contrib.auth.decorators import permission_required
+from django.db.models import Count, Manager, Func, Sum
 from django.shortcuts import render
 from apps.dpv_complaint.models import *
 from apps.dpv_complaint.forms import FilterForm
@@ -31,6 +32,31 @@ def get_elements(cleaned_data, type_complaint):
     if cleaned_data['status'] and cleaned_data['status'] != 'Seleccione Estado':
         elements = elements.filter(status=cleaned_data['status'])
     return elements
+
+
+class Month(Func):
+    function = 'EXTRACT'
+    template = '%(function)s(MONTH from %(expressions)s)'
+    output_field = models.IntegerField()
+
+
+class MonthSqlite(Func):
+    function = 'STRFTIME'
+    template = '%(function)s("%%m", %(expressions)s)'
+    output_field = models.CharField()
+
+
+@permission_required('dpv_complaint.view_complaint')
+def statistics(request):
+    query = Manager.raw("SELECT * FROM \"dpv_complaint_complaint\" GROUP BY \"dpv_complaint_complaint\".\"enter_date\", \"dpv_complaint_complaint\".\"is_natural\"")
+    # summary = (Complaint.objects
+    #            .annotate(m=MonthSqlite('enter_date'))
+    #            .values('m')
+    #            .annotate(total=Count('total'))
+    #            .order_by())
+    s = query.__str__()
+    by_month = Complaint.objects.values('enter_date').annotate(natural_count=Count('is_natural'))
+    return render(request, "dpv_complaint/statistics_view.html", {'dataset': []})
 
 
 @permission_required('dpv_complaint.view_complaint')

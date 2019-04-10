@@ -14,6 +14,9 @@
     {% endif %}
 {% endblock breadcrumbs %}
 {% block content_page %}
+    <link rel="stylesheet" href={% static 'dpv_complaint/css/jquery-ui.css' %}>
+    <script src={% static 'dpv_complaint/js/jquery-ui.min.js' %}></script>
+    <script src={% static 'dpv_complaint/js/jquery.min.js' %}></script>
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -21,12 +24,16 @@
                 {% if natural %}
                     <a role="button" class="pull-right btn btn-success btn-sm"
                        href={% url 'search' type_complaint=1 %}><i class="fa fa-plus">
-                        Filtrado Profundo</i></a>
+                        Filtrado Parcial</i></a>
                 {% else %}
                     <a role="button" class="pull-right btn btn-success btn-sm"
                        href={% url 'search' type_complaint=0 %}><i class="fa fa-plus">
-                        Filtrado Profundo</i></a>
+                        Filtrado Parcial</i></a>
                 {% endif %}
+                <a role="button" class="pull-right btn btn-success btn-sm"
+                   href={% url 'search' type_complaint=0 %}><i class="fa fa-plus">
+                    Filtrado Completo</i></a>
+
                 <a role="button" class="pull-right btn btn-success btn-sm"
                    href={% url 'add_natural_person' %}><i class="fa fa-plus">
                     Agregar Queja Natural</i></a>
@@ -71,8 +78,11 @@
                                 <td>{{ complaint.status }}</td>
                                 <td>{{ complaint.enter_date }}</td>
                                 <td>
-                                    <a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los
-                                        Datos </a>
+                                    {#                                    <a href={% url 'watch_complaint' complaint_id=complaint.id %}> Ver Todos los#}
+                                    {#                                        Datos </a>#}
+                                    <a class="js-popup-link" href={% url 'watch_complaint' complaint_id=complaint.id %}>Mostrar
+                                        Datos</a>
+                                    <div id="popup"></div>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -86,7 +96,6 @@
             </div>
         </div>
     </div>
-
 {% endblock content_page %}
 {% block extra_scripts %}
     <script src="{% static 'dpv_base/js/lib/data-table/datatables.min.js' %}"></script>
@@ -105,5 +114,15 @@
             $('#bootstrap-data-table-export').DataTable();
         });
     </script>
+
+    <script>
+        $(function () {
+            $('.js-popup-link').click(function (e) {
+                e.preventDefault();
+                $('#popup').dialog({modal: true}).dialog('open').load(this.href)
+            })
+        })
+    </script>
+
 {% endblock extra_scripts %}
 {% block init_jquery %} {% endblock init_jquery %}
