@@ -48,10 +48,10 @@
                                 <td>{{municipio.provincia}}</td>
                                 <td>
                                     {% if perms.dpv_nomencladores.change_municipio %}
-                                    <a onclick="return abrir_modal('{% url 'municipio_edit' municipio.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    <a onclick="return abrir_modal('{% url 'municipio_edit' municipio.id %}')" class="btn btn-sm btn-warning" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
                                     {% endif %}
                                     {% if perms.dpv_nomencladores.delete_municipio %}
-                                    <a onclick="return abrir_modal('{% url 'municipio_delete' municipio.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    <a onclick="return abrir_modal('{% url 'municipio_delete' municipio.id %}')" class="btn btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>

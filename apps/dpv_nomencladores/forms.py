@@ -1,8 +1,5 @@
-from typing import Dict
-
 from django import forms
-from django.forms import TextInput
-
+from apps.dpv_base.Widgets import DivCheckboxSelectMultiple
 from .models import *
 
 
@@ -13,9 +10,9 @@ class ProvinciaForm(forms.ModelForm):
         fields = ['nombre', 'numero']
 
         widgets = {
-            'nombre' : forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control malpha'}),
-            'nombre' : forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control mname'}),
-            'numero' : forms.TextInput(attrs={'placeholder':'Número', 'class': 'form-control mnumber'}),
+            'nombre': forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control malpha'}),
+            'nombre': forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control mname'}),
+            'numero': forms.TextInput(attrs={'placeholder':'Número', 'class': 'form-control mnumber'}),
         }
 
 
@@ -31,6 +28,7 @@ class MunicipioForm(forms.ModelForm):
             'provincia': forms.Select(attrs={'placeholder':'Seleccionar Provincia', 'class': 'form-control'})
         }
 
+
 class ConsejoPopularForm(forms.ModelForm):
     class Meta:
         model = ConsejoPopular
@@ -41,6 +39,7 @@ class ConsejoPopularForm(forms.ModelForm):
             'numero': forms.TextInput(attrs={'placeholder': 'Número', 'class': 'form-control mnumber'}),
             'municipio': forms.Select(attrs={'placeholder':'Seleccionar Municipio', 'class': 'form-control'})
         }
+
 
 class OrganismoForm(forms.ModelForm):
     class Meta:
@@ -54,6 +53,7 @@ class OrganismoForm(forms.ModelForm):
             'siglas': forms.TextInput(attrs={'placeholder': 'Siglas', 'class': 'form-control mnum'}),
         }
 
+
 class DestinoForm(forms.ModelForm):
     class Meta:
         model= Destino
@@ -65,16 +65,18 @@ class DestinoForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
         }
 
+
 class CalleForm(forms.ModelForm):
     class Meta:
         model= Calle
 
-        fields = ['nombre']
+        fields = ['nombre', 'municipios']
 
         widgets = {
             'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
-            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
+            'municipios': DivCheckboxSelectMultiple(attrs={'placeholder': 'Nombre', 'class': 'form-control multi-select-box'}),
         }
+
 
 class PisoForm(forms.ModelForm):
     class Meta:

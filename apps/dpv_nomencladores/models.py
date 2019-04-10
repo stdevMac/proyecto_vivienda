@@ -72,6 +72,7 @@ class Destino(models.Model):
 
 class Calle(models.Model):
     nombre = models.CharField(max_length=50, help_text="Nombre de la calle", verbose_name="Calle", unique=True, validators=[not_special_char])
+    municipios = models.ManyToManyField(Municipio, default='', blank=True, verbose_name='Municipios', help_text='Municipios en los que esta presente una calle con este nombre.')
 
     class Meta:
         verbose_name = "Calle"

@@ -46,10 +46,10 @@
                                 <td>{{departamento.nombre}}</td>
                                 <td>
                                     {% if perms.dpv_nomencladores.change_areatrabajo %}
-                                    <a onclick="return abrir_modal('{% url 'areatrabajo_edit' departamento.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    <a onclick="return abrir_modal('{% url 'areatrabajo_edit' departamento.id %}')" class="btn btn-sm btn-warning" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
                                     {% endif %}
                                     {% if perms.dpv_nomencladores.delete_areatrabajo %}
-                                    <a onclick="return abrir_modal('{% url 'areatrabajo_delete' departamento.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    <a onclick="return abrir_modal('{% url 'areatrabajo_delete' departamento.id %}')" class="btn btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>

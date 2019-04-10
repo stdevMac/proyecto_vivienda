@@ -1,4 +1,4 @@
-from apps.dpv_nomencladores.models import AreaTrabajo
+# from apps.dpv_nomencladores.models import AreaTrabajo, Municipio
 from apps.dpv_perfil.models import Perfil
 from django.utils import timezone
 from apps.dpv_persona.models import *
@@ -58,7 +58,7 @@ class PopularCouncil(models.Model):
 
 class Approach(models.Model):
     reference_number = models.IntegerField()
-    municipality = models.ForeignKey(Municipio, on_delete=False)
+    municipality = models.ForeignKey(Municipio, on_delete=False, default='', blank=True)
     popular_council = models.ForeignKey(PopularCouncil, on_delete=False)
     entity = models.ForeignKey(PersonaJuridica, on_delete=False)
     topic = models.CharField(max_length=200, verbose_name='Asunto')

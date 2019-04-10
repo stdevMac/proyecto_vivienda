@@ -44,10 +44,10 @@
                                 <td>{{calle.nombre}}</td>
                                 <td>
                                     {% if perms.dpv_nomencladores.change_calle %}
-                                    <a onclick="return abrir_modal('{% url 'calle_edit' calle.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    <a onclick="return abrir_modal('{% url 'calle_edit' calle.id %}')" class="btn btn-sm btn-warning" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
                                     {% endif %}
                                     {% if perms.dpv_nomencladores.delete_calle %}
-                                    <a onclick="return abrir_modal('{% url 'calle_delete' calle.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    <a onclick="return abrir_modal('{% url 'calle_delete' calle.id %}')" class="btn btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -82,6 +82,7 @@
     <script src="{% static 'dpv_nomencladores/js/nomencladores.js' %}"></script>
     <script src="{% static 'dpv_nomencladores/js/jquery.validate.min.js' %}"></script>
     <script src="{% static 'dpv_nomencladores/js/validation.functions.js' %}"></script>
+    <script src="{% static 'dpv_nomencladores/js/calles.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();

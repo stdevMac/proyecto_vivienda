@@ -54,6 +54,11 @@
                             <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top" title="{{field.help_text}}" >
                                 {{field.errors}}
                                 <label class="control-label mb-1" for="id_{{field.name}}">{{field.label}}</label>
+                                {% if 'calle' in field.name %}
+                                <button class=" pull-right btn btn-link">
+                                    <i class="fa fa-plus text-success"></i>
+                                </button>
+                                {% endif %}
                                 {{field}}
                             </div>
                             {% endfor %}

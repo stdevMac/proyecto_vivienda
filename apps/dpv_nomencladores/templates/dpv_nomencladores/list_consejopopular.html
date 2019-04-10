@@ -48,10 +48,10 @@
                                 <td>{{consejopopular.municipio}}</td>
                                 <td>
                                     {% if perms.dpv_nomencladores.change_consejopopular %}
-                                    <a onclick="return abrir_modal('{% url 'consejopopular_edit' consejopopular.id %}')" class="btn-sm btn-warning btn-round" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                    <a onclick="return abrir_modal('{% url 'consejopopular_edit' consejopopular.id %}')" class="btn btn-sm btn-warning" role="button" data-toggle="modal"><i class="fa fa-edit"></i></a>
                                     {% endif %}
                                     {% if perms.dpv_nomencladores.delete_consejopopular %}
-                                    <a onclick="return abrir_modal('{% url 'consejopopular_delete' consejopopular.id %}')" class="btn-round btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
+                                    <a onclick="return abrir_modal('{% url 'consejopopular_delete' consejopopular.id %}')" class="btn btn-sm btn-danger" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>
