@@ -7,10 +7,10 @@
 {% block breadcrumb_title %} Gestión de Quejas {% endblock breadcrumb_title %}
 {% block breadcrumbs %}
     {{ block.super }}
-    {% if '/quejas/natural/' == request.path%}
-         <a class="active" href={% url 'main_complaint' %}>Persona natural</a>
-    {% elif '/quejas/juridic/' == request.path  %}
-         <a class="active" href={% url 'main_complaint' %}>Persona jurídica</a>
+    {% if '/quejas/natural/' == request.path %}
+        <a class="active" href={% url 'main_complaint' %}>Persona natural</a>
+    {% elif '/quejas/juridic/' == request.path %}
+        <a class="active" href={% url 'main_complaint' %}>Persona jurídica</a>
     {% endif %}
 {% endblock breadcrumbs %}
 {% block content_page %}
@@ -18,11 +18,20 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Quejas</strong>
+                {% if natural %}
+                    <a role="button" class="pull-right btn btn-success btn-sm"
+                       href={% url 'search' type_complaint=1 %}><i class="fa fa-plus">
+                        Filtrado Profundo</i></a>
+                {% else %}
+                    <a role="button" class="pull-right btn btn-success btn-sm"
+                       href={% url 'search' type_complaint=0 %}><i class="fa fa-plus">
+                        Filtrado Profundo</i></a>
+                {% endif %}
                 <a role="button" class="pull-right btn btn-success btn-sm"
-                href={% url 'add_natural_person' %}><i class="fa fa-plus" >
+                   href={% url 'add_natural_person' %}><i class="fa fa-plus">
                     Agregar Queja Natural</i></a>
                 <a role="button" class="pull-right
-                   btn btn-success btn-sm" href={% url 'add_juridic_person' %} ><i class="fa fa-plus" >
+                   btn btn-success btn-sm" href={% url 'add_juridic_person' %}><i class="fa fa-plus">
                     Agregar Queja Juridica</i></a>
 
             </div>
@@ -44,14 +53,18 @@
                         <tbody>
                         {% for complaint in index %}
                             <tr>
-                                <td><a href={% url 'watch_complaint' complaint_id=complaint.id %}>{{ complaint.number }}</a></td>
+                                <td>
+                                    <a href={% url 'watch_complaint' complaint_id=complaint.id %}>{{ complaint.number }}</a>
+                                </td>
                                 {% if complaint.is_natural %}
                                     <td>{{ complaint.person_natural.nombre }} {{ complaint.person_natural.apellidos }}</td>
-                                    <td>{{ complaint.person_natural.direccion_calle}}, Número {{ complaint.person_natural.direccion_numero }}</td>
-                                    <td>{{ complaint.person_natural.municipio}}</td>
+                                    <td>{{ complaint.person_natural.direccion_calle }},
+                                        Número {{ complaint.person_natural.direccion_numero }}</td>
+                                    <td>{{ complaint.person_natural.municipio }}</td>
                                 {% else %}
                                     <td>{{ complaint.person_juridic.nombre }}</td>
-                                    <td>{{ complaint.person_juridic.direccion_calle }} , Número {{ complaint.person_juridic.direccion_numero }}</td>
+                                    <td>{{ complaint.person_juridic.direccion_calle }} ,
+                                        Número {{ complaint.person_juridic.direccion_numero }}</td>
                                     <td>{{ complaint.person_juridic.municipio }}</td>
                                 {% endif %}
                                 <td>{{ complaint.topic }}</td>

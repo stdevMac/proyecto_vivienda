@@ -51,9 +51,9 @@ def middle_form_juridic_complaint(request, juridic_id):
     complaints = Complaint.objects.all().filter(person_juridic=juridic_id)
     if complaints.exists():
         return render(request, "dpv_complaint/index_by_person.html", {'index': complaints,
-                                                                       'index_name': 'Obtener persona por id',
-                                                                       'person': juridic_id,
-                                                                       'is_natural': False})
+                                                                      'index_name': 'Obtener persona por id',
+                                                                      'person': juridic_id,
+                                                                      'is_natural': False})
     else:
         return redirect(reverse_lazy('add_juridic_complaint', args=[juridic_id]))
 
