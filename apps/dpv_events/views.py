@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+
 from .models import *
 from .forms import *
 
@@ -16,75 +18,44 @@ def TipoEventoView(request):
 @permission_required('dpv_events.add_tipoevento')
 def create_tipoevento(request):
     data = {}
+    form = TipoEventoForm(request.POST or None)
 
-    if not TipoEvento.objects.all():
-        data['isfirst'] = True
+    if form.is_valid():
+        type = request.POST["type_tipoevento"]
 
-    type = request.POST["type_tipoevento"]
+        permission = Permission.objects.create(name="Puede visualizar %s" % (type),content_type=ContentType.objects.get_for_model(TipoEvento),codename="view_tipoevento_%s" % (type.lower().replace(" ", "_")))
 
-    permission = Permission.objects.create(name="Puede visualizar %s" % (type), content_type=ContentType.objects.get_for_model(TipoEvento), codename="view_tipoevento_%s" % (type.lower().replace(" ","_")))
-
-    model = TipoEvento()
-    model.type = type
-    if request.POST.get("frecuencia_tipoevento"):
-        model.frecuencia_id = request.POST["frecuencia_tipoevento"]
-    model.permission_id = permission.id
-    model.save()
-
-    data['id'] = model.id
-    data['type'] = model.type
-    data['frecuencia'] = str(model.frecuencia)
-
-    return redirect('dpv_events:tipoevento')
+        model = TipoEvento()
+        model.type = type
+        if request.POST.get("frecuencia_tipoevento"):
+            model.frecuencia_id = request.POST["frecuencia_tipoevento"]
+        model.permission_id = permission.id
+        model.save()
+    return JsonResponse(data)
 
 
 @permission_required('dpv_events.change_tipoevento')
 def update_tipoevento(request):
     data = {}
+    form = TipoEventoForm(request.POST or None)
 
-    model = TipoEvento.objects.get(pk=request.POST['id'])
-    model.type = request.POST["type_tipoevento"]
-    model.save()
-    
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(TipoEvento)
-    log.object = model.id
-    log.action = 2
-    log.date = timezone.now()
-    log.save()
-
-    data['id'] = model.id
-    data['type'] = model.type
-    data['frecuencia'] = str(model.frecuencia)
-    
+    if form.is_valid():
+        model = TipoEvento.objects.get(pk=request.POST['id'])
+        model.type = form.cleaned_data["type_tipoevento"]
+        if request.POST.get("frecuencia_tipoevento"):
+            model.frecuencia_id = form.cleaned_data["frecuencia_tipoevento"]
+        model.save()
 
     return JsonResponse(data)
 
 
 @permission_required('dpv_events.delete_tipoevento')
-def delete_tipoevento(request):
-    data = {}
-
-    try:
-        model = TipoEvento.objects.get(pk=request.POST['id'])
-    except:
-        data['iserror'] = True
-    else:
-        object = model.id
-        permission = Permission.objects.get(pk=model.permission_id)
-        model.delete()
-        permission.delete()
-
-        log = Log()
-        log.user_id = request.user.id
-        log.content_type = ContentType.objects.get_for_model(TipoEvento)
-        log.object = object
-        log.action = 3
-        log.date = timezone.now()
-        log.save()
-    return JsonResponse(data)
+def delete_tipoevento(request, tipoevento_id):
+    model = TipoEvento.objects.get(pk=tipoevento_id)
+    permission = Permission.objects.get(pk=model.permission_id)
+    model.delete()
+    permission.delete()
+    return redirect('dpv_events:tipoevento')
 
 
 @permission_required('dpv_events.view_frecuencia')
@@ -95,68 +66,35 @@ def FrecuenciaView(request):
 @permission_required('dpv_events.add_frecuencia')
 def create_frecuencia(request):
     data = {}
+    form = FrecuenciaForm(request.POST or None)
 
-    if not Frecuencia.objects.all():
-        data['isfirst'] = True
-
-    model = Frecuencia()
-    model.name = request.POST["name_frecuencia"]
-    model.days = request.POST["days_frecuencia"]
-    model.save()
-
-    data['id'] = model.id
-    data['name'] = model.name
-    data['days'] = model.days
-
-    return redirect('dpv_events:frecuencia')
+    if form.is_valid():
+        model = Frecuencia()
+        model.name = form.cleaned_data["name_frecuencia"]
+        model.days = form.cleaned_data["days_frecuencia"]
+        model.save()
+    return JsonResponse(data)
 
 
 @permission_required('dpv_events.change_frecuencia')
 def update_frecuencia(request):
     data = {}
+    form = FrecuenciaForm(request.POST or None)
 
-    model = Frecuencia.objects.get(pk=request.POST['id'])
-    model.name = request.POST["name_frecuencia"]
-    model.days = request.POST["days_frecuencia"]
-    model.save()
-    
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(Frecuencia)
-    log.object = model.id
-    log.action = 2
-    log.date = timezone.now()
-    log.save()
-
-    data['id'] = model.id
-    data['name'] = model.name
-    data['days'] = model.days
-    
+    if form.is_valid():
+        model = Frecuencia.objects.get(pk=request.POST['id'])
+        model.name = form.cleaned_data["name_frecuencia"]
+        model.days = form.cleaned_data["days_frecuencia"]
+        model.save()
 
     return JsonResponse(data)
 
 
 @permission_required('dpv_events.delete_frecuencia')
-def delete_frecuencia(request):
-    data = {}
-
-    try:
-        model = Frecuencia.objects.get(pk=request.POST['id'])
-    except:
-        data['iserror'] = True
-    else:
-        object = model.id
-        model.delete()
-
-        log = Log()
-        log.user_id = request.user.id
-        log.content_type = ContentType.objects.get_for_model(Frecuencia)
-        log.object = object
-        log.action = 3
-        log.date = timezone.now()
-        log.save()
-    return JsonResponse(data)
+def delete_frecuencia(request, frecuencia_id):
+    model = Frecuencia.objects.get(pk=frecuencia_id)
+    model.delete()
+    return redirect('dpv_events:frecuencia')
 
 
 @permission_required('dpv_events.view_evento')
@@ -178,9 +116,6 @@ def EventoView(request, event_id):
 @permission_required('dpv_events.add_evento')
 def create_evento(request):
     data = {}
-
-    if not Evento.objects.all():
-        data['isfirst'] = True
 
     model = Evento()
     model.user_id = request.user.id
@@ -220,21 +155,6 @@ def create_evento(request):
     tema.responsable_id = request.user.id
     tema.save()
 
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(Evento)
-    log.object = model.type.type
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
-
-    data['id'] = model.id
-    data['type'] = str(model.type)
-    data['date_programed'] = model.get_datetime_programed
-    data['site'] = model.site
-    data['month'] = model.get_month
-    data['is_extraordinario'] = model.get_is_extraordinario
-
     return JsonResponse(data)
 
 
@@ -251,8 +171,8 @@ def update_evento(request):
     if request.POST.get("is_extraordinario_evento"):
         model.is_extraordinario = True
     else:
+        model.is_extraordinario = False
         for event in Evento.objects.filter(type_id=request.POST['type_evento'],month=int(request.POST['month_evento'])).exclude(pk=model.id):
-
             if not event.is_extraordinario:
                 model.is_extraordinario = True
     model.save()
@@ -269,14 +189,6 @@ def update_evento(request):
         tema.save()
         themes.append({"id":i+1,"asunto": tema.asunto, "responsable_id": tema.responsable_id, "responsable_name": tema.responsable.username})
         i += 1
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(Evento)
-    log.object = model.id
-    log.action = 2
-    log.date = timezone.now()
-    log.save()
 
     data['event'] = {
         "id": model.id,
@@ -298,26 +210,19 @@ def update_evento(request):
     return JsonResponse(data)
 
 
+@permission_required('dpv_events.change_evento')
+def done_evento(request, evento_id):
+    model = Evento.objects.get(pk=evento_id)
+    model.is_done = True
+    model.save()
+    return redirect('dpv_events:eventos')
+
+
 @permission_required('dpv_events.delete_evento')
-def delete_evento(request):
-    data = {}
-
-    try:
-        model = Evento.objects.get(pk=request.POST['id'])
-    except:
-        data['iserror'] = True
-    else:
-        object = model.id
-        model.delete()
-
-        log = Log()
-        log.user_id = request.user.id
-        log.content_type = ContentType.objects.get_for_model(Evento)
-        log.object = object
-        log.action = 3
-        log.date = timezone.now()
-        log.save()
-    return JsonResponse(data)
+def delete_evento(request, evento_id):
+    model = Evento.objects.get(pk=evento_id)
+    model.delete()
+    return redirect('dpv_events:eventos')
 
 
 def verify_evento(request):
@@ -354,14 +259,6 @@ def create_temaevento(request):
     model.es_sugerido = True
     model.save()
 
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(TemaEvento)
-    log.object = model.asunto
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
-
     data["id"] = model.id
     data["asunto"] = model.asunto
     data["responsable_name"] = model.responsable.username
@@ -375,11 +272,7 @@ def aprobar_temaevento(request):
     model.es_sugerido = False
     model.save()
 
-    data = {
-        "id": model.id,
-        "asunto": model.asunto,
-        "responsable_name": model.responsable.username,
-    }
+    data = {}
 
     return JsonResponse(data)
 
@@ -393,14 +286,6 @@ def create_acta(request):
     model.body = request.POST['body_acta_evento']
     model.date_created = timezone.now()
     model.save()
-
-    log = Log()
-    log.user_id = request.user.id
-    log.content_type = ContentType.objects.get_for_model(TemaEvento)
-    log.object = model.code
-    log.action = 1
-    log.date = timezone.now()
-    log.save()
 
     data['id'] = model.id
     data['code'] = model.code

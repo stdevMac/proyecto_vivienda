@@ -10,3 +10,6 @@ class DpvComplaintConfig(AppConfig):
     active = True       # Si el modulo esta activo, es como si esta instalado
     parent = True      # Si el modulo es un submodulo de otro en el menu (y solo en el menu)
     child_of = ''     # Si el modulo es hijo de otro en el menu se coloca aqui el nombre(atributo name) del modulo padre
+    route_data = 'index_natural_complaint'
+    model_data = ['Complaint']
+    name_data = 'Quejas Registrados'

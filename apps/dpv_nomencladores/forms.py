@@ -1,4 +1,5 @@
 from django import forms
+from apps.dpv_base.Widgets import DivCheckboxSelectMultiple
 from .models import *
 
 
@@ -8,12 +9,11 @@ class ProvinciaForm(forms.ModelForm):
 
         fields = ['nombre', 'numero']
 
-    def __init__(self, *args, **kwargs):
-        super(ProvinciaForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control malpha'}),
+            'nombre': forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control mname'}),
+            'numero': forms.TextInput(attrs={'placeholder':'Número', 'class': 'form-control mnumber'}),
+        }
 
 
 class MunicipioForm(forms.ModelForm):
@@ -22,15 +22,24 @@ class MunicipioForm(forms.ModelForm):
         fields = ['numero', 'nombre', 'provincia']
 
         widgets = {
-            'provincia': forms.Select()
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
+            'numero': forms.TextInput(attrs={'placeholder': 'Número', 'class': 'form-control mnumber'}),
+            'provincia': forms.Select(attrs={'placeholder':'Seleccionar Provincia', 'class': 'form-control'})
         }
 
-    def __init__(self, *args, **kwargs):
-        super(MunicipioForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
+
+class ConsejoPopularForm(forms.ModelForm):
+    class Meta:
+        model = ConsejoPopular
+        fields = ['numero', 'nombre', 'municipio']
+
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'numero': forms.TextInput(attrs={'placeholder': 'Número', 'class': 'form-control mnumber'}),
+            'municipio': forms.Select(attrs={'placeholder':'Seleccionar Municipio', 'class': 'form-control'})
+        }
+
 
 class OrganismoForm(forms.ModelForm):
     class Meta:
@@ -38,12 +47,12 @@ class OrganismoForm(forms.ModelForm):
 
         fields = ['nombre', 'siglas']
 
-    def __init__(self, *args, **kwargs):
-        super(OrganismoForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
+            'siglas': forms.TextInput(attrs={'placeholder': 'Siglas', 'class': 'form-control mnum'}),
+        }
+
 
 class DestinoForm(forms.ModelForm):
     class Meta:
@@ -51,26 +60,22 @@ class DestinoForm(forms.ModelForm):
 
         fields = ['nombre']
 
-    def __init__(self, *args, **kwargs):
-        super(DestinoForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
+        }
 
 
 class CalleForm(forms.ModelForm):
     class Meta:
         model= Calle
 
-        fields = ['nombre']
+        fields = ['nombre', 'municipios']
 
-    def __init__(self, *args, **kwargs):
-        super(CalleForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'municipios': DivCheckboxSelectMultiple(attrs={'placeholder': 'Nombre', 'class': 'form-control multi-select-box'}),
+        }
 
 
 class PisoForm(forms.ModelForm):
@@ -79,12 +84,10 @@ class PisoForm(forms.ModelForm):
 
         fields = ['nombre']
 
-    def __init__(self, *args, **kwargs):
-        super(PisoForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
+        }
 
 class ConceptoForm(forms.ModelForm):
     class Meta:
@@ -92,12 +95,11 @@ class ConceptoForm(forms.ModelForm):
 
         fields = ['nombre']
 
-    def __init__(self, *args, **kwargs):
-        super(ConceptoForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mname'}),
+        }
+
 
 class GeneroForm(forms.ModelForm):
     class Meta:
@@ -105,13 +107,12 @@ class GeneroForm(forms.ModelForm):
 
         fields = ['nombre', 'sigla']
 
-    def __init__(self, *args, **kwargs):
-        super(GeneroForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
-
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control malpha'}),
+            'sigla': forms.TextInput(attrs={'placeholder':'Sigla', 'class': 'form-control mnum'}),
+            'nombre': forms.TextInput(attrs={'placeholder':'Nombre', 'class': 'form-control mname'}),
+            'sigla': forms.TextInput(attrs={'placeholder':'Sigla', 'class': 'form-control mname'}),
+        }
 
 class CentroTrabajoForm(forms.ModelForm):
 
@@ -120,27 +121,23 @@ class CentroTrabajoForm(forms.ModelForm):
         fields = ['nombre', 'numero', 'siglas', 'municipio', 'oc']
 
         widgets = {
-            'municipio': forms.Select(),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
+            'numero': forms.TextInput(attrs={'placeholder': 'Número', 'class': 'form-control mnumber'}),
+            'siglas': forms.TextInput(attrs={'placeholder': 'Siglas', 'class': 'form-control mnum'}),
+            'municipio': forms.Select(attrs={'placeholder': 'Seleccionar Municipio', 'class': 'form-control'}),
             'oc': forms.CheckboxInput()
         }
-
-    def __init__(self, *args, **kwargs):
-        super(CentroTrabajoForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
-
 
 class AreaTrabajoForm(forms.ModelForm):
 
     class Meta:
         model = AreaTrabajo
-        fields = ['nombre', 'numero', ]
 
-    def __init__(self, *args, **kwargs):
-        super(AreaTrabajoForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
+        fields = ['nombre', 'numero' ]
+
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control malpha'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre', 'class': 'form-control mnum'}),
+            'numero': forms.TextInput(attrs={'placeholder': 'Número', 'class': 'form-control mnumber'}),
+        }
