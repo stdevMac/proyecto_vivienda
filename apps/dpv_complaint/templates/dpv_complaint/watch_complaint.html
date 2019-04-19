@@ -1,55 +1,93 @@
-{% extends 'dpv_complaint/complaint_main_page.html' %}
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Detalles de la queja</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
 
-{% block breadcrumbs %}
-    {{ block.super }}
-
-{% endblock breadcrumbs %}
-
-{% block content_page %}
-    {% if complaint_for_dist %}
-        <p><strong>Número de la Queja:</strong> {{ complaint_for_dist.number }}</p>
-        <p><strong>Procedencia:</strong> {{ complaint_for_dist.origin }}</p>
-        <p><strong>Asunto:</strong> {{ complaint_for_dist.topic }}</p>
-        <p><strong>Cuerpo:</strong> {{ complaint_for_dist.body }}</p>
-        <p><strong>Estado:</strong> {{ complaint_for_dist.status }}</p>
-        <p><strong>Fecha de Entrada:</strong> {{ complaint_for_dist.enter_date }}</p>
-        {% if complaint_for_dist.is_natural %}
-            <p><a>Mostrar datos de la persona natural</a></p>
-        {% else %}
-            <p><a>Mostrar datos de la persona jurídica</a></p>
-        {% endif %}
-        {% if complaint_for_dist.department %}
-            <p><strong>Área de trabajo asignada:</strong> {{ complaint_for_dist.department.nombre }}</p>
-            {% if complaint_for_dist.status == 'P' or complaint_for_dist.status == 'Pendiente' %}
+            {% if complaint_for_dist %}
+                <div class="col-md-12"><span
+                        class="text-muted">Número de la Queja:</span> {{ complaint_for_dist.number }}</div>
+                <div class="col-md-12"><span class="text-muted">Procedencia:</span> {{ complaint_for_dist.origin }}
+                </div>
+                <div class="col-md-12"><span class="text-muted">Asunto:</span> {{ complaint_for_dist.topic }}</div>
+                <div class="col-md-12"><span class="text-muted">Cuerpo:</span> {{ complaint_for_dist.body }}</div>
+                <div class="col-md-12"><span class="text-muted">Estado:</span> {{ complaint_for_dist.status }}</div>
+                <div class="col-md-12"><span
+                        class="text-muted">Fecha de Entrada:</span> {{ complaint_for_dist.enter_date }}</div>
                 {% if complaint_for_dist.is_natural %}
-                    <p>
-                        <a href={% url 'trans_wait_to_assigned' complaint_id=complaint_for_dist.id department_id=complaint_for_dist.department.id municipality_id=complaint_for_dist.person_natural.municipio.id %}>Asignar
-                            a un técnico</a></p>
-
+                    <div class="col-md-12"><span class="text-muted"></span><a
+                            href={% url 'persona_natural_view' id_personat=complaint_for_dist.person_natural.id %}>Datos
+                        Persona</a></div>
                 {% else %}
-                    <p>
-                        <a href={% url 'trans_wait_to_assigned' complaint_id=complaint_for_dist.id department_id=complaint_for_dist.department.id municipality_id=complaint_for_dist.person_juridic.municipio.id %}>Asignar
-                            a un técnico</a></p>
+                    <div class="col-md-12"><span class="text-muted"></span><a
+                            href={% url 'persona_juridica_view' id_personajur=complaint_for_dist.person_juridic.id %}>Datos
+                        Persona</a></div>
+                {% endif %}
+                {% if complaint_for_dist.department %}
+                    <div class="col-md-12"><span
+                            class="text-muted">Área de trabajo asignada:</span> {{ complaint_for_dist.department.nombre }}
+                    </div>
+                    {% if complaint_for_dist.status == 'P' or complaint_for_dist.status == 'Pendiente' %}
+                        {% if complaint_for_dist.is_natural %}
+                            <div>
+                                <a class="btn btn-info btn-lg cta-open"
+                                   href={% url 'trans_wait_to_assigned' complaint_id=complaint_for_dist.id department_id=complaint_for_dist.department.id municipality_id=complaint_for_dist.person_natural.municipio.id %}>Asignar
+                                    a un técnico</a>
+                            </div>
+
+                        {% else %}
+                            <div>
+                                <a class="btn btn-info btn-lg cta-open"
+                                   href={% url 'trans_wait_to_assigned' complaint_id=complaint_for_dist.id department_id=complaint_for_dist.department.id municipality_id=complaint_for_dist.person_juridic.municipio.id %}>Asignar
+                                    a un técnico</a>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="col-md-12">
+                            <span class="text-muted">Asignada a un técnico</span>
+                        </div>
+                        {% if tech %}
+                            <div>
+                                <a class="btn btn-info btn-lg cta-open"
+                                   href={% url 'form_finished_complaint' complaint_id=complaint_for_dist.id technical_id=tech.technical.id %}>
+                                    Responder </a></div>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <div class="col-md-12"><span class="text-muted"></span>
+
+                        <a class="btn btn-info btn-lg cta-open" aria-label="Asignar Departamento" href={% url 'assign_department' complaint_id=complaint_for_dist.id %}>Asignar Departamento</a>
+                    </div>
+                {% endif %}
+
+                {% if complaint_for_dist.is_natural %}
+                    <div class="col-md-12">
+                        <a class="btn btn-info btn-lg cta-open" href={% url 'index_natural_complaint' %}>Ver quejas
+                            naturales</a>
+                    </div>
+                {% else %}
+                    <div class="col-md-12">
+                        <a class="btn btn-info btn-lg cta-open" href={% url 'index_juridic_complaint' %}>Ver quejas
+                            jurídicas</a>
+                    </div>
                 {% endif %}
             {% else %}
-                <p>Asignada a un técnico</p>
-
-
-                {% if tech %}
-                    <a href={% url 'form_finished_complaint' complaint_id=complaint_for_dist.id technical_id=tech.technical.id %}>
-                                        Responder </a>
-                {% endif %}
+                <div>
+                    <span>Problemas mostrando la queja</span>
+                </div>
             {% endif %}
-        {% else %}
-            <a href={% url 'assign_department' complaint_id=complaint_for_dist.id %}> Asignar Departamento</a>
-        {% endif %}
 
-        {% if complaint_for_dist.is_natural %}
-            <p><a href={% url 'index_natural_complaint' %}>Ver quejas naturales</a></p>
-        {% else %}
-            <p><a href={% url 'index_juridic_complaint' %}>Ver quejas jurídicas</a></p>
-        {% endif %}
-    {% else %}
-        <p>Problemas mostrando la queja</p>
-    {% endif %}
-{% endblock %}
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="return cerrar_modal()">
+                    Cerrar
+                </button>
+            </div>
+            <div class="modal fade modal-show" id="popup" role="dialog">
+
+            </div>
+        </div>
+    </div>
+</div>

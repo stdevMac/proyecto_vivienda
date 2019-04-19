@@ -57,6 +57,7 @@ class FilterForm(forms.Form):
     municipality = forms.ModelChoiceField(queryset=Municipio.objects.all(), required=False)
     days = forms.IntegerField(required=False)
     status = forms.ChoiceField(choices=stat_history, required=False, initial='')
+    natural = forms.NullBooleanField(widget=forms.NullBooleanSelect)
 
     def clean(self):
         cleaned_data = super(FilterForm, self).clean()

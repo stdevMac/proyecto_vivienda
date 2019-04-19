@@ -51,9 +51,9 @@ def login_page(request):
                     else:
                         form.add_error('password_login', _('Combinación no válida de usuario y contraseña'))
                 else:
-                    form.add_error('username_login', _('Ese usuario no exitse o está incativo contacte con el administrador del sistema'))
+                    form.add_error('username_login', _('Ese usuario no existe o está inactivo contacte con el administrador del sistema'))
             else:
-                form.add_error('password_login', _('Error de usuario o contraseña no valido'))
+                form.add_error('password_login', _('Error de usuario o contraseña no válida'))
             print(form.errors)
             return render(request, 'layouts/login.html', { 'form': form })
         else:

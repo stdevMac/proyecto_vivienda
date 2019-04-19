@@ -1,12 +1,12 @@
 from datetime import timedelta
+import datetime
 from django.db.models.functions import ExtractMonth
 from django.contrib.auth.decorators import permission_required
-from django.core import serializers
-from django.db.models import Count, Func
-from django.http import JsonResponse
+from django.db.models import Count, Func, Q
 from django.shortcuts import render
 from apps.dpv_complaint.models import *
 from apps.dpv_complaint.forms import FilterForm
+from django.template.context_processors import csrf
 
 
 @permission_required('dpv_complaint.view_complaint')
@@ -17,17 +17,30 @@ def index_natural_complaint(request):
                   {'index': elms, 'index_name': index_name, 'natural': True})
 
 
-def get_elements(cleaned_data, type_complaint):
-    elements = Complaint.objects.filter(is_natural=type_complaint)
-    if cleaned_data['initial_time']:
-        elements = elements.filter(enter_date__gte=cleaned_data['initial_time'])
-    if cleaned_data['final_time']:
-        elements = elements.filter(enter_date__lte=cleaned_data['final_time'])
-    if cleaned_data['municipality']:
-        if type_complaint:
-            elements = elements.filter(person_natural__municipio=cleaned_data['municipality'])
+def get_elements(cleaned_data):
+    if cleaned_data['natural'] is not None:
+        if cleaned_data['natural']:
+            elements = Complaint.objects.filter(is_natural=True)
         else:
-            elements = elements.filter(person_juridic__municipio=cleaned_data['municipality'])
+            elements = Complaint.objects.filter(is_natural=False)
+    else:
+        elements = Complaint.objects.all()
+
+    if cleaned_data['initial_time']:
+        dat = cleaned_data['final_time']
+        elements = elements.filter(Q(enter_date__gte=datetime.date(dat.year, dat.month, dat.day - timedelta(1))))
+    if cleaned_data['final_time']:
+        dat = cleaned_data['final_time']
+        elements = elements.filter(enter_date__lte=datetime.date(dat.year, dat.month, dat.day + timedelta(1)))
+    if cleaned_data['municipality']:
+        if cleaned_data['natural'] is not None:
+            if cleaned_data['natural']:
+                elements = elements.filter(person_natural__municipio=cleaned_data['municipality'])
+            else:
+                elements = elements.filter(person_juridic__municipio=cleaned_data['municipality'])
+        else:
+            elements = elements.filter(Q(person_juridic__municipio=cleaned_data['municipality']) |
+                                       Q(person_natural__municipio=cleaned_data['municipality']))
     if cleaned_data['days']:
         date = min(timezone.now(), cleaned_data['final_time']) - timedelta(cleaned_data['days'])
         elements = elements.filter(enter_date__gte=date)
@@ -52,20 +65,23 @@ class MonthSqlite(Func):
 def statistics(request):
     count_natural = Complaint.objects.filter(is_natural=True).count()
     count_juridic = Complaint.objects.filter(is_natural=False).count()
-    group_month = Complaint.objects.annotate(month=ExtractMonth('enter_date')).values('month').\
+    group_month = Complaint.objects.annotate(month=ExtractMonth('enter_date')).values('month'). \
         annotate(count=Count('id')).values('month', 'count')
     return render(request, "dpv_complaint/statistics_view.html", {'dataset': group_month, 'count_nat': count_natural,
                                                                   'count_jur': count_juridic})
 
 
 @permission_required('dpv_complaint.view_complaint')
-def search(request, type_complaint):
+def search(request):
+    context = {}
+    context.update(csrf(request))
     if request.method == 'POST':
         form = FilterForm(request.POST)
         if form.is_valid():
-            elms = get_elements(form.cleaned_data, type_complaint)
+            elms = get_elements(form.cleaned_data)
             return render(request, "dpv_complaint/index_complaint_new.html",
-                          {'index': elms, 'index_name': 'Elementos filtrados', 'natural': type_complaint})
+                          {'index': elms, 'index_name': 'Elementos filtrados',
+                           'natural': True if form.cleaned_data['natural'] else False})
     else:
         form = FilterForm()
     return render(request, "dpv_complaint/search_form.html", {'form': form, 'form_name': 'Plantilla de Búsqueda'})
