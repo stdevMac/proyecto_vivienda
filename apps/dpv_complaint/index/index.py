@@ -1,7 +1,9 @@
 from datetime import timedelta
-
+from django.db.models.functions import ExtractMonth
 from django.contrib.auth.decorators import permission_required
-from django.db.models import Count, Manager, Func, Sum
+from django.core import serializers
+from django.db.models import Count, Func
+from django.http import JsonResponse
 from django.shortcuts import render
 from apps.dpv_complaint.models import *
 from apps.dpv_complaint.forms import FilterForm
@@ -48,15 +50,12 @@ class MonthSqlite(Func):
 
 @permission_required('dpv_complaint.view_complaint')
 def statistics(request):
-    query = Manager.raw("SELECT * FROM \"dpv_complaint_complaint\" GROUP BY \"dpv_complaint_complaint\".\"enter_date\", \"dpv_complaint_complaint\".\"is_natural\"")
-    # summary = (Complaint.objects
-    #            .annotate(m=MonthSqlite('enter_date'))
-    #            .values('m')
-    #            .annotate(total=Count('total'))
-    #            .order_by())
-    s = query.__str__()
-    by_month = Complaint.objects.values('enter_date').annotate(natural_count=Count('is_natural'))
-    return render(request, "dpv_complaint/statistics_view.html", {'dataset': []})
+    count_natural = Complaint.objects.filter(is_natural=True).count()
+    count_juridic = Complaint.objects.filter(is_natural=False).count()
+    group_month = Complaint.objects.annotate(month=ExtractMonth('enter_date')).values('month').\
+        annotate(count=Count('id')).values('month', 'count')
+    return render(request, "dpv_complaint/statistics_view.html", {'dataset': group_month, 'count_nat': count_natural,
+                                                                  'count_jur': count_juridic})
 
 
 @permission_required('dpv_complaint.view_complaint')

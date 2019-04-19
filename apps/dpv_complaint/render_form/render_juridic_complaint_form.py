@@ -60,7 +60,6 @@ def middle_form_juridic_complaint(request, juridic_id):
 
 @permission_required('dpv_complaint.add_complaint')
 def form_juridic_for_complaint(request):
-    form_name = "Insertar persona jurídica"
     if request.method == "POST":
         form_juridic = PersonaJuridicaForm(request.POST)
         codigo_nit = form_juridic.data.get('codigo_nit')
@@ -74,5 +73,5 @@ def form_juridic_for_complaint(request):
 
     else:
         form_juridic = PersonaJuridicaForm()
-    return render(request, "dpv_complaint/form_juridic_person.html",
-                  {'form': form_juridic, 'form_name': form_name})
+    return render(request, "dpv_persona/form_persojur.html",
+                  {'form': form_juridic})

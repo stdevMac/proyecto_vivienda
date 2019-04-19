@@ -9,7 +9,6 @@ from apps.dpv_persona.forms import PersonaNaturalForm
 def check_natural_person(ci):
     # Check if exist a person for the CI
     by_ci = PersonaNatural.objects.filter(ci=ci)
-    # Check if exist a person for the email
     return by_ci.exists()
 
 
@@ -63,7 +62,6 @@ def middle_form_natural_complaint(request, person_id):
 
 @permission_required('dpv_complaint.add_complaint')
 def form_person_for_complaint(request):
-    form_name = "Insertar persona natural"
     if request.method == "POST":
         form_natural = PersonaNaturalForm(request.POST)
         ci = form_natural.data.get('ci')
@@ -77,5 +75,5 @@ def form_person_for_complaint(request):
 
     else:
         form_natural = PersonaNaturalForm()
-    return render(request, "dpv_complaint/form_natural_person.html",
-                  {'form': form_natural, 'form_name': form_name})
+    return render(request, "dpv_persona/form_personat.html",
+                  {'form': form_natural})
