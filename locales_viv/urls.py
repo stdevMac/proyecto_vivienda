@@ -32,6 +32,5 @@ urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     path('vivienda/', include(vivienda_url)),
     path('quejas/', include(complaint_url)),
     path('dpv_events/', include(events_url)),
-    path('compliats/', include(complaint_url)),
     path('emailing/', include(email_url)),
 ]

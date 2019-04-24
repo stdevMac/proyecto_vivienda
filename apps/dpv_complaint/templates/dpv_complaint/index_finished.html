@@ -44,28 +44,24 @@
                                 <td><a href={% url 'watch_complaint' complaint_id=finished.complaint.id %}> Ver
                                     datos </a></td>
                                 <td>
-                                    <p>
-                                        {% if finished.technical.id %}
-                                            <a href={% url 'trans_Finished_to_Accepted' complaint_id=finished.complaint.id technical_id=finished.technical.id %}>
-                                                Aceptar </a>
-                                        {% else %}
-                                            Ocurrió un error
-                                        {% endif %}
+                                    {% if finished.technical.id %}
+                                        <a href={% url 'trans_Finished_to_Accepted' complaint_id=finished.complaint.id technical_id=finished.technical.id %}>
+                                            Aceptar </a>
+                                    {% else %}
+                                        Ocurrió un error
+                                    {% endif %}
 
-                                    </p>
-                                    <p>
-                                        {% if finished.complaint.is_natural %}
-                                            <a href={% url 'trans_wait_to_assigned' complaint_id=finished.complaint.id department_id=finished.complaint.department.id municipality_id=finished.complaint.person_natural.municipio.id %}>Reasignar
-                                                técnico</a>
+                                    {% if finished.complaint.is_natural %}
+                                        <a href={% url 'trans_wait_to_assigned' complaint_id=finished.complaint.id department_id=finished.complaint.department.id municipality_id=finished.complaint.person_natural.municipio.id %}>Reasignar
+                                            técnico</a>
 
-                                        {% else %}
-                                            <a href={% url 'trans_wait_to_assigned' complaint_id=finished.complaint.id department_id=finished.complaint.department.id municipality_id=finished.complaint.person_juridic.municipio.id %}>Reasignar
-                                                técnico</a>
+                                    {% else %}
+                                        <a href={% url 'trans_wait_to_assigned' complaint_id=finished.complaint.id department_id=finished.complaint.department.id municipality_id=finished.complaint.person_juridic.municipio.id %}>Reasignar
+                                            técnico</a>
 
-                                        {% endif %}
-                                    </p>
-                                    <p><a href={% url 'assign_department' complaint_id=finished.complaint.id %}>Reasignar
-                                        departamento</a></p>
+                                    {% endif %}
+                                    <a href={% url 'assign_department' complaint_id=finished.complaint.id %}>Reasignar
+                                        departamento</a>
 
                                 </td>
                             </tr>

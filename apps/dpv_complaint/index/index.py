@@ -18,8 +18,8 @@ def index_natural_complaint(request):
 
 
 def get_elements(cleaned_data):
-    if cleaned_data['natural'] is not None:
-        if cleaned_data['natural']:
+    if cleaned_data['natural'] != '':
+        if cleaned_data['natural'] == 'True':
             elements = Complaint.objects.filter(is_natural=True)
         else:
             elements = Complaint.objects.filter(is_natural=False)
@@ -28,10 +28,10 @@ def get_elements(cleaned_data):
 
     if cleaned_data['initial_time']:
         dat = cleaned_data['final_time']
-        elements = elements.filter(Q(enter_date__gte=datetime.date(dat.year, dat.month, dat.day - timedelta(1))))
+        elements = elements.filter(Q(enter_date__gte=datetime.date(dat.year, dat.month, dat.day)))
     if cleaned_data['final_time']:
         dat = cleaned_data['final_time']
-        elements = elements.filter(enter_date__lte=datetime.date(dat.year, dat.month, dat.day + timedelta(1)))
+        elements = elements.filter(enter_date__lte=datetime.date(dat.year, dat.month, dat.day + 1))
     if cleaned_data['municipality']:
         if cleaned_data['natural'] is not None:
             if cleaned_data['natural']:
@@ -41,11 +41,11 @@ def get_elements(cleaned_data):
         else:
             elements = elements.filter(Q(person_juridic__municipio=cleaned_data['municipality']) |
                                        Q(person_natural__municipio=cleaned_data['municipality']))
-    if cleaned_data['days']:
-        date = min(timezone.now(), cleaned_data['final_time']) - timedelta(cleaned_data['days'])
-        elements = elements.filter(enter_date__gte=date)
     if cleaned_data['status'] and cleaned_data['status'] != 'Seleccione Estado':
         elements = elements.filter(status=cleaned_data['status'])
+    if cleaned_data['department']:
+        elements = elements.filter(department=cleaned_data['department'])
+
     return elements
 
 
@@ -61,20 +61,49 @@ class MonthSqlite(Func):
     output_field = models.CharField()
 
 
+months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+          'Noviembre', 'Diciembre']
+
+
 @permission_required('dpv_complaint.view_complaint')
 def statistics(request):
     count_natural = Complaint.objects.filter(is_natural=True).count()
     count_juridic = Complaint.objects.filter(is_natural=False).count()
     group_month = Complaint.objects.annotate(month=ExtractMonth('enter_date')).values('month'). \
-        annotate(count=Count('id')).values('month', 'count')
-    return render(request, "dpv_complaint/statistics_view.html", {'dataset': group_month, 'count_nat': count_natural,
-                                                                  'count_jur': count_juridic})
+        annotate(count=Count('id')).values('month', 'count').order_by('month')
+    group_month = list(group_month)
+    data_set = []
+    # mark = [False for _ in range(12)]
+    for current_month in range(len(months)):
+        for i in range(len(group_month)):
+            if group_month[i].get('month') == current_month:
+                data_set.append({'name': months[group_month[i].get('month')],
+                                 'data': group_month[i].get('count')})
+                break
+        else:
+            data_set.append({'name': months[current_month], 'data': 0})
+
+    municipality_natural = Complaint.objects.values('person_natural__municipio__nombre') \
+        .annotate(municipality=Count('person_natural__municipio__nombre'))
+    municipality_juridic = Complaint.objects.values('person_juridic__municipio__nombre') \
+        .annotate(municipality=Count('person_juridic__municipio__nombre'))
+
+    nat = [{'name': entry.get('person_natural__municipio__nombre'), 'y': entry.get('municipality')} for entry in
+           municipality_natural]
+
+    jur = [{'name': entry.get('person_juridic__municipio__nombre'), 'y': entry.get('municipality')} for entry in
+           municipality_juridic]
+
+    return render(request, "dpv_complaint/statistics_view.html", {'dataset': data_set, 'count_nat': count_natural,
+                                                                  'count_jur': count_juridic,
+                                                                  'municipality_nat': nat,
+                                                                  'municipality_jur': jur})
 
 
 @permission_required('dpv_complaint.view_complaint')
 def search(request):
-    context = {}
-    context.update(csrf(request))
+    # context = {}
+    # context.update(csrf(request))
     if request.method == 'POST':
         form = FilterForm(request.POST)
         if form.is_valid():

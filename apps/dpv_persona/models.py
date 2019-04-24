@@ -16,10 +16,10 @@ class Persona(models.Model):
     telefono = models.CharField(max_length=8, verbose_name="Teléfono Fijo", blank=True, validators=[MinLengthValidator(8),
                                                                                                     MaxLengthValidator(8),
                                                                                                     only_numbers])
-    movil = models.CharField(max_length=8, verbose_name="Teléfono Movil", blank=True, unique=True, validators=[MinLengthValidator(8),
+    movil = models.CharField(max_length=8, verbose_name="Teléfono Movil", blank=True, null=True, unique=True, validators=[MinLengthValidator(8),
                                                                                                                MaxLengthValidator(8),
                                                                                                                only_numbers])
-    email_address = models.EmailField(verbose_name="Correo Electrónico", blank=True, unique=True)
+    email_address = models.EmailField(verbose_name="Correo Electrónico", blank=True, null=True, unique=True)
 
     class Meta:
         verbose_name = "Persona"

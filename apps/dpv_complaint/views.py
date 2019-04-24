@@ -1,14 +1,25 @@
-from django.db.models import Manager
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required, login_required
 from .forms import *
 from .models import *
+from .index import index
 
 
 @login_required()
 def main_view(request):
-    return render(request, "dpv_complaint/complaint_main_page.html")
+    elems = Complaint.objects.all()
+    if request.method == 'POST':
+        form = FilterForm(request.POST)
+        if form.is_valid():
+            elms = index.get_elements(form.cleaned_data)
+            return render(request, "dpv_complaint/index_complaint_new.html",
+                          {'index': elms, 'index_name': 'Elementos filtrados',
+                           'natural': True if form.cleaned_data['natural'] else False, 'search': form})
+    else:
+        form = FilterForm()
+    return render(request, "dpv_complaint/index_complaint_new.html",
+                  {'index': elems, 'index_name': "Quejas Jurídicas y Naturales", 'natural': None, 'search': form})
 
 
 @permission_required('dpv_complaint.add_assignedtotechnician')

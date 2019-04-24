@@ -2,6 +2,9 @@ import datetime
 
 from django import forms
 from .models import *
+from functools import partial
+
+DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
 
 class ComplaintForm(forms.ModelForm):
@@ -42,7 +45,7 @@ class AcceptedForm(forms.ModelForm):
 
 
 stat_history = {
-    ('', 'Seleccione Estado'),
+    ('', '--------'),
     ('Pendiente', 'Pendiente'),
     ('Esperando Asignación', 'Esperando Asignación'),
     ('Esperando Respuesta de Técnico', 'Esperando Respuesta de Técnico'),
@@ -50,21 +53,32 @@ stat_history = {
     ('Finalizada', 'Finalizada'),
 }
 
+CHOICES = (
+    (None, "Todas"),
+    (True, "Naturales"),
+    (False, "Jurídicas")
+)
+
 
 class FilterForm(forms.Form):
-    initial_time = forms.DateField(widget=forms.SelectDateWidget(), required=False)
-    final_time = forms.DateField(widget=forms.SelectDateWidget(), initial=timezone.now(), required=False)
-    municipality = forms.ModelChoiceField(queryset=Municipio.objects.all(), required=False)
-    days = forms.IntegerField(required=False)
-    status = forms.ChoiceField(choices=stat_history, required=False, initial='')
-    natural = forms.NullBooleanField(widget=forms.NullBooleanSelect)
+    initial_time = forms.DateField(widget=forms.DateInput(), required=False,
+                                   label='Inicio del rango')
+    final_time = forms.DateField(widget=forms.DateInput(),
+                                 initial=timezone.now(),
+                                 required=False,
+                                 label='Final del rango')
+    municipality = forms.ModelChoiceField(queryset=Municipio.objects.all(), required=False, label='Municipio')
+    status = forms.ChoiceField(choices=stat_history, required=False, initial='', label='Estado')
+    natural = forms.ChoiceField(initial='Todas', choices=CHOICES,
+                                label='Tipo de Quejas', required=False)
+    department = forms.ModelChoiceField(queryset=AreaTrabajo.objects.all(), label='Departamento', required=False)
 
     def clean(self):
         cleaned_data = super(FilterForm, self).clean()
         initial_time = cleaned_data.get('initial_time')
         final_time = cleaned_data.get('final_time')
 
-        if final_time > datetime.date.today():
+        if final_time and final_time > datetime.date.today():
             raise forms.ValidationError("La fecha final debe ser antes del día de hoy")
 
         if initial_time and initial_time > final_time:

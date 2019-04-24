@@ -6,24 +6,9 @@
             Quejas y Planteamientos
         </a>
         <ul class="sub-menu children dropdown-menu">
-            {% if perms.dpv_complaint.add_complaint %}
-                <li class="active">
-                    <a href="{% url 'add_natural_person' %}"><i class="fa fa-tag"></i>Adicionar Queja Natural</a>
-                </li>
-            {% endif %}
-            {% if perms.dpv_complaint.add_complaint %}
-                <li class="active">
-                    <a href="{% url 'add_juridic_person' %}"><i class="fa fa-tag"></i>Adicionar Queja Jurídica</a>
-                </li>
-            {% endif %}
             {% if perms.dpv_complaint.view_complaint %}
                 <li class="active">
-                    <a href="{% url 'index_natural_complaint' %}"><i class="fa fa-tag"></i>Mostrar quejas naturales</a>
-                </li>
-            {% endif %}
-            {% if perms.dpv_complaint.view_complaint %}
-                <li class="active">
-                    <a href="{% url 'index_juridic_complaint' %}"><i class="fa fa-tag"></i>Mostrar quejas jurídicas</a>
+                    <a href="{% url 'main_complaint' %}"><i class="fa fa-tag"></i>Mostrar quejas</a>
                 </li>
             {% endif %}
             {% if perms.dpv_complaint.view_waitingfordistribution %}
