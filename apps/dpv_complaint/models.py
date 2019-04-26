@@ -46,12 +46,22 @@ class Complaint(models.Model):
     expiration_time = models.IntegerField(default=60)
     reference = models.CharField(default='', max_length=50, blank=True, verbose_name='Referencia')
 
+    class Meta:
+        verbose_name = "Queja"
+        verbose_name_plural = "Quejas"
+        abstract = True
+
     def __str__(self):
         return '{}'.format(self.topic)
 
 
 class PopularCouncil(models.Model):
     name = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = "Consejo Popular"
+        verbose_name_plural = "Consejos Populares"
+        abstract = True
 
     def __str__(self):
         return '{}'.format(self.name)
@@ -68,9 +78,19 @@ class Approach(models.Model):
     expiration_time = models.IntegerField(default=30)
     # address of the one how make the approach
 
+    class Meta:
+        verbose_name = "Planteamiento"
+        verbose_name_plural = "Planteamientos"
+        abstract = True
+
 
 class Technical(models.Model):
     profile = models.ForeignKey(Perfil, on_delete=False, related_name='profile')
+
+    class Meta:
+        verbose_name = "Técnicos"
+        verbose_name_plural = "Personas"
+        abstract = True
 
     def __str__(self):
         return '{}'.format(self.profile.datos_personales.nombre + ' ' + self.profile.datos_personales.apellidos)
@@ -80,6 +100,11 @@ class WaitingForDistribution(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=False)
     enter_date = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        verbose_name = "Queja esperando distribución"
+        verbose_name_plural = "Queja esperando distribución"
+        abstract = True
+
 
 class AssignedToTechnician(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=False)
@@ -87,12 +112,22 @@ class AssignedToTechnician(models.Model):
     enter_date = models.DateTimeField(default=timezone.now)
     assigned_by = models.ForeignKey(Perfil, on_delete=False, default=1)
 
+    class Meta:
+        verbose_name = "Queja asignadas a técnicos"
+        verbose_name_plural = "Queja asignadas a técnicos"
+        abstract = True
+
 
 class FinishedComplaint(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=False)
     technical = models.ForeignKey(Technical, on_delete=False)
     technical_args = models.TextField()
     enter_date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name = ""
+        verbose_name_plural = "Queja Finalizada"
+        abstract = True
 
 
 class Accepted(models.Model):
@@ -104,6 +139,11 @@ class Accepted(models.Model):
     finished_date = models.DateTimeField(default=timezone.now)
     boss_accepted = models.ForeignKey(Perfil, on_delete=False, default=False, related_name='boss_accepted')
     answer = models.CharField(choices=ans, default='S', max_length=100)
+
+    class Meta:
+        verbose_name = "Queja Aceptada"
+        verbose_name_plural = "Queja Acceptada"
+        abstract = True
 
 
 class HistoryComplaint(models.Model):
@@ -120,7 +160,18 @@ class HistoryComplaint(models.Model):
     approach = models.ForeignKey(Approach, on_delete=False, blank=True, null=True)
     is_complaint = models.BooleanField(default=True)
 
+    class Meta:
+        verbose_name = "Histórico"
+        verbose_name_plural = "Históricos"
+        abstract = True
+
 
 class CurrentComplaint(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=False)
     current_status = models.CharField(max_length=100, default='Pendiente', choices=stat_history)
+
+    class Meta:
+        verbose_name = "Queja en Proceso"
+        verbose_name_plural = "Quejas en Proceso"
+        abstract = True
+
