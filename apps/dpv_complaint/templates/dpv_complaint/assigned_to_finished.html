@@ -24,9 +24,11 @@
                     <form class="row" role="form" method="post">
                         <div class="col-md-12">
                             <div class="form-control-sm">
-                                <label for="">Argumentos del técnico</label>
-                                {{ form.non_field_errors }}
-                                {{ form.technical_args }}
+                                <label for="">Argumentos*:</label>
+                                <div>
+                                    {{ form.non_field_errors }}
+                                    {{ form.technical_args }}
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

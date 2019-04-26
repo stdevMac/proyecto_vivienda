@@ -8,15 +8,15 @@ from .render_form import render_juridic_complaint_form as render_juridic_complai
 
 urlpatterns = [
     url(r'^$', complaint_view.main_view, name='main_complaint'),
-    url(r'^natural/$', complaint_index.index_natural_complaint, name="index_natural_complaint"),
-    url(r'^juridic/$', complaint_index.index_juridic_complaint, name="index_juridic_complaint"),
+    url(r'^natural/$', complaint_view.main_view, name="index_natural_complaint"),
+    url(r'^juridic/$', complaint_view.main_view, name="index_juridic_complaint"),
     url(r'^natural/new$', render_natural_complaint.form_person_for_complaint, name="add_natural_person"),
     url(r'^juridic/new$', render_juridic_complaint.form_juridic_for_complaint, name="add_juridic_person"),
     url(r'^wait_distribution/$', complaint_index.index_waiting_for_distribution, name="waiting_for_distribution"),
     url(r'^finished/$', complaint_index.index_finished_complaint, name="index_finished_complaint"),
     url(r'^accepted_all/$', complaint_index.index_accepted, name="index_accepted_all"),
     url(r'^technicals/$', complaint_index.index_technical, name="index_technicals"),
-    url(r'^statistics/$', complaint_index.statistics, name="index_technicals"),
+    url(r'^statistics/$', complaint_index.statistics, name="index_statistics"),
     url(r'^search/$', complaint_index.search, name='search'),
 
     re_path(r'^complaint_nat/(?P<person_id>[1-9]\d*)/$', render_natural_complaint.form_natural_complaint,

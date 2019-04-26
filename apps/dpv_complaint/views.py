@@ -15,7 +15,7 @@ def main_view(request):
             elms = index.get_elements(form.cleaned_data)
             return render(request, "dpv_complaint/index_complaint_new.html",
                           {'index': elms, 'index_name': 'Elementos filtrados',
-                           'natural': True if form.cleaned_data['natural'] else False, 'search': form})
+                           'natural': True if form.cleaned_data['natural'] else False})
     else:
         form = FilterForm()
     return render(request, "dpv_complaint/index_complaint_new.html",

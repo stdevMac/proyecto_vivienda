@@ -1,5 +1,5 @@
 {% load static i18n %}
-{% if perms.dpv_complaint.view_complaint or perms.dpv_complaint.add_accepted or perms.dpv_complaint.view_accepted or perms.dpv_complaint.view_assignedtotechnician or perms.dpv_complaint.view_complaint or perms.dpv_complaint.view_finishedcomplaint or perms.dpv_complaint.view_historycomplaint or perms.dpv_complaint.add_complaint or perms.dpv_complaint.view_technical or perms.dpv_complaint.add_technical or perms.dpv_complaint.view_waitingfordistribution %}
+{% if perms.dpv_complaint.view_complaint or perms.dpv_complaint.view_accepted or perms.dpv_complaint.view_assignedtotechnician or perms.dpv_complaint.view_complaint or perms.dpv_complaint.view_finishedcomplaint or perms.dpv_complaint.view_historycomplaint or perms.dpv_complaint.view_technical or perms.dpv_complaint.view_waitingfordistribution %}
     <li class="{% if '/quejas/' in request.path %} active show {% endif %} menu-item-has-children dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="menu-icon fa fa-tasks"></i>
@@ -26,6 +26,11 @@
             {% if perms.dpv_complaint.view_accepted %}
                 <li class="active">
                     <a href="{% url 'index_accepted_all' %}"><i class="fa fa-tag"></i>Mostrar quejas aceptadas</a>
+                </li>
+            {% endif %}
+            {% if perms.dpv_complaint.view_complaint %}
+                <li class="active">
+                    <a href="{% url 'index_statistics' %}"><i class="fa fa-tag"></i>Mostrar gráficos</a>
                 </li>
             {% endif %}
 

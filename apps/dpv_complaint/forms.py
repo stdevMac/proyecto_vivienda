@@ -4,7 +4,7 @@ from django import forms
 from .models import *
 from functools import partial
 
-DateInput = partial(forms.DateInput, {'class': 'datepicker'})
+# DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
 
 class ComplaintForm(forms.ModelForm):
@@ -61,9 +61,9 @@ CHOICES = (
 
 
 class FilterForm(forms.Form):
-    initial_time = forms.DateField(widget=forms.DateInput(), required=False,
+    initial_time = forms.DateField(widget=forms.SelectDateWidget(), required=False,
                                    label='Inicio del rango')
-    final_time = forms.DateField(widget=forms.DateInput(),
+    final_time = forms.DateField(widget=forms.SelectDateWidget(),
                                  initial=timezone.now(),
                                  required=False,
                                  label='Final del rango')

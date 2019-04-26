@@ -20,6 +20,7 @@
     <script src={% static 'dpv_complaint/js/jquery.min.js' %}></script>
     <script src={% static 'dpv_complaint/js/jquery-1.9.1.js' %}></script>
     <script src={% static 'dpv_complaint/js/jquery-ui.js' %}></script>
+    <script src="{% static 'dpv_base/js/lib/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
     <div class="col-md-12">
         <div class="card">
             {% csrf_token %}
@@ -28,7 +29,7 @@
                 <strong class="card-title">Quejas</strong>
                 <a type="button" onclick="togglePageElementVisibility('dp_search')"
                    class="pull-right btn btn-success btn-sm"
-                ><i class="fa fa-plus">
+                ><i>
                     Filtros</i></a>
 
                 <a role="button" class="pull-right btn btn-success btn-sm"
@@ -42,20 +43,12 @@
                 <div id="dp_search">
                     <div class="row">
                         <div class="card-body">
-                            <form method="POST" class="post-form">{% csrf_token %}
-                                {{ search.as_p }}
-                                <button type="submit" class="save btn btn-default">Agregar</button>
-                            </form>
-                            {#                            {% for field in search %}#}
-                            {#                                <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top"#}
-                            {#                                     title="{{ field.help_text }}">#}
-                            {#                                    {{ field.errors }}#}
-                            {#                                    <label class="control-label mb-1">{{ field.label }}</label>#}
-                            {#                                    {{ field }}#}
-                            {#                                    {{ field.required }}#}
-                            {#                                </div>#}
-                            {#                            {% endfor %}#}
-                            {#                            <button type="submit" class="btn btn-primary">Buscar</button>#}
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="top">
+                                <form method="POST" class="post-form">{% csrf_token %}
+                                    {{ search.as_ul }}
+                                    <button type="submit" class="save btn btn-default">Agregar</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <div>

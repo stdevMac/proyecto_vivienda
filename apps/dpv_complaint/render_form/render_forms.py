@@ -11,7 +11,7 @@ def assign_department(request, complaint_id):
     if request.method == 'POST':
         form = AssignDepartmentForm(request.POST)
         if form.is_valid():
-            args = form.fields['department'].queryset.first()
+            args = form.cleaned_data['department']
             Complaint.objects.filter(id=complaint_id).update(department=args,
                                                              assigned_to_department_date=timezone.now(),
                                                              status='Esperando Asignación')
