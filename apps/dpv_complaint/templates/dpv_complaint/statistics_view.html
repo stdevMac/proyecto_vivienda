@@ -22,8 +22,8 @@
         <div id="container_municipality_nat"
              style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
-{#        <div id="container_municipality_jur"#}
-{#             style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>#}
+        {#        <div id="container_municipality_jur"#}
+        {#             style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>#}
 
     </div>
     <script src={% static 'dpv_complaint/js/highcharts.src.js' %}></script>
@@ -56,10 +56,14 @@
 
             plotOptions: {
                 series: {
-                    label: {
-                        connectorAllowed: false
-                    },
-                    pointStart: 0
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
                 }
             },
 
@@ -68,7 +72,6 @@
                 data: [
                     {% for entry in dataset %}{{ entry.data }}{% if not forloop.last %}, {% endif %}{% endfor %}
                 ],
-                color: 'green'
             }],
 
             responsive: {
@@ -93,65 +96,6 @@
                 type: 'column'
             }
         });
-        {#Highcharts.chart("container_municipality_jar", {#}
-        {#    title: {#}
-        {#        text: 'Quejas Jurídicas por municipio'#}
-        {#    },#}
-        {##}
-        {#    xAxis: {#}
-        {#        categories: [#}
-        {#            {% for entry in municipality_jur %}'{{ entry.name }}' {% if not forloop.last %}, {% endif %}{% endfor %}#}
-        {#        ]#}
-        {#    },#}
-        {#    yAxis: {#}
-        {#        title: {#}
-        {#            text: 'Número de quejas'#}
-        {#        }#}
-        {#    },#}
-        {#    legend: {#}
-        {#        layout: 'vertical',#}
-        {#        align: 'right',#}
-        {#        verticalAlign: 'middle'#}
-        {#    },#}
-        {##}
-        {#    plotOptions: {#}
-        {#        series: {#}
-        {#            label: {#}
-        {#                connectorAllowed: false#}
-        {#            },#}
-        {#            pointStart: 0#}
-        {#        }#}
-        {#    },#}
-        {##}
-        {#    series: [{#}
-        {#        name: 'Quejas',#}
-        {#        data: [#}
-        {#            {% for entry in municipality_jur %}{{ entry.y }}{% if not forloop.last %}, {% endif %}{% endfor %}#}
-        {#        ],#}
-        {#        color: 'green'#}
-        {#    }],#}
-        {##}
-        {#    responsive: {#}
-        {#        rules: [{#}
-        {#            condition: {#}
-        {#                maxWidth: 500#}
-        {#            },#}
-        {#            chartOptions: {#}
-        {#                legend: {#}
-        {#                    layout: 'horizontal',#}
-        {#                    align: 'center',#}
-        {#                    verticalAlign: 'bottom'#}
-        {#                }#}
-        {#            }#}
-        {#        }]#}
-        {#    },#}
-        {#    chart: {#}
-        {#        plotBackgroundColor: null,#}
-        {#        plotBorderWidth: null,#}
-        {#        plotShadow: false,#}
-        {#        type: 'column'#}
-        {#    }#}
-        {# });#}
         Highcharts.chart("container_municipality_nat", {
             title: {
                 text: 'Quejas Naturales por municipio'
@@ -159,7 +103,14 @@
 
             xAxis: {
                 categories: [
-                    {% for entry in municipality_nat %}'{{ entry.name }}' {% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% if municipality_nat and not municipality_jur%}
+                        {% for entry in municipality_nat %}'{{ entry.name }}' {% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% elif municipality_nat and municipality_jur %}
+                        {% for entry in municipality_nat %}'{{ entry.name }}', {% endfor %}
+                        {% for entry in municipality_jur %}'{{ entry.name }}' {% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% else %}
+                        {% for entry in municipality_jur %}'{{ entry.name }}' {% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
                 ]
             },
             yAxis: {
@@ -174,20 +125,30 @@
             },
 
             plotOptions: {
-                series: {
-                    label: {
-                        connectorAllowed: false
-                    },
-                    pointStart: 0
+                series:{
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
                 }
             },
 
             series: [{
-                name: 'Quejas',
+                name: 'Quejas Naturales',
                 data: [
                     {% for entry in municipality_nat %}{{ entry.y }}{% if not forloop.last %}, {% endif %}{% endfor %}
                 ],
-                color: 'green'
+                {#color: 'green'#}
+            }, {
+                name: 'Quejas Jurídicas',
+                data: [
+                    {% for entry in municipality_jur %}{{ entry.y }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                ],
+                {#color: 'blue'#}
             }],
 
             responsive: {

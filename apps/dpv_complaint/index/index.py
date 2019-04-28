@@ -86,16 +86,16 @@ def statistics(request):
     data_set.append(data_set[0])
     data_set.remove(data_set[0])
 
-    municipality_natural = Complaint.objects.values('person_natural__municipio__nombre') \
-        .annotate(municipality=Count('person_natural__municipio__nombre'))
-    municipality_juridic = Complaint.objects.values('person_juridic__municipio__nombre') \
-        .annotate(municipality=Count('person_juridic__municipio__nombre'))
+    municipality_natural = Complaint.objects.values('person_natural__municipio__nombre').annotate(
+        Count('id')).order_by()
+    municipality_juridic = Complaint.objects.values('person_juridic__municipio__nombre').annotate(
+        Count('id')).order_by()
 
-    nat = [{'name': entry.get('person_natural__municipio__nombre'), 'y': entry.get('municipality')} for entry in
-           municipality_natural]
+    nat = [{'name': entry.get('person_natural__municipio__nombre'), 'y': entry.get('id__count')} for entry in
+           municipality_natural if entry.get('person_natural__municipio__nombre')]
 
-    jur = [{'name': entry.get('person_juridic__municipio__nombre'), 'y': entry.get('municipality')} for entry in
-           municipality_juridic]
+    jur = [{'name': entry.get('person_juridic__municipio__nombre'), 'y': entry.get('id__count')} for entry in
+           municipality_juridic if entry.get('person_juridic__municipio__nombre')]
 
     return render(request, "dpv_complaint/statistics_view.html", {'dataset': data_set, 'count_nat': count_natural,
                                                                   'count_jur': count_juridic,
