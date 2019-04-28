@@ -25,3 +25,8 @@ class Perfil(models.Model):
     class Meta:
         verbose_name = "Perfil"
         verbose_name_plural = "Perfiles"
+
+    def __str__(self):
+        if not self.datos_personales:
+            return '{}'.format(self.datos_usuario.username)
+        return '{}'.format(self.datos_personales.nombre + ' ' + self.datos_personales.apellidos)

@@ -1,4 +1,5 @@
 # from apps.dpv_nomencladores.models import AreaTrabajo, Municipio
+from apps.dpv_nomencladores.models import ConsejoPopular
 from apps.dpv_perfil.models import Perfil
 from django.utils import timezone
 from apps.dpv_persona.models import *
@@ -49,26 +50,16 @@ class Complaint(models.Model):
     class Meta:
         verbose_name = "Queja"
         verbose_name_plural = "Quejas"
+        ordering = ['enter_date', ]
 
     def __str__(self):
         return '{}'.format(self.topic)
 
 
-class PopularCouncil(models.Model):
-    name = models.CharField(max_length=50)
-
-    class Meta:
-        verbose_name = "Consejo Popular"
-        verbose_name_plural = "Consejos Populares"
-
-    def __str__(self):
-        return '{}'.format(self.name)
-
-
 class Approach(models.Model):
     reference_number = models.IntegerField()
     municipality = models.ForeignKey(Municipio, on_delete=False, default='', blank=True)
-    popular_council = models.ForeignKey(PopularCouncil, on_delete=False)
+    popular_council = models.ForeignKey(ConsejoPopular, on_delete=False)
     entity = models.ForeignKey(PersonaJuridica, on_delete=False)
     topic = models.CharField(max_length=200, verbose_name='Asunto')
     text = models.CharField(max_length=1000)
@@ -85,8 +76,8 @@ class Technical(models.Model):
     profile = models.ForeignKey(Perfil, on_delete=False, related_name='profile')
 
     class Meta:
-        verbose_name = "Técnicos"
-        verbose_name_plural = "Personas"
+        verbose_name = "Técnico"
+        verbose_name_plural = "Técnicos"
 
     def __str__(self):
         return '{}'.format(self.profile.datos_personales.nombre + ' ' + self.profile.datos_personales.apellidos)

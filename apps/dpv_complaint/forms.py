@@ -2,9 +2,6 @@ import datetime
 
 from django import forms
 from .models import *
-from functools import partial
-
-# DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
 
 class ComplaintForm(forms.ModelForm):
@@ -23,12 +20,6 @@ class AssignDepartmentForm(forms.Form):
 
 class TechnicianForm(forms.Form):
     technical = forms.ModelChoiceField(queryset=Technical.objects.all(), label='Disponibles')
-
-
-class AssignedToTechnicalForm(forms.ModelForm):
-    class Meta:
-        model = AssignedToTechnician
-        exclude = ('enter_date', 'complaint', 'assigned_by')
 
 
 class FinishedComplaintForm(forms.ModelForm):

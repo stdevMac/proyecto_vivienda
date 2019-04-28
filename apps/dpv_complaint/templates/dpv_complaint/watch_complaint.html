@@ -30,7 +30,7 @@
                     <div class="col-md-12"><span
                             class="text-muted">Área de trabajo asignada:</span> {{ complaint_for_dist.department.nombre }}
                     </div>
-                    {% if complaint_for_dist.status == 'P' or complaint_for_dist.status == 'Pendiente' %}
+                    {% if complaint_for_dist.status == 'EA' or complaint_for_dist.status == 'Esperando Asignación' %}
                         {% if complaint_for_dist.is_natural %}
                             <div>
                                 <a class="btn btn-info btn-lg cta-open"

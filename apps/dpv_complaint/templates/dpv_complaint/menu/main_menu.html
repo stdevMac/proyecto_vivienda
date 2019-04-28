@@ -28,11 +28,22 @@
                     <a href="{% url 'index_accepted_all' %}"><i class="fa fa-tag"></i>Mostrar quejas aceptadas</a>
                 </li>
             {% endif %}
+            {% if perms.dpv_complaint.add_assignedtotechnician %}
+                <li class="active">
+                    <a href="{% url 'assigned' %}"><i class="fa fa-tag"></i>Asignadas</a>
+                </li>
+            {% endif %}
+            {% if perms.dpv_complaint.add_finishedcomplaint %}
+                <li class="active">
+                    <a href="{% url 'assigned' %}"><i class="fa fa-tag"></i>Asignadas</a>
+                </li>
+            {% endif %}
             {% if perms.dpv_complaint.view_complaint %}
                 <li class="active">
                     <a href="{% url 'index_statistics' %}"><i class="fa fa-tag"></i>Mostrar gráficos</a>
                 </li>
             {% endif %}
+
 
         </ul>
     </li>

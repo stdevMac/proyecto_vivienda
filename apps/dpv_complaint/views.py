@@ -15,11 +15,23 @@ def main_view(request):
             elms = index.get_elements(form.cleaned_data)
             return render(request, "dpv_complaint/index_complaint_new.html",
                           {'index': elms, 'index_name': 'Elementos filtrados',
-                           'natural': True if form.cleaned_data['natural'] else False})
+                           'natural': True if form.cleaned_data['natural'] else False, 'search': form})
     else:
         form = FilterForm()
     return render(request, "dpv_complaint/index_complaint_new.html",
                   {'index': elems, 'index_name': "Quejas Jurídicas y Naturales", 'natural': None, 'search': form})
+
+
+@permission_required('dpv_complaint.add_assignedtotechnician')
+def show_department_boss(request):
+    pass
+
+
+@permission_required('dpv_complaint.add_finishedcomplaint')
+def show_technical_complaints(request):
+    user = request.user
+    technical = Technical.objects.get(profile__datos_usuario=user)
+    return redirect(reverse_lazy('index_assigned_to_technical', args=[technical.id]))
 
 
 @permission_required('dpv_complaint.add_assignedtotechnician')
@@ -28,7 +40,7 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
     if request.method == "POST":
         form = TechnicianForm(request.POST)
         if form.is_valid():
-            args = form.fields['technical'].queryset.first()
+            args = form.cleaned_data['technical']
             post = AssignedToTechnician()
             post.technical = Technical.objects.get(id=args.id)
             post.enter_date = timezone.now()
@@ -65,6 +77,8 @@ def from_waiting_for_distribution_to_assigned_to_technician(request, complaint_i
             return redirect(reverse_lazy('index_assigned_to_technical', args=[post.technical.id]))
     else:
         form = TechnicianForm(data={'department_id': department_id, 'municipality_id': municipality_id})
+        form.fields['technical'].queryset = Technical.objects.filter(profile__depto_trabajo=department_id).filter(
+            profile__centro_trabajo__municipio=municipality_id)
     return render(request, "dpv_complaint/single_form.html", {'form': form, 'form_name': form_name})
 
 
@@ -95,7 +109,7 @@ def from_assigned_to_technician_to_finished_complaint(request, complaint_id, tec
             CurrentComplaint.objects.filter(complaint=post.complaint.id).update(
                 current_status=history.current_status)
 
-            return redirect(reverse_lazy('index_assigned_to_technical', args=technical_id))
+            return redirect(reverse_lazy('index_assigned_to_technical', args=[technical_id]))
     else:
         form = FinishedComplaintForm()
     return render(request, "dpv_complaint/assigned_to_finished.html", {'form': form, 'form_name': form_name})

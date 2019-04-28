@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^technicals/$', complaint_index.index_technical, name="index_technicals"),
     url(r'^statistics/$', complaint_index.statistics, name="index_statistics"),
     url(r'^search/$', complaint_index.search, name='search'),
+    url(r'^assigned/', complaint_view.show_technical_complaints, name='assigned'),
 
     re_path(r'^complaint_nat/(?P<person_id>[1-9]\d*)/$', render_natural_complaint.form_natural_complaint,
             name='add_natural_complaint'),
