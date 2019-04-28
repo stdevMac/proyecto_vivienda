@@ -82,8 +82,8 @@
                                     <td>{{ complaint.person_natural.municipio }}</td>
                                 {% else %}
                                     <td>{{ complaint.person_juridic.nombre }}</td>
-                                    <td>{{ complaint.person_juridic.direccion_calle }} ,
-                                        Número {{ complaint.person_juridic.direccion_numero }}</td>
+                                    <td>{{ complaint.person_juridic.direccion_calle }} {% if complaint.person_juridic.direccion_numero %},
+                                        Número {{ complaint.person_juridic.direccion_numero }} {% endif %}</td>
                                     <td>{{ complaint.person_juridic.municipio }}</td>
                                 {% endif %}
                                 <td>{{ complaint.topic }}</td>

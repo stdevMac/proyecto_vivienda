@@ -49,7 +49,6 @@ class Complaint(models.Model):
     class Meta:
         verbose_name = "Queja"
         verbose_name_plural = "Quejas"
-        abstract = True
 
     def __str__(self):
         return '{}'.format(self.topic)
@@ -61,7 +60,6 @@ class PopularCouncil(models.Model):
     class Meta:
         verbose_name = "Consejo Popular"
         verbose_name_plural = "Consejos Populares"
-        abstract = True
 
     def __str__(self):
         return '{}'.format(self.name)
@@ -81,7 +79,6 @@ class Approach(models.Model):
     class Meta:
         verbose_name = "Planteamiento"
         verbose_name_plural = "Planteamientos"
-        abstract = True
 
 
 class Technical(models.Model):
@@ -90,7 +87,6 @@ class Technical(models.Model):
     class Meta:
         verbose_name = "Técnicos"
         verbose_name_plural = "Personas"
-        abstract = True
 
     def __str__(self):
         return '{}'.format(self.profile.datos_personales.nombre + ' ' + self.profile.datos_personales.apellidos)
@@ -103,7 +99,6 @@ class WaitingForDistribution(models.Model):
     class Meta:
         verbose_name = "Queja esperando distribución"
         verbose_name_plural = "Queja esperando distribución"
-        abstract = True
 
 
 class AssignedToTechnician(models.Model):
@@ -115,7 +110,6 @@ class AssignedToTechnician(models.Model):
     class Meta:
         verbose_name = "Queja asignadas a técnicos"
         verbose_name_plural = "Queja asignadas a técnicos"
-        abstract = True
 
 
 class FinishedComplaint(models.Model):
@@ -127,7 +121,6 @@ class FinishedComplaint(models.Model):
     class Meta:
         verbose_name = ""
         verbose_name_plural = "Queja Finalizada"
-        abstract = True
 
 
 class Accepted(models.Model):
@@ -143,7 +136,6 @@ class Accepted(models.Model):
     class Meta:
         verbose_name = "Queja Aceptada"
         verbose_name_plural = "Queja Acceptada"
-        abstract = True
 
 
 class HistoryComplaint(models.Model):
@@ -163,7 +155,6 @@ class HistoryComplaint(models.Model):
     class Meta:
         verbose_name = "Histórico"
         verbose_name_plural = "Históricos"
-        abstract = True
 
 
 class CurrentComplaint(models.Model):
@@ -173,5 +164,4 @@ class CurrentComplaint(models.Model):
     class Meta:
         verbose_name = "Queja en Proceso"
         verbose_name_plural = "Quejas en Proceso"
-        abstract = True
 

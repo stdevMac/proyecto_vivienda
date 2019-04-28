@@ -23,7 +23,7 @@
                         Persona</a></div>
                 {% else %}
                     <div class="col-md-12"><span class="text-muted"></span><a
-                            href={% url 'persona_juridica_view' id_personajur=complaint_for_dist.person_juridic.id %}>Datos
+                            href={% url 'persona_juridica_view' id_persojur=complaint_for_dist.person_juridic.id %}>Datos
                         Persona</a></div>
                 {% endif %}
                 {% if complaint_for_dist.department %}
@@ -60,18 +60,6 @@
                     <div class="col-md-12"><span class="text-muted"></span>
 
                         <a class="btn btn-info btn-lg cta-open" aria-label="Asignar Departamento" href={% url 'assign_department' complaint_id=complaint_for_dist.id %}>Asignar Departamento</a>
-                    </div>
-                {% endif %}
-
-                {% if complaint_for_dist.is_natural %}
-                    <div class="col-md-12">
-                        <a class="btn btn-info btn-lg cta-open" href={% url 'index_natural_complaint' %}>Ver quejas
-                            naturales</a>
-                    </div>
-                {% else %}
-                    <div class="col-md-12">
-                        <a class="btn btn-info btn-lg cta-open" href={% url 'index_juridic_complaint' %}>Ver quejas
-                            jurídicas</a>
                     </div>
                 {% endif %}
             {% else %}

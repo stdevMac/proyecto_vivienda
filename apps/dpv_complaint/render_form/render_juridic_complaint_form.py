@@ -64,7 +64,7 @@ def form_juridic_for_complaint(request):
         form_juridic = PersonaJuridicaForm(request.POST)
         codigo_nit = form_juridic.data.get('codigo_nit')
         if check_juridic_person(codigo_nit):
-            person = PersonaNatural.objects.get(codigo_nit=codigo_nit)
+            person = PersonaJuridica.objects.get(codigo_nit=codigo_nit)
             return redirect(reverse_lazy('complaints_by_juridic', args=[person.id]))
 
         elif form_juridic.is_valid():

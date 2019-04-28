@@ -12,7 +12,7 @@ class Persona(models.Model):
     nombre = models.CharField(max_length=30, validators=[MaxLengthValidator(30)])
     municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE, verbose_name="Municipio", help_text="Municipio donde recide la persona")
     direccion_calle = models.ForeignKey(Calle, on_delete=models.CASCADE, verbose_name="Calle", blank=True)
-    direccion_numero = models.PositiveSmallIntegerField(blank=True, verbose_name="Número")
+    direccion_numero = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name="Número")
     telefono = models.CharField(max_length=8, verbose_name="Teléfono Fijo", blank=True, validators=[MinLengthValidator(8),
                                                                                                     MaxLengthValidator(8),
                                                                                                     only_numbers])
