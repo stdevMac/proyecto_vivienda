@@ -73,15 +73,18 @@ def statistics(request):
         annotate(count=Count('id')).values('month', 'count').order_by('month')
     group_month = list(group_month)
     data_set = []
-    # mark = [False for _ in range(12)]
+
     for current_month in range(len(months)):
         for i in range(len(group_month)):
             if group_month[i].get('month') == current_month:
-                data_set.append({'name': months[group_month[i].get('month')],
+                data_set.append({'name': months[group_month[i].get('month') - 1],
                                  'data': group_month[i].get('count')})
                 break
         else:
-            data_set.append({'name': months[current_month], 'data': 0})
+            data_set.append({'name': months[current_month - 1], 'data': 0})
+
+    data_set.append(data_set[0])
+    data_set.remove(data_set[0])
 
     municipality_natural = Complaint.objects.values('person_natural__municipio__nombre') \
         .annotate(municipality=Count('person_natural__municipio__nombre'))
