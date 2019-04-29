@@ -65,12 +65,7 @@ months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agost
           'Noviembre', 'Diciembre']
 
 
-@permission_required('dpv_complaint.view_complaint')
-def statistics(request):
-    count_natural = Complaint.objects.filter(is_natural=True).count()
-    count_juridic = Complaint.objects.filter(is_natural=False).count()
-    group_month = Complaint.objects.annotate(month=ExtractMonth('enter_date')).values('month'). \
-        annotate(count=Count('id')).values('month', 'count').order_by('month')
+def get_by_month(group_month):
     group_month = list(group_month)
     data_set = []
 
@@ -85,11 +80,22 @@ def statistics(request):
 
     data_set.append(data_set[0])
     data_set.remove(data_set[0])
+    return data_set
 
+
+@permission_required('dpv_complaint.view_complaint')
+def statistics(request):
+    count_natural = Complaint.objects.filter(is_natural=True).count()
+    count_juridic = Complaint.objects.filter(is_natural=False).count()
+
+    nat_by_month = get_by_month(Complaint.objects.annotate(month=ExtractMonth('enter_date')).values('month').annotate(
+        count=Count('person_natural')).values('month', 'count').order_by('month'))
+    jur_by_month = get_by_month(Complaint.objects.annotate(month=ExtractMonth('enter_date')).values('month').annotate(
+        count=Count('person_juridic')).values('month', 'count').order_by('month'))
     municipality_natural = Complaint.objects.values('person_natural__municipio__nombre').annotate(
-        Count('id')).order_by()
+        Count('id')).order_by('id__count').reverse()
     municipality_juridic = Complaint.objects.values('person_juridic__municipio__nombre').annotate(
-        Count('id')).order_by()
+        Count('id')).order_by('id__count').reverse()
 
     nat = [{'name': entry.get('person_natural__municipio__nombre'), 'y': entry.get('id__count')} for entry in
            municipality_natural if entry.get('person_natural__municipio__nombre')]
@@ -97,10 +103,13 @@ def statistics(request):
     jur = [{'name': entry.get('person_juridic__municipio__nombre'), 'y': entry.get('id__count')} for entry in
            municipality_juridic if entry.get('person_juridic__municipio__nombre')]
 
-    return render(request, "dpv_complaint/statistics_view.html", {'dataset': data_set, 'count_nat': count_natural,
-                                                                  'count_jur': count_juridic,
-                                                                  'municipality_nat': nat,
-                                                                  'municipality_jur': jur})
+    return render(request, "dpv_complaint/statistics_view.html", {
+        'nat_by_month': nat_by_month,
+        'jur_by_month': jur_by_month,
+        'count_nat': count_natural,
+        'count_jur': count_juridic,
+        'municipality_nat': nat,
+        'municipality_jur': jur})
 
 
 @permission_required('dpv_complaint.view_complaint')
